@@ -17,7 +17,7 @@ describe('station db', () => {
     const latest = (await db.readings.orderBy('takenAt').last())!.takenAt
     expect(Date.parse(now) - Date.parse(latest)).toBe(86_400_000)
     const s = await db.settings.get('scenario')
-    expect((s?.value as { id: string }).id).toBe('urgent')
+    expect((s?.value as { id: string } | undefined)?.id).toBe('urgent')
     db.close()
   })
 })

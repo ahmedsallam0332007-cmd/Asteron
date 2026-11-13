@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { content } from '../../../content'
 import { stationDb } from '../../../data/db'
@@ -16,8 +16,14 @@ type Analysis = { readings: Reading[]; at: string; result: ReturnType<typeof ass
 
 const MANUAL: Provenance = { kind: 'manual', enteredBy: 'crew' }
 
+/** Remount the form per crew member so edits and analysis never leak between crew. */
 export function CheckIn() {
-  const { crewId, setCrew } = useApp()
+  const crewId = useApp((s) => s.crewId)
+  return <CheckInForm key={crewId} />
+}
+
+function CheckInForm() {
+  const { crewId, setCrew, now: appNow } = useApp()
   const crew = CREW.find((c) => c.id === crewId)!
   const history = useCrewReadings(crewId)
   const pendingAll = usePendingToday()
@@ -35,9 +41,7 @@ export function CheckIn() {
     pending?.[id] && (edited[id] === undefined || Number(edited[id]) === pending[id].value) ? pending[id].provenance : MANUAL
 
   const last = history?.reduce<string | undefined>((m, r) => (!m || r.takenAt > m ? r.takenAt : m), undefined)
-  const doneToday = checkedInToday(last, new Date().toISOString())
-
-  useEffect(() => { setEdited({}); setAnalysis(null); setStep(0) }, [crewId])
+  const doneToday = checkedInToday(last, appNow)
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()

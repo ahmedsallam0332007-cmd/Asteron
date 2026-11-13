@@ -7,7 +7,6 @@ const META: Record<Status, { icon: string; label: string; cls: string }> = {
   urgent: { icon: '✖', label: 'Urgent', cls: 'text-st-urgent border-st-urgent/40 bg-st-urgent/10' },
   unknown: { icon: '?', label: 'Unknown', cls: 'text-st-unknown border-dashed border-st-unknown/60 bg-st-unknown/10' },
 }
-export const statusMeta = (s: Status) => META[s]
 
 /** Status is never colour-only: icon + label + colour. */
 export function StatusBadge({ status, size = 'sm' }: { status: Status; size?: 'sm' | 'lg' }) {
