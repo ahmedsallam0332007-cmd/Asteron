@@ -1,12 +1,14 @@
 import { z } from 'zod'
 import type { Indicator, Rule, TierContent } from '../engine/types'
-import { anchorSchema, guidanceSchema, indicatorSchema, ruleSchema, sourceSchema, tierSchema } from './schema'
+import { anchorSchema, guidanceSchema, indicatorSchema, missionSchema, radiationSchema, ruleSchema, sourceSchema, tierSchema } from './schema'
 import indicatorsJson from './indicators.json'
 import rulesJson from './rules.json'
 import sourcesJson from './sources.json'
 import tiersJson from './tiers.json'
 import guidanceJson from './guidance.json'
 import anchorsJson from './anchors.json'
+import radiationJson from './radiation.json'
+import missionJson from './mission.json'
 
 export type Source = z.infer<typeof sourceSchema>
 export interface Content {
@@ -16,7 +18,11 @@ export interface Content {
   tiers: TierContent[]
   guidance: Guidance[]
   anchors: Anchor[]
+  radiation: Radiation
+  mission: Mission
 }
+export type Radiation = z.infer<typeof radiationSchema>
+export type Mission = z.infer<typeof missionSchema>
 export type Anchor = z.infer<typeof anchorSchema>
 export type Guidance = z.infer<typeof guidanceSchema>
 
@@ -29,6 +35,8 @@ export function loadContent(): Content {
     tiers: z.array(tierSchema).parse(tiersJson) as TierContent[],
     guidance: z.array(guidanceSchema).parse(guidanceJson),
     anchors: z.array(anchorSchema).parse(anchorsJson),
+    radiation: radiationSchema.parse(radiationJson),
+    mission: missionSchema.parse(missionJson),
   }
 }
 

@@ -1,0 +1,51 @@
+{
+ "limits": {
+  "careerMsv": {
+   "value": 600,
+   "clause": "V1 4030",
+   "sourceIds": [
+    "nasa-ochmo-radiation-brief"
+   ]
+  },
+  "speEventMsv": {
+   "value": 250,
+   "clause": "V1 4031",
+   "sourceIds": [
+    "nasa-ochmo-radiation-brief"
+   ]
+  }
+ },
+ "dailyDoseMsv": {
+  "iss": {
+   "low": 0.2,
+   "high": 0.5,
+   "note": "Effective dose on the ISS: about 40 to 90 mSv per six-month mission.",
+   "sourceIds": [
+    "nasa-ntrs-20250006168"
+   ]
+  },
+  "moon": {
+   "low": 0.4,
+   "high": 0.9,
+   "note": "Galactic cosmic rays on the lunar surface with optimized shielding: low end at solar maximum, high end at solar minimum.",
+   "sourceIds": [
+    "nasa-ntrs-20250006168"
+   ]
+  },
+  "mars": {
+   "low": 0.35,
+   "high": 0.65,
+   "note": "Galactic cosmic rays on the Martian surface (planet and thin atmosphere shield part of the dose): low end at solar maximum, high end at solar minimum.",
+   "sourceIds": [
+    "nasa-ntrs-20250006168"
+   ]
+  }
+ },
+ "shelter": {
+  "text": "Radiation alerting gives early warning so the crew can safe the vehicle and configure a shelter. On the ISS, Radi-N2 measured a lower neutron dose in the sleeping quarters than elsewhere on the station.",
+  "sourceIds": [
+   "nasa-ochmo-radiation-brief",
+   "csa-radi-n2"
+  ]
+ }
+}

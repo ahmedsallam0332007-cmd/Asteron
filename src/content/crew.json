@@ -36,6 +36,30 @@
    "exercise_min": [
     95,
     6
+   ],
+   "stress": [
+    2,
+    0.3
+   ],
+   "workload": [
+    3,
+    0.3
+   ],
+   "sym_headache": [
+    0,
+    0
+   ],
+   "sym_rash": [
+    0,
+    0
+   ],
+   "sym_dizzy": [
+    0,
+    0
+   ],
+   "sym_vision": [
+    0,
+    0
    ]
   },
   "bio": {
@@ -51,7 +75,8 @@
    "missionDays": 180,
    "fitness": "very high",
    "chronotype": "morning",
-   "exerciseRoutine": "Resistive 3x/week + treadmill"
+   "exerciseRoutine": "Resistive 3x/week + treadmill",
+   "priorCareerDoseMsv": 160
   }
  },
  {
@@ -91,6 +116,30 @@
    "exercise_min": [
     90,
     6
+   ],
+   "stress": [
+    2,
+    0.3
+   ],
+   "workload": [
+    3,
+    0.3
+   ],
+   "sym_headache": [
+    0,
+    0
+   ],
+   "sym_rash": [
+    0,
+    0
+   ],
+   "sym_dizzy": [
+    0,
+    0
+   ],
+   "sym_vision": [
+    0,
+    0
    ]
   },
   "bio": {
@@ -106,7 +155,8 @@
    "missionDays": 180,
    "fitness": "high",
    "chronotype": "intermediate",
-   "exerciseRoutine": "Cycle ergometer + resistive"
+   "exerciseRoutine": "Cycle ergometer + resistive",
+   "priorCareerDoseMsv": 75
   }
  },
  {
@@ -146,6 +196,30 @@
    "exercise_min": [
     100,
     6
+   ],
+   "stress": [
+    2,
+    0.3
+   ],
+   "workload": [
+    3,
+    0.3
+   ],
+   "sym_headache": [
+    0,
+    0
+   ],
+   "sym_rash": [
+    0,
+    0
+   ],
+   "sym_dizzy": [
+    0,
+    0
+   ],
+   "sym_vision": [
+    0,
+    0
    ]
   },
   "bio": {
@@ -161,7 +235,8 @@
    "missionDays": 180,
    "fitness": "very high",
    "chronotype": "evening",
-   "exerciseRoutine": "Resistive 4x/week"
+   "exerciseRoutine": "Resistive 4x/week",
+   "priorCareerDoseMsv": 0
   }
  },
  {
@@ -201,6 +276,30 @@
    "exercise_min": [
     85,
     6
+   ],
+   "stress": [
+    2,
+    0.3
+   ],
+   "workload": [
+    3,
+    0.3
+   ],
+   "sym_headache": [
+    0,
+    0
+   ],
+   "sym_rash": [
+    0,
+    0
+   ],
+   "sym_dizzy": [
+    0,
+    0
+   ],
+   "sym_vision": [
+    0,
+    0
    ]
   },
   "bio": {
@@ -216,7 +315,8 @@
    "missionDays": 180,
    "fitness": "high",
    "chronotype": "morning",
-   "exerciseRoutine": "Treadmill + resistive"
+   "exerciseRoutine": "Treadmill + resistive",
+   "priorCareerDoseMsv": 0
   }
  },
  {
@@ -256,6 +356,30 @@
    "exercise_min": [
     95,
     6
+   ],
+   "stress": [
+    2,
+    0.3
+   ],
+   "workload": [
+    3,
+    0.3
+   ],
+   "sym_headache": [
+    0,
+    0
+   ],
+   "sym_rash": [
+    0,
+    0
+   ],
+   "sym_dizzy": [
+    0,
+    0
+   ],
+   "sym_vision": [
+    0,
+    0
    ]
   },
   "bio": {
@@ -271,7 +395,8 @@
    "missionDays": 180,
    "fitness": "high",
    "chronotype": "intermediate",
-   "exerciseRoutine": "Resistive + cycle"
+   "exerciseRoutine": "Resistive + cycle",
+   "priorCareerDoseMsv": 70
   }
  },
  {
@@ -311,6 +436,30 @@
    "exercise_min": [
     88,
     6
+   ],
+   "stress": [
+    2,
+    0.3
+   ],
+   "workload": [
+    3,
+    0.3
+   ],
+   "sym_headache": [
+    0,
+    0
+   ],
+   "sym_rash": [
+    0,
+    0
+   ],
+   "sym_dizzy": [
+    0,
+    0
+   ],
+   "sym_vision": [
+    0,
+    0
    ]
   },
   "bio": {
@@ -326,7 +475,8 @@
    "missionDays": 180,
    "fitness": "high",
    "chronotype": "intermediate",
-   "exerciseRoutine": "Treadmill + resistive"
+   "exerciseRoutine": "Treadmill + resistive",
+   "priorCareerDoseMsv": 85
   }
  }
 ]

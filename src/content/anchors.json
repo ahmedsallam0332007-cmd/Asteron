@@ -1,10 +1,103 @@
 [
- {"indicatorId":"bp_sys","text":"In flight: 24-h systolic pressure was about 8 mmHg lower than before flight (8 ISS astronauts, 85-192 days).","sourceIds":["norsk-2015"]},
- {"indicatorId":"bp_dia","text":"In flight: 24-h diastolic pressure was about 9 mmHg lower than before flight (8 ISS astronauts).","sourceIds":["norsk-2015"]},
- {"indicatorId":"hr_rest","text":"In flight: heart rate did not change compared with before flight, while the heart pumped about 35% more blood per beat (8 ISS astronauts).","sourceIds":["norsk-2015"]},
- {"indicatorId":"sleep_h","text":"In flight: astronauts slept 6.09 h a night on average on the ISS, against 8.5 h scheduled (21 ISS astronauts).","sourceIds":["barger-2014"]},
- {"indicatorId":"exercise_min","text":"Without gravity, bone and muscle are lost; daily exercise is the main countermeasure.","sourceIds":["nasa-hrp-hazards"]},
- {"indicatorId":"mood","text":"Isolation and confinement are one of NASA's five spaceflight hazards and affect mood, sleep and team work.","sourceIds":["nasa-hrp-hazards"]},
- {"indicatorId":"spo2","text":"No spaceflight-specific figure in our sources yet; the published clinical range applies.","sourceIds":["who-pulse-ox"]},
- {"indicatorId":"temp","text":"No spaceflight-specific figure in our sources yet; the published clinical definition of fever applies.","sourceIds":["cdc-fever"]}
+ {
+  "indicatorId": "bp_sys",
+  "text": "In flight: 24-h systolic pressure was about 8 mmHg lower than before flight (8 ISS astronauts, 85-192 days).",
+  "sourceIds": [
+   "norsk-2015"
+  ]
+ },
+ {
+  "indicatorId": "bp_dia",
+  "text": "In flight: 24-h diastolic pressure was about 9 mmHg lower than before flight (8 ISS astronauts).",
+  "sourceIds": [
+   "norsk-2015"
+  ]
+ },
+ {
+  "indicatorId": "hr_rest",
+  "text": "In flight: heart rate did not change compared with before flight, while the heart pumped about 35% more blood per beat (8 ISS astronauts).",
+  "sourceIds": [
+   "norsk-2015"
+  ]
+ },
+ {
+  "indicatorId": "sleep_h",
+  "text": "In flight: astronauts slept 6.09 h a night on average on the ISS, against 8.5 h scheduled (21 ISS astronauts).",
+  "sourceIds": [
+   "barger-2014"
+  ]
+ },
+ {
+  "indicatorId": "exercise_min",
+  "text": "Without gravity, bone and muscle are lost; daily exercise is the main countermeasure.",
+  "sourceIds": [
+   "nasa-hrp-hazards"
+  ]
+ },
+ {
+  "indicatorId": "mood",
+  "text": "Isolation and confinement are one of NASA's five spaceflight hazards and affect mood, sleep and team work.",
+  "sourceIds": [
+   "nasa-hrp-hazards"
+  ]
+ },
+ {
+  "indicatorId": "spo2",
+  "text": "No spaceflight-specific figure in our sources yet; the published clinical range applies.",
+  "sourceIds": [
+   "who-pulse-ox"
+  ]
+ },
+ {
+  "indicatorId": "temp",
+  "text": "No spaceflight-specific figure in our sources yet; the published clinical definition of fever applies.",
+  "sourceIds": [
+   "cdc-fever"
+  ]
+ },
+ {
+  "indicatorId": "stress",
+  "text": "NASA lists behavioral changes and psychiatric disorders (risk 12) among the effects of isolation, confinement and distance. Canada's C-STARS study tracks stress and coping with questionnaires and diary entries during the mission.",
+  "sourceIds": [
+   "nasa-hrp-risks",
+   "csa-iss-science"
+  ]
+ },
+ {
+  "indicatorId": "workload",
+  "text": "NASA risk 14 names sleep loss, circadian desynchronization and work overload together as causes of performance decrements and adverse health outcomes.",
+  "sourceIds": [
+   "nasa-hrp-risks"
+  ]
+ },
+ {
+  "indicatorId": "sym_headache",
+  "text": "NASA: mild hypoxia can cause confusion, headaches, vision impairment and trouble sleeping (risk 6). Cabin CO2 at levels nobody notices in a day causes headaches and irritability after months (Hazard 5 podcast).",
+  "sourceIds": [
+   "nasa-hrp-risks",
+   "nasa-hwhap-hazard5"
+  ]
+ },
+ {
+  "indicatorId": "sym_rash",
+  "text": "NASA: some ISS astronauts have reported cold sores, rashes, atypical allergies and infections that can be attributed to immune system alterations (risk 1).",
+  "sourceIds": [
+   "nasa-hrp-risks"
+  ]
+ },
+ {
+  "indicatorId": "sym_dizzy",
+  "text": "NASA: the majority of astronauts experience motion sickness during spaceflight; changes in gravity affect orientation, coordination and balance (risk 2).",
+  "sourceIds": [
+   "nasa-hrp-risks"
+  ]
+ },
+ {
+  "indicatorId": "sym_vision",
+  "text": "NASA: approximately 70 percent of ISS astronauts experience some swelling in the back of their eyes (SANS, risk 10). Canada's SANSORI study reports the same figure.",
+  "sourceIds": [
+   "nasa-hrp-risks",
+   "csa-iss-science"
+  ]
+ }
 ]

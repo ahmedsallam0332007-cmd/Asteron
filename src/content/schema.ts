@@ -13,6 +13,8 @@ export const sourceSchema = z.object({
   year: z.number().int().optional(),
   url: z.string().url().optional(),
   verifiedAgainstOriginal: z.boolean(),
+  /** SHA-256 of the original document we read, when we downloaded it. */
+  sha256: z.string().regex(/^[0-9a-f]{64}$/).optional(),
   note: z.string().optional(),
 })
 
@@ -79,3 +81,29 @@ export const guidanceSchema = z.object({
 })
 
 export const anchorSchema = z.object({ indicatorId: z.string(), text: z.string().min(20), sourceIds })
+
+const sourced = { sourceIds }
+const doseRange = z.object({ low: z.number().positive(), high: z.number().positive(), note: z.string().min(10), ...sourced })
+  .refine((r) => r.low <= r.high, 'low must not exceed high')
+
+/** Radiation: published limits and published daily dose ranges only. */
+export const radiationSchema = z.object({
+  limits: z.object({
+    careerMsv: z.object({ value: z.number().positive(), clause: z.string(), ...sourced }),
+    speEventMsv: z.object({ value: z.number().positive(), clause: z.string(), ...sourced }),
+  }),
+  dailyDoseMsv: z.object({ iss: doseRange, moon: doseRange, mars: doseRange }),
+  shelter: z.object({ text: z.string().min(20), ...sourced }),
+})
+
+/** Mission settings. Each is labelled: a plan setting or an estimate, never a medical threshold. */
+export const missionSchema = z.object({
+  exercisePlan: z.object({
+    minutesPerDay: z.number().positive(),
+    daysPerWeek: z.number().int().min(1).max(7),
+    kind: z.literal('mission-plan-setting'),
+    note: z.string().min(10),
+    ...sourced,
+  }),
+  adaptationDays: z.object({ value: z.number().int().positive(), kind: z.literal('estimate'), note: z.string().min(10), ...sourced }),
+})

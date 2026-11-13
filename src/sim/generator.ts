@@ -18,6 +18,8 @@ export interface CrewBio {
   fitness: 'high' | 'very high'
   chronotype: 'morning' | 'intermediate' | 'evening'
   exerciseRoutine: string
+  /** Fictional effective dose from earlier flights, mSv (kept within NASA's published ISS range per mission). */
+  priorCareerDoseMsv: number
 }
 export interface CrewMember {
   id: string

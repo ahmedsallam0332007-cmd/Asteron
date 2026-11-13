@@ -538,5 +538,176 @@
   ],
   "reviewStatus": "unchecked",
   "minTier": 4
+ },
+ {
+  "id": "base-stress-high",
+  "type": "baseline",
+  "indicatorIds": [
+   "stress"
+  ],
+  "params": {
+   "k": 3,
+   "minDays": 7,
+   "direction": "above"
+  },
+  "resultStatus": "watch",
+  "message": "Stress is clearly above your usual level.",
+  "sourceIds": [
+   "nasa-hrp-risks",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "base-workload-high",
+  "type": "baseline",
+  "indicatorIds": [
+   "workload"
+  ],
+  "params": {
+   "k": 3,
+   "minDays": 7,
+   "direction": "above"
+  },
+  "resultStatus": "watch",
+  "message": "Workload is clearly above your usual level.",
+  "sourceIds": [
+   "nasa-hrp-risks",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "comp-overload",
+  "type": "composite",
+  "indicatorIds": [
+   "workload",
+   "sleep_h"
+  ],
+  "params": {
+   "conditions": [
+    {
+     "indicatorId": "workload",
+     "kind": "baselineAbove",
+     "value": 3
+    },
+    {
+     "indicatorId": "sleep_h",
+     "kind": "baselineBelow",
+     "value": 2
+    }
+   ],
+   "minDays": 7
+  },
+  "resultStatus": "concern",
+  "message": "Workload at least two steps above your usual together with sleep below your usual. NASA links work overload and sleep loss to performance decrements and health effects.",
+  "sourceIds": [
+   "nasa-hrp-risks",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-sym-headache",
+  "type": "absolute",
+  "indicatorIds": [
+   "sym_headache"
+  ],
+  "params": {
+   "op": "gte",
+   "value": 1
+  },
+  "resultStatus": "watch",
+  "message": "Headache reported. Check oxygen saturation and cabin air, drink water, rest, and re-check later.",
+  "sourceIds": [
+   "nasa-hrp-risks",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-sym-rash",
+  "type": "absolute",
+  "indicatorIds": [
+   "sym_rash"
+  ],
+  "params": {
+   "op": "gte",
+   "value": 1
+  },
+  "resultStatus": "watch",
+  "message": "New rash or cold sore reported. In flight this can come from dormant viruses reactivating. Keep it clean and report it in the next downlink.",
+  "sourceIds": [
+   "nasa-hrp-risks",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-sym-dizzy",
+  "type": "absolute",
+  "indicatorIds": [
+   "sym_dizzy"
+  ],
+  "params": {
+   "op": "gte",
+   "value": 1
+  },
+  "resultStatus": "watch",
+  "message": "Dizziness or motion sickness reported. Avoid fast head movements and critical tasks until it passes.",
+  "sourceIds": [
+   "nasa-hrp-risks",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-sym-vision",
+  "type": "absolute",
+  "indicatorIds": [
+   "sym_vision"
+  ],
+  "params": {
+   "op": "gte",
+   "value": 1
+  },
+  "resultStatus": "concern",
+  "message": "A change in vision was reported. Vision changes in flight can be part of SANS; the flight surgeon should review the eye exam data.",
+  "sourceIds": [
+   "nasa-hrp-risks",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked",
+  "minTier": 3
+ },
+ {
+  "id": "comp-cabin-air",
+  "type": "composite",
+  "indicatorIds": [
+   "sym_headache",
+   "stress"
+  ],
+  "params": {
+   "conditions": [
+    {
+     "indicatorId": "sym_headache",
+     "kind": "gte",
+     "value": 1
+    },
+    {
+     "indicatorId": "stress",
+     "kind": "baselineAbove",
+     "value": 2
+    }
+   ],
+   "minDays": 7
+  },
+  "resultStatus": "watch",
+  "message": "Headache together with stress above your usual. NASA notes that cabin carbon dioxide (CO2) at levels nobody notices in a day causes headaches and irritability over months: check the cabin air readings first.",
+  "sourceIds": [
+   "nasa-hwhap-hazard5",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
  }
 ]

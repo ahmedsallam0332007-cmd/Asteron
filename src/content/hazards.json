@@ -47,7 +47,8 @@
    "name": "Risk of Altered Immune System Responses",
    "nasaText": "The stresses of spaceflight can awaken inactive viruses inside the bodies of astronauts, leading to rashes and other symptoms.",
    "indicatorIds": [
-    "temp"
+    "temp",
+    "sym_rash"
    ],
    "hazardIds": [
     "hostile"
@@ -55,20 +56,26 @@
    "coverage": "partial",
    "sourceIds": [
     "nasa-hrp-risks"
-   ]
+   ],
+   "method": "self-report",
+   "features": []
   },
   {
    "group": "physiology",
    "name": "Risk of Altered Sensorimotor and Vestibular Function",
    "nasaText": "Astronauts can experience motion sickness, issues with hand-eye or gait coordination, and dizziness during gravitational changes.",
-   "indicatorIds": [],
+   "indicatorIds": [
+    "sym_dizzy"
+   ],
    "hazardIds": [
     "gravity"
    ],
-   "coverage": "not-monitored",
+   "coverage": "partial",
    "sourceIds": [
     "nasa-hrp-risks"
-   ]
+   ],
+   "method": "self-report",
+   "features": []
   },
   {
    "group": "physiology",
@@ -85,7 +92,9 @@
    "coverage": "monitored",
    "sourceIds": [
     "nasa-hrp-risks"
-   ]
+   ],
+   "method": "direct",
+   "features": []
   },
   {
    "group": "physiology",
@@ -98,7 +107,9 @@
    "coverage": "not-monitored",
    "sourceIds": [
     "nasa-hrp-risks"
-   ]
+   ],
+   "method": "out-of-scope",
+   "features": []
   },
   {
    "group": "physiology",
@@ -113,14 +124,17 @@
    "coverage": "partial",
    "sourceIds": [
     "nasa-hrp-risks"
-   ]
+   ],
+   "method": "context",
+   "features": []
   },
   {
    "group": "physiology",
    "name": "Risk of Hypoxia",
    "nasaText": "Following steps to avoid the bends during spacewalks elevates the risk of mild hypoxia, when oxygen levels in body tissues become lower than normal.",
    "indicatorIds": [
-    "spo2"
+    "spo2",
+    "sym_headache"
    ],
    "hazardIds": [
     "hostile"
@@ -128,7 +142,9 @@
    "coverage": "monitored",
    "sourceIds": [
     "nasa-hrp-risks"
-   ]
+   ],
+   "method": "direct",
+   "features": []
   },
   {
    "group": "physiology",
@@ -141,7 +157,9 @@
    "coverage": "not-monitored",
    "sourceIds": [
     "nasa-hrp-risks"
-   ]
+   ],
+   "method": "context",
+   "features": []
   },
   {
    "group": "physiology",
@@ -154,7 +172,9 @@
    "coverage": "not-monitored",
    "sourceIds": [
     "nasa-hrp-risks"
-   ]
+   ],
+   "method": "out-of-scope",
+   "features": []
   },
   {
    "group": "physiology",
@@ -170,20 +190,28 @@
    "coverage": "monitored",
    "sourceIds": [
     "nasa-hrp-risks"
+   ],
+   "method": "direct",
+   "features": [
+    "countermeasures-tracker"
    ]
   },
   {
    "group": "physiology",
    "name": "Risk of Spaceflight Associated Neuro-ocular Syndrome (SANS)",
    "nasaText": "The structure of the eyes and brain can change with spaceflight.",
-   "indicatorIds": [],
+   "indicatorIds": [
+    "sym_vision"
+   ],
    "hazardIds": [
     "gravity"
    ],
-   "coverage": "not-monitored",
+   "coverage": "partial",
    "sourceIds": [
     "nasa-hrp-risks"
-   ]
+   ],
+   "method": "self-report",
+   "features": []
   },
   {
    "group": "physiology",
@@ -198,6 +226,10 @@
    "coverage": "partial",
    "sourceIds": [
     "nasa-hrp-risks"
+   ],
+   "method": "context",
+   "features": [
+    "countermeasures-tracker"
    ]
   },
   {
@@ -206,37 +238,7 @@
    "nasaText": "Isolation, radiation, distance from Earth, and other intense space stressors may all take a toll on the mental health of the crew.",
    "indicatorIds": [
     "mood",
-    "sleep_h"
-   ],
-   "hazardIds": [
-    "isolation",
-    "distance"
-   ],
-   "coverage": "partial",
-   "sourceIds": [
-    "nasa-hrp-risks"
-   ]
-  },
-  {
-   "group": "behavior",
-   "name": "Risk of Inadequate Teamwork",
-   "nasaText": "Selecting a crew that works well together is essential for mission success and safety.",
-   "indicatorIds": [
-    "mood"
-   ],
-   "hazardIds": [
-    "isolation"
-   ],
-   "coverage": "partial",
-   "sourceIds": [
-    "nasa-hrp-risks"
-   ]
-  },
-  {
-   "group": "behavior",
-   "name": "Risk of Inadequate Sleep and Irregular Schedules",
-   "nasaText": "Stressors include chronic sleep loss, constant work demands, and irregularities in their internal biological clocks.",
-   "indicatorIds": [
+    "stress",
     "sleep_h"
    ],
    "hazardIds": [
@@ -246,7 +248,50 @@
    "coverage": "monitored",
    "sourceIds": [
     "nasa-hrp-risks"
+   ],
+   "method": "direct",
+   "features": [
+    "private-journal"
    ]
+  },
+  {
+   "group": "behavior",
+   "name": "Risk of Inadequate Teamwork",
+   "nasaText": "Selecting a crew that works well together is essential for mission success and safety.",
+   "indicatorIds": [
+    "mood",
+    "stress"
+   ],
+   "hazardIds": [
+    "isolation"
+   ],
+   "coverage": "partial",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ],
+   "method": "self-report",
+   "features": [
+    "crew-heatmap"
+   ]
+  },
+  {
+   "group": "behavior",
+   "name": "Risk of Inadequate Sleep and Irregular Schedules",
+   "nasaText": "Stressors include chronic sleep loss, constant work demands, and irregularities in their internal biological clocks.",
+   "indicatorIds": [
+    "sleep_h",
+    "workload"
+   ],
+   "hazardIds": [
+    "isolation",
+    "distance"
+   ],
+   "coverage": "monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ],
+   "method": "direct",
+   "features": []
   },
   {
    "group": "behavior",
@@ -256,9 +301,16 @@
    "hazardIds": [
     "distance"
    ],
-   "coverage": "partial",
+   "coverage": "monitored",
    "sourceIds": [
     "nasa-hrp-risks"
+   ],
+   "method": "core",
+   "features": [
+    "mission-link",
+    "link-aware-escalation",
+    "store-and-forward",
+    "onboard-protocol"
    ]
   },
   {
@@ -272,7 +324,9 @@
    "coverage": "not-monitored",
    "sourceIds": [
     "nasa-hrp-risks"
-   ]
+   ],
+   "method": "out-of-scope",
+   "features": []
   },
   {
    "group": "radiation",
@@ -282,14 +336,20 @@
    "hazardIds": [
     "radiation"
    ],
-   "coverage": "not-monitored",
+   "coverage": "monitored",
    "sourceIds": [
     "nasa-hrp-risks"
+   ],
+   "method": "direct",
+   "features": [
+    "radiation-dose-tracker",
+    "solar-storm-alert"
    ]
   }
  ],
  "notes": {
   "hazardRiskMapping": "NASA's risks page groups risks by physiology, behaviour and radiation. The link from each risk to the five hazards is Team Asteron's reading of NASA's text, not a NASA table.",
-  "systemsOps": "Asteron's store-and-forward link and escalation report address part of this risk for medical information only."
+  "systemsOps": "Asteron's store-and-forward link and escalation report address part of this risk for medical information only.",
+  "methods": "direct = measured every check-in; self-report = the astronaut answers a yes/no or 1-5 question; context = explained on the Hazards page only; out-of-scope = needs suit, vehicle or lab data we do not have; core = what Asteron is built around."
  }
 }

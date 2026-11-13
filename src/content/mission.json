@@ -1,0 +1,19 @@
+{
+ "exercisePlan": {
+  "minutesPerDay": 90,
+  "daysPerWeek": 6,
+  "kind": "mission-plan-setting",
+  "note": "NASA: six to seven days a week, ISS astronauts do resistance and aerobic exercise for 1.5 hours per day. Used as the mission plan target, not a medical threshold.",
+  "sourceIds": [
+   "nasa-hrp-risks"
+  ]
+ },
+ "adaptationDays": {
+  "value": 45,
+  "kind": "estimate",
+  "note": "Dr. Brian Crucian (NASA immunology): an early adaptation phase of about 45 days, then a \"space normal\" state. Personal baselines formed in this phase are marked as still settling.",
+  "sourceIds": [
+   "nasa-hwhap-hazard5"
+  ]
+ }
+}

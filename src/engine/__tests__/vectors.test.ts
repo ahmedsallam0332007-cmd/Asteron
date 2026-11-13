@@ -4,7 +4,7 @@ import { runVector, VECTOR_GROUPS } from '../vectors'
 
 describe('golden vectors', () => {
   it('has vectors for every group', () => {
-    expect(VECTOR_GROUPS.map((g) => g.group)).toEqual(['absolute', 'aggregate', 'baseline', 'composite', 'trend'])
+    expect(VECTOR_GROUPS.map((g) => g.group)).toEqual(['absolute', 'aggregate', 'baseline', 'composite', 'psych', 'symptoms', 'trend'])
   })
   for (const { group, vectors } of VECTOR_GROUPS) {
     describe(group, () => {

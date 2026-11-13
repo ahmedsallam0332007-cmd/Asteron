@@ -32,7 +32,10 @@
   "title": "Radiation Protection technical brief",
   "publisher": "NASA OCHMO",
   "url": "https://www.nasa.gov/wp-content/uploads/2023/03/radiation-protection-technical-brief-ochmo.pdf",
-  "verifiedAgainstOriginal": false
+  "verifiedAgainstOriginal": true,
+  "year": 2022,
+  "sha256": "75c8040df1b595ffb88d02b4381efd2d4a2cf793abb1f386d72a75c7b3e2a396",
+  "note": "OCHMO-TB-020 Rev E (12/27/2022), derived from NASA-STD-3001. Read 13 Nov 2026: career effective dose < 600 mSv [V1 4030]; solar particle event limit 250 mSv [V1 4031]; radiation alerting lets the crew configure a shelter."
  },
  {
   "id": "aha-acc-2025-bp",
@@ -145,5 +148,45 @@
   "publisher": "Team Asteron",
   "verifiedAgainstOriginal": true,
   "note": "Not a medical source. Choices made by the team and not reviewed by a clinician."
+ },
+ {
+  "id": "nasa-ntrs-20250006168",
+  "kind": "published",
+  "title": "Moon 2 Mars Space Radiation Protection: \"Buying Down\" Risks to Crew (Simonsen, Zawaski, Weeks)",
+  "publisher": "NASA HQ / NASA JSC (NTRS 20250006168, ASCEND draft)",
+  "year": 2025,
+  "url": "https://ntrs.nasa.gov/citations/20250006168",
+  "verifiedAgainstOriginal": true,
+  "sha256": "467d4a9ac36ef4a094b90c919ee565ac6f23820ea6c813c3c32d82f2830c5545",
+  "note": "Read 13 Nov 2026. ISS: 0.2 to 0.5 mSv/day (~40-90 mSv per six-month mission). Table 1 (GCR, optimized shielding): lunar surface ~0.4 (solar max) to ~0.9 (solar min), Mars surface ~0.35 to ~0.65, free space ~0.6 to ~1.3. Table 1 prints \"mSv/yr\"; its own comparison column (\"two to three times higher than ISS\", \"similar to ISS\") and the ISS rate in the text show per-day values are meant."
+ },
+ {
+  "id": "nasa-hwhap-hazard5",
+  "kind": "published",
+  "title": "Houston We Have a Podcast, ep. 61: Hazard 5 - Environments (Dr. Brian Crucian, Dr. Stan Love)",
+  "publisher": "NASA",
+  "year": 2018,
+  "url": "https://www.nasa.gov/podcasts/houston-we-have-a-podcast/hazard-5-environments/",
+  "verifiedAgainstOriginal": false,
+  "note": "Used through the team's analysis of the page (13 Nov 2026): ~45-day immune adaptation then \"space normal\"; CO2 at unnoticed levels causes headaches and irritability after months."
+ },
+ {
+  "id": "csa-iss-science",
+  "kind": "published",
+  "title": "Why do we conduct science experiments in space? (and linked experiment pages: SANSORI, C-STARS, TBone, Vascular, MARROW)",
+  "publisher": "Canadian Space Agency",
+  "year": 2026,
+  "url": "https://www.asc-csa.gc.ca/eng/iss/science/why-do-we-conduct-science-experiments-in-space.asp",
+  "verifiedAgainstOriginal": false,
+  "note": "Used through the team's report of the pages (13 Nov 2026)."
+ },
+ {
+  "id": "csa-radi-n2",
+  "kind": "published",
+  "title": "Radi-N2: neutron radiation on the ISS",
+  "publisher": "Canadian Space Agency",
+  "url": "https://www.asc-csa.gc.ca/eng/sciences/radi-n2.asp",
+  "verifiedAgainstOriginal": false,
+  "note": "Preliminary result: about 150 microsieverts/day from neutrons; dose lower in sleeping quarters than elsewhere on the station."
  }
 ]
