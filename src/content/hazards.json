@@ -1,0 +1,295 @@
+{
+ "hazards": [
+  {
+   "id": "radiation",
+   "name": "Space Radiation",
+   "nasaText": "Invisible to the human eye, space radiation is not only stealthy but considered one of the most hazardous aspects of spaceflight.",
+   "sourceIds": [
+    "nasa-hrp-hazards"
+   ]
+  },
+  {
+   "id": "isolation",
+   "name": "Isolation and Confinement",
+   "nasaText": "Behavioral responses occur among groups of people far from Earth who are isolated and confined in a small space over a long period of time.",
+   "sourceIds": [
+    "nasa-hrp-hazards"
+   ]
+  },
+  {
+   "id": "distance",
+   "name": "Distance from Earth",
+   "nasaText": "Instructions, new supplies, medical care, and more become increasingly challenging to receive from Earth as astronauts venture deeper into space.",
+   "sourceIds": [
+    "nasa-hrp-hazards"
+   ]
+  },
+  {
+   "id": "gravity",
+   "name": "Gravity Fields",
+   "nasaText": "Astronauts' entire bodies – muscles, bones, inner ear, and organs – must adjust to the new gravities encountered on the space station or their spacecraft, as well as on the Moon, Mars, and Earth once they return home.",
+   "sourceIds": [
+    "nasa-hrp-hazards"
+   ]
+  },
+  {
+   "id": "hostile",
+   "name": "Hostile/Closed Environments",
+   "nasaText": "Maintaining a safe ecosystem inside a spacecraft presents unique challenges, from ensuring optimal temperatures, pressures, and lighting, to reducing noise, monitoring microbial communities, and tracking immune responses.",
+   "sourceIds": [
+    "nasa-hrp-hazards"
+   ]
+  }
+ ],
+ "risks": [
+  {
+   "group": "physiology",
+   "name": "Risk of Altered Immune System Responses",
+   "nasaText": "The stresses of spaceflight can awaken inactive viruses inside the bodies of astronauts, leading to rashes and other symptoms.",
+   "indicatorIds": [
+    "temp"
+   ],
+   "hazardIds": [
+    "hostile"
+   ],
+   "coverage": "partial",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "physiology",
+   "name": "Risk of Altered Sensorimotor and Vestibular Function",
+   "nasaText": "Astronauts can experience motion sickness, issues with hand-eye or gait coordination, and dizziness during gravitational changes.",
+   "indicatorIds": [],
+   "hazardIds": [
+    "gravity"
+   ],
+   "coverage": "not-monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "physiology",
+   "name": "Risk of Cardiovascular Adaptations",
+   "nasaText": "Weightlessness alters blood circulation and how the heart and blood vessels function, potentially increasing the risk of cardiovascular events.",
+   "indicatorIds": [
+    "hr_rest",
+    "bp_sys",
+    "bp_dia"
+   ],
+   "hazardIds": [
+    "gravity"
+   ],
+   "coverage": "monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "physiology",
+   "name": "Risk of Decompression Sickness",
+   "nasaText": "Transitioning from a pressurized spacecraft to a lower-pressure spacesuit can cause health and mission complications when dissolved nitrogen starts to bubble within body tissues.",
+   "indicatorIds": [],
+   "hazardIds": [
+    "hostile"
+   ],
+   "coverage": "not-monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "physiology",
+   "name": "Risk of Host-Microorganism Interactions",
+   "nasaText": "Skin and gut microbiomes can change in space, potentially increasing the risk of crew members getting sick.",
+   "indicatorIds": [
+    "temp"
+   ],
+   "hazardIds": [
+    "hostile"
+   ],
+   "coverage": "partial",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "physiology",
+   "name": "Risk of Hypoxia",
+   "nasaText": "Following steps to avoid the bends during spacewalks elevates the risk of mild hypoxia, when oxygen levels in body tissues become lower than normal.",
+   "indicatorIds": [
+    "spo2"
+   ],
+   "hazardIds": [
+    "hostile"
+   ],
+   "coverage": "monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "physiology",
+   "name": "Risk of Inadequate Food and Nutrition",
+   "nasaText": "A healthy, balanced diet is an essential element of crew health and performance.",
+   "indicatorIds": [],
+   "hazardIds": [
+    "distance"
+   ],
+   "coverage": "not-monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "physiology",
+   "name": "Risk of Injury and Compromised Performance from Spacewalks",
+   "nasaText": "Crew members must manage risks in the spacewalk environment, including decompression sickness, and low oxygen and high carbon dioxide levels.",
+   "indicatorIds": [],
+   "hazardIds": [
+    "hostile"
+   ],
+   "coverage": "not-monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "physiology",
+   "name": "Risk of Reduced Cardiorespiratory and Musculoskeletal Fitness",
+   "nasaText": "All astronauts perform exercise during their mission to counteract losses in bone density, muscle strength, and heart and blood vessel performance.",
+   "indicatorIds": [
+    "exercise_min",
+    "hr_rest"
+   ],
+   "hazardIds": [
+    "gravity"
+   ],
+   "coverage": "monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "physiology",
+   "name": "Risk of Spaceflight Associated Neuro-ocular Syndrome (SANS)",
+   "nasaText": "The structure of the eyes and brain can change with spaceflight.",
+   "indicatorIds": [],
+   "hazardIds": [
+    "gravity"
+   ],
+   "coverage": "not-monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "physiology",
+   "name": "Risk of Spaceflight-Induced Bone Changes",
+   "nasaText": "Without gravity, bones break down and become more brittle, boosting the chances of painful breaks.",
+   "indicatorIds": [
+    "exercise_min"
+   ],
+   "hazardIds": [
+    "gravity"
+   ],
+   "coverage": "partial",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "behavior",
+   "name": "Risk of Behavioral Changes and Psychiatric Disorders",
+   "nasaText": "Isolation, radiation, distance from Earth, and other intense space stressors may all take a toll on the mental health of the crew.",
+   "indicatorIds": [
+    "mood",
+    "sleep_h"
+   ],
+   "hazardIds": [
+    "isolation",
+    "distance"
+   ],
+   "coverage": "partial",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "behavior",
+   "name": "Risk of Inadequate Teamwork",
+   "nasaText": "Selecting a crew that works well together is essential for mission success and safety.",
+   "indicatorIds": [
+    "mood"
+   ],
+   "hazardIds": [
+    "isolation"
+   ],
+   "coverage": "partial",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "behavior",
+   "name": "Risk of Inadequate Sleep and Irregular Schedules",
+   "nasaText": "Stressors include chronic sleep loss, constant work demands, and irregularities in their internal biological clocks.",
+   "indicatorIds": [
+    "sleep_h"
+   ],
+   "hazardIds": [
+    "isolation",
+    "distance"
+   ],
+   "coverage": "monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "behavior",
+   "name": "Risk of Inadequate Systems Operations Support",
+   "nasaText": "Future crews on deep space missions must be able to live and work in an environment where they may face unexpected problems with software, vehicles, or other systems.",
+   "indicatorIds": [],
+   "hazardIds": [
+    "distance"
+   ],
+   "coverage": "partial",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "behavior",
+   "name": "Risk of Injury from Dynamic Loads",
+   "nasaText": "During landing activities, crews risk getting injured.",
+   "indicatorIds": [],
+   "hazardIds": [
+    "gravity"
+   ],
+   "coverage": "not-monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  },
+  {
+   "group": "radiation",
+   "name": "Risk of Radiation-Induced Cancers",
+   "nasaText": "Crews exposed to radiation from space may be more likely to develop cancer.",
+   "indicatorIds": [],
+   "hazardIds": [
+    "radiation"
+   ],
+   "coverage": "not-monitored",
+   "sourceIds": [
+    "nasa-hrp-risks"
+   ]
+  }
+ ],
+ "notes": {
+  "hazardRiskMapping": "NASA's risks page groups risks by physiology, behaviour and radiation. The link from each risk to the five hazards is Team Asteron's reading of NASA's text, not a NASA table.",
+  "systemsOps": "Asteron's store-and-forward link and escalation report address part of this risk for medical information only."
+ }
+}

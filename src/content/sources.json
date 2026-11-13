@@ -1,18 +1,149 @@
 [
-  {"id":"nasa-hrp-hazards","kind":"published","title":"NASA Human Research Program: Hazards of Human Spaceflight","publisher":"NASA HRP","url":"https://www.nasa.gov/hrp/hazards","verifiedAgainstOriginal":false},
-  {"id":"nasa-std-3001-v1c","kind":"published","title":"NASA-STD-3001 Volume 1, Revision C: Crew Health","publisher":"NASA OCHMO","year":2023,"url":"https://standards.nasa.gov/sites/default/files/standards/NASA/C//nasa-std-3001-vol-1-rev-c-signature.pdf","verifiedAgainstOriginal":false},
-  {"id":"nasa-ochmo-radiation-brief","kind":"published","title":"Radiation Protection technical brief","publisher":"NASA OCHMO","url":"https://www.nasa.gov/wp-content/uploads/2023/03/radiation-protection-technical-brief-ochmo.pdf","verifiedAgainstOriginal":false},
-  {"id":"aha-acc-2025-bp","kind":"published","title":"2025 AHA/ACC Guideline for the Prevention, Detection, Evaluation and Management of High Blood Pressure in Adults","publisher":"AHA/ACC","year":2025,"verifiedAgainstOriginal":false,"note":"Open the original journal article and confirm category boundaries."},
-  {"id":"aha-resting-hr","kind":"published","title":"All About Heart Rate (Pulse)","publisher":"American Heart Association","verifiedAgainstOriginal":false,"note":"Open heart.org and confirm the 60-100 bpm resting range."},
-  {"id":"mayo-hr","kind":"published","title":"Heart rate: What's normal?","publisher":"Mayo Clinic","url":"https://www.mayoclinic.org/heart-rate/expert-answers/faq-20057979","verifiedAgainstOriginal":false},
-  {"id":"who-pulse-ox","kind":"published","title":"Pulse Oximetry Training Manual","publisher":"World Health Organization","year":2011,"verifiedAgainstOriginal":false,"note":"Confirm the 94% action level and the 90% level in the original manual."},
-  {"id":"cdc-fever","kind":"published","title":"Definition of fever (measured temperature at or above 100.4 F / 38.0 C)","publisher":"CDC","verifiedAgainstOriginal":false,"note":"Found via secondary sources only. Confirm on cdc.gov."},
-  {"id":"aasm-srs-2015","kind":"published","title":"Recommended Amount of Sleep for a Healthy Adult: consensus statement","publisher":"AASM and Sleep Research Society","year":2015,"url":"https://aasm.org/aasm-and-srs-publish-new-sleep-duration-consensus-statement/","verifiedAgainstOriginal":false},
-  {"id":"barger-2014","kind":"published","title":"Prevalence of sleep deficiency and use of hypnotic drugs in astronauts before, during, and after spaceflight","publisher":"Lancet Neurology","year":2014,"url":"https://doi.org/10.1016/S1474-4422(14)70122-X","verifiedAgainstOriginal":false},
-  {"id":"norsk-2015","kind":"published","title":"Fluid shifts, vasodilatation and ambulatory blood pressure reduction during long duration spaceflight","publisher":"Journal of Physiology","year":2015,"url":"https://doi.org/10.1113/jphysiol.2014.284869","verifiedAgainstOriginal":false},
-  {"id":"nasa-osdr","kind":"published","title":"Inspiration4 data access through the NASA Open Science Data Repository","publisher":"NASA OSDR","year":2024,"url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11094041/","verifiedAgainstOriginal":false},
-  {"id":"nasa-dtn","kind":"published","title":"Delay/Disruption Tolerant Networking on the International Space Station","publisher":"NASA NTRS","url":"https://ntrs.nasa.gov/citations/20100020137","verifiedAgainstOriginal":false},
-  {"id":"esa-light-time","kind":"published","title":"Adventures in time and space (signal delay to Mars)","publisher":"ESA","url":"https://www.esa.int/Enabling_Support/Operations/Adventures_in_time_and_space","verifiedAgainstOriginal":false},
-  {"id":"russell-2023","kind":"published","title":"The value of a spaceflight clinical decision support system for earth-independent medical operations","publisher":"npj Microgravity","year":2023,"url":"https://doi.org/10.1038/s41526-023-00284-1","verifiedAgainstOriginal":false,"note":"Verify author list."},
-  {"id":"asteron-method","kind":"design","title":"Asteron design decision (status mapping and engineering parameters)","publisher":"Team Asteron","verifiedAgainstOriginal":true,"note":"Not a medical source. Choices made by the team and not reviewed by a clinician."}
+ {
+  "id": "nasa-hrp-hazards",
+  "kind": "published",
+  "title": "NASA Human Research Program: Hazards of Human Spaceflight",
+  "publisher": "NASA HRP",
+  "url": "https://www.nasa.gov/hrp/hazards",
+  "verifiedAgainstOriginal": true,
+  "note": "Page read in full on 13 Nov 2026 (last updated by NASA 12 Jun 2026)."
+ },
+ {
+  "id": "nasa-hrp-risks",
+  "kind": "published",
+  "title": "Risks of Human Spaceflight",
+  "publisher": "NASA HRP",
+  "url": "https://www.nasa.gov/hrp/risks/",
+  "verifiedAgainstOriginal": true,
+  "note": "Page read in full on 13 Nov 2026. 17 named risks in three groups."
+ },
+ {
+  "id": "nasa-std-3001-v1c",
+  "kind": "published",
+  "title": "NASA-STD-3001 Volume 1, Revision C: Crew Health",
+  "publisher": "NASA OCHMO",
+  "year": 2023,
+  "url": "https://standards.nasa.gov/sites/default/files/standards/NASA/C//nasa-std-3001-vol-1-rev-c-signature.pdf",
+  "verifiedAgainstOriginal": false
+ },
+ {
+  "id": "nasa-ochmo-radiation-brief",
+  "kind": "published",
+  "title": "Radiation Protection technical brief",
+  "publisher": "NASA OCHMO",
+  "url": "https://www.nasa.gov/wp-content/uploads/2023/03/radiation-protection-technical-brief-ochmo.pdf",
+  "verifiedAgainstOriginal": false
+ },
+ {
+  "id": "aha-acc-2025-bp",
+  "kind": "published",
+  "title": "2025 AHA/ACC Guideline for the Prevention, Detection, Evaluation and Management of High Blood Pressure in Adults",
+  "publisher": "AHA/ACC",
+  "year": 2025,
+  "verifiedAgainstOriginal": false,
+  "note": "Open the original journal article and confirm category boundaries."
+ },
+ {
+  "id": "aha-resting-hr",
+  "kind": "published",
+  "title": "All About Heart Rate (Pulse)",
+  "publisher": "American Heart Association",
+  "verifiedAgainstOriginal": false,
+  "note": "Open heart.org and confirm the 60-100 bpm resting range."
+ },
+ {
+  "id": "mayo-hr",
+  "kind": "published",
+  "title": "Heart rate: What's normal?",
+  "publisher": "Mayo Clinic",
+  "url": "https://www.mayoclinic.org/heart-rate/expert-answers/faq-20057979",
+  "verifiedAgainstOriginal": false
+ },
+ {
+  "id": "who-pulse-ox",
+  "kind": "published",
+  "title": "Pulse Oximetry Training Manual",
+  "publisher": "World Health Organization",
+  "year": 2011,
+  "verifiedAgainstOriginal": false,
+  "note": "Confirm the 94% action level and the 90% level in the original manual."
+ },
+ {
+  "id": "cdc-fever",
+  "kind": "published",
+  "title": "Definition of fever (measured temperature at or above 100.4 F / 38.0 C)",
+  "publisher": "CDC",
+  "verifiedAgainstOriginal": false,
+  "note": "Found via secondary sources only. Confirm on cdc.gov."
+ },
+ {
+  "id": "aasm-srs-2015",
+  "kind": "published",
+  "title": "Recommended Amount of Sleep for a Healthy Adult: consensus statement",
+  "publisher": "AASM and Sleep Research Society",
+  "year": 2015,
+  "url": "https://aasm.org/aasm-and-srs-publish-new-sleep-duration-consensus-statement/",
+  "verifiedAgainstOriginal": false
+ },
+ {
+  "id": "barger-2014",
+  "kind": "published",
+  "title": "Prevalence of sleep deficiency and use of hypnotic drugs in astronauts before, during, and after spaceflight",
+  "publisher": "Lancet Neurology",
+  "year": 2014,
+  "url": "https://doi.org/10.1016/S1474-4422(14)70122-X",
+  "verifiedAgainstOriginal": false
+ },
+ {
+  "id": "norsk-2015",
+  "kind": "published",
+  "title": "Fluid shifts, vasodilatation and ambulatory blood pressure reduction during long duration spaceflight",
+  "publisher": "Journal of Physiology",
+  "year": 2015,
+  "url": "https://doi.org/10.1113/jphysiol.2014.284869",
+  "verifiedAgainstOriginal": false
+ },
+ {
+  "id": "nasa-osdr",
+  "kind": "published",
+  "title": "Inspiration4 data access through the NASA Open Science Data Repository",
+  "publisher": "NASA OSDR",
+  "year": 2024,
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11094041/",
+  "verifiedAgainstOriginal": false
+ },
+ {
+  "id": "nasa-dtn",
+  "kind": "published",
+  "title": "Delay/Disruption Tolerant Networking on the International Space Station",
+  "publisher": "NASA NTRS",
+  "url": "https://ntrs.nasa.gov/citations/20100020137",
+  "verifiedAgainstOriginal": false
+ },
+ {
+  "id": "esa-light-time",
+  "kind": "published",
+  "title": "Adventures in time and space (signal delay to Mars)",
+  "publisher": "ESA",
+  "url": "https://www.esa.int/Enabling_Support/Operations/Adventures_in_time_and_space",
+  "verifiedAgainstOriginal": false
+ },
+ {
+  "id": "russell-2023",
+  "kind": "published",
+  "title": "The value of a spaceflight clinical decision support system for earth-independent medical operations",
+  "publisher": "npj Microgravity",
+  "year": 2023,
+  "url": "https://doi.org/10.1038/s41526-023-00284-1",
+  "verifiedAgainstOriginal": false,
+  "note": "Verify author list."
+ },
+ {
+  "id": "asteron-method",
+  "kind": "design",
+  "title": "Asteron design decision (status mapping and engineering parameters)",
+  "publisher": "Team Asteron",
+  "verifiedAgainstOriginal": true,
+  "note": "Not a medical source. Choices made by the team and not reviewed by a clinician."
+ }
 ]

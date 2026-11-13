@@ -10,6 +10,7 @@ import { ensureSeeded, seedScenario } from '../data/seed'
 const NAV = [
   ['/station', 'Station'],
   ['/ground', 'Ground'],
+  ['/science', 'Hazards'],
   ['/nasa', 'NASA Data'],
   ['/lab', 'Judge Lab'],
   ['/verify', 'Verify'],
