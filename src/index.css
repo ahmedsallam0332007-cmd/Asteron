@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+@theme {
+  --color-void: #07060a;
+  --color-abyss: #0f0b17;
+  --color-hull: #1a1426;
+  --color-line: #2c2342;
+  --color-asteron: #7b3fe4;
+  --color-mauve: #b58be8;
+  --color-orchid: #ebddff;
+  --color-signal: #3dd6f5;
+  --color-star: #f4f1fa;
+  --color-dust: #a79fbd;
+  --color-st-normal: #22c55e;
+  --color-st-watch: #f5b700;
+  --color-st-concern: #f97316;
+  --color-st-urgent: #ef4444;
+  --color-st-unknown: #94a3b8;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html, body, #root { height: 100%; }
+body { background: var(--color-void); color: var(--color-star); font-family: var(--font-sans); }
+:focus-visible { outline: 2px solid var(--color-signal); outline-offset: 3px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
