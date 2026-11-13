@@ -93,6 +93,10 @@ export const radiationSchema = z.object({
     speEventMsv: z.object({ value: z.number().positive(), clause: z.string(), ...sourced }),
   }),
   dailyDoseMsv: z.object({ iss: doseRange, moon: doseRange, mars: doseRange }),
+  speEventEstimateMsv: z.object({
+    moon: z.object({ shielded: z.number().positive(), note: z.string().min(10), ...sourced }),
+    mars: z.object({ shielded: z.number().positive(), unshielded: z.number().positive(), note: z.string().min(10), ...sourced }),
+  }),
   shelter: z.object({ text: z.string().min(20), ...sourced }),
 })
 

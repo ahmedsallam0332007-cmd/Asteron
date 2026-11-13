@@ -15,3 +15,9 @@ export function assess(content: Pick<Content, 'indicators' | 'rules'>, readings:
   const systems = aggregateSystems(evaluations, content.indicators)
   return { evaluations, systems, overall: overall(systems), tier: decideTier(systems, evaluations, content.rules) }
 }
+
+export { summarizeDose } from './radiation'
+export type { DoseRecord, DoseSummary } from './radiation'
+export { exerciseAdherence } from './countermeasures'
+export type { Adherence } from './countermeasures'
+export { adaptationPhase } from './adaptation'

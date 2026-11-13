@@ -47,5 +47,22 @@
    "nasa-ochmo-radiation-brief",
    "csa-radi-n2"
   ]
+ },
+ "speEventEstimateMsv": {
+  "moon": {
+   "shielded": 100,
+   "note": "Estimate for the October 1989 solar particle event on the lunar surface with a 10 g/cm2 water-equivalent shield.",
+   "sourceIds": [
+    "nasa-ntrs-20250006168"
+   ]
+  },
+  "mars": {
+   "shielded": 25,
+   "unshielded": 40,
+   "note": "Estimate for the October 1989 event on the Martian surface: under 25 mSv with a 10 g/cm2 water-equivalent shield, about 40 mSv with only the planet and atmosphere.",
+   "sourceIds": [
+    "nasa-ntrs-20250006168"
+   ]
+  }
  }
 }
