@@ -26,14 +26,15 @@ export type Delivered = ({ id: string; kind?: string; arrivesAt: number } & ({ o
  * A cut stops new transmissions; bundles already travelling still arrive.
  */
 export class Mission {
-  private readonly station: StationNode
-  private readonly ground: GroundNode
+  private readonly station?: StationNode
+  private readonly ground?: GroundNode
   private readonly transport: Transport
   private readonly profile: () => ProfileId
   private last: number
   private cut = false
 
-  constructor(deps: { station: StationNode; ground: GroundNode; transport: Transport; profile: () => ProfileId; start: number }) {
+  /** Pass both nodes for one page, or only one for a station window or a ground window. */
+  constructor(deps: { station?: StationNode; ground?: GroundNode; transport: Transport; profile: () => ProfileId; start: number }) {
     this.station = deps.station
     this.ground = deps.ground
     this.transport = deps.transport
@@ -41,7 +42,7 @@ export class Mission {
     this.last = deps.start
   }
 
-  async init() { await this.station.init(); await this.ground.init() }
+  async init() { await this.station?.init(); await this.ground?.init() }
   setCut(v: boolean) { this.cut = v }
   isCut() { return this.cut }
   lastTick() { return this.last }
@@ -49,8 +50,8 @@ export class Mission {
   custodyTimeoutMs(at: number) { return 2 * oneWaySeconds(this.profile(), at).sec * 1000 + CUSTODY_MARGIN_MS }
 
   private async deliver(now: number, out: { down: Delivered[]; up: Delivered[] }) {
-    for (const e of this.transport.due('down', now)) out.down.push(this.result(e, await this.ground.receive(e.sealed, e.arrivesAt)))
-    for (const e of this.transport.due('up', now)) out.up.push(this.result(e, await this.station.receive(e.sealed, e.arrivesAt)))
+    if (this.ground) for (const e of this.transport.due('down', now)) out.down.push(this.result(e, await this.ground.receive(e.sealed, e.arrivesAt)))
+    if (this.station) for (const e of this.transport.due('up', now)) out.up.push(this.result(e, await this.station.receive(e.sealed, e.arrivesAt)))
   }
 
   private result(e: Envelope, r: GroundReceive | ReceiveResult): Delivered {
@@ -72,10 +73,10 @@ export class Mission {
     const out = { down: [] as Delivered[], up: [] as Delivered[] }
     await this.deliver(now, out)
     const timeout = this.custodyTimeoutMs(now)
-    await this.station.requeueUnacked(now, timeout)
-    await this.ground.requeueUnacked(now, timeout)
-    await this.move(this.station, 'down', this.last, now)
-    await this.move(this.ground, 'up', this.last, now)
+    await this.station?.requeueUnacked(now, timeout)
+    await this.ground?.requeueUnacked(now, timeout)
+    if (this.station) await this.move(this.station, 'down', this.last, now)
+    if (this.ground) await this.move(this.ground, 'up', this.last, now)
     await this.deliver(now, out)
     this.last = now
     return out
