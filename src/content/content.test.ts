@@ -9,7 +9,7 @@ describe('content', () => {
     expect(content.rules.length).toBeGreaterThan(10)
   })
   it('every rule, indicator and tier has resolvable sourceIds', () => {
-    const items = [...content.rules, ...content.indicators, ...content.tiers]
+    const items = [...content.rules, ...content.indicators, ...content.tiers, ...content.guidance]
     const bad = items.flatMap((x) => x.sourceIds.filter((s) => !ids.has(s)).map((s) => `${'id' in x ? x.id : 'tier'} -> ${s}`))
     expect(bad).toEqual([])
   })

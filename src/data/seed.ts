@@ -13,3 +13,8 @@ export async function seedScenario(db: StationDB, scenarioId: string, now: strin
   })
   return { scenario: sc, count: readings.length }
 }
+
+/** Seeds the healthy scenario on first launch only. */
+export async function ensureSeeded(db: StationDB, now: string) {
+  if ((await db.readings.count()) === 0) await seedScenario(db, 'healthy', now)
+}

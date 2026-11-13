@@ -30,3 +30,4 @@ html, body, #root { height: 100%; }
 body { background: var(--color-void); color: var(--color-star); font-family: var(--font-sans); }
 :focus-visible { outline: 2px solid var(--color-signal); outline-offset: 3px; border-radius: 6px; }
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+@media print { header, footer, button { display: none !important; } body { background: #fff; color: #000; } pre { border: 0 !important; background: #fff !important; } }

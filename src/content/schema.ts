@@ -70,3 +70,10 @@ export const tierSchema = z.object({
   actions: z.array(z.string().min(1)).min(1),
   sourceIds,
 })
+
+export const guidanceSchema = z.object({
+  systemId: systemId,
+  status: status,
+  text: z.string().min(20),
+  sourceIds,
+})

@@ -1,0 +1,107 @@
+[
+ {
+  "systemId": "cardio",
+  "status": "watch",
+  "text": "Re-measure after 5 minutes of seated rest. Avoid caffeine before the next reading. Keep up your planned exercise and fluids.",
+  "sourceIds": [
+   "aha-acc-2025-bp",
+   "nasa-hrp-hazards"
+  ]
+ },
+ {
+  "systemId": "cardio",
+  "status": "concern",
+  "text": "Repeat the measurement twice, one minute apart. Note any headache, chest discomfort or dizziness. Send the report to the flight surgeon.",
+  "sourceIds": [
+   "aha-acc-2025-bp",
+   "asteron-method"
+  ]
+ },
+ {
+  "systemId": "cardio",
+  "status": "urgent",
+  "text": "Stop strenuous activity. Follow the mission emergency medical procedure and contact the flight surgeon now.",
+  "sourceIds": [
+   "nasa-std-3001-v1c",
+   "asteron-method"
+  ]
+ },
+ {
+  "systemId": "resp",
+  "status": "concern",
+  "text": "Warm your hands and re-measure with the sensor still for 10 seconds. If it stays at 94% or below, tell the crew medical officer and send the report.",
+  "sourceIds": [
+   "who-pulse-ox"
+  ]
+ },
+ {
+  "systemId": "resp",
+  "status": "urgent",
+  "text": "Low blood oxygen together with other warning signs, or a reading below 90%, needs immediate attention. Follow the emergency procedure and contact the flight surgeon now.",
+  "sourceIds": [
+   "who-pulse-ox",
+   "nasa-std-3001-v1c"
+  ]
+ },
+ {
+  "systemId": "brain",
+  "status": "watch",
+  "text": "Protect your next sleep period: dim lights an hour before, keep the sleep station cool, limit screens. Short sleep is common in flight.",
+  "sourceIds": [
+   "aasm-srs-2015",
+   "barger-2014"
+  ]
+ },
+ {
+  "systemId": "brain",
+  "status": "concern",
+  "text": "Short sleep, low mood and a raised heart rate together point to strain. Talk to the crew medical officer and request a private conference with the ground.",
+  "sourceIds": [
+   "nasa-hrp-hazards",
+   "aasm-srs-2015"
+  ]
+ },
+ {
+  "systemId": "metabolic",
+  "status": "watch",
+  "text": "Check sleep and exercise logs. Keep meals and hydration on the mission plan.",
+  "sourceIds": [
+   "nasa-hrp-hazards"
+  ]
+ },
+ {
+  "systemId": "msk",
+  "status": "watch",
+  "text": "Exercise is the main protection for bone and muscle in microgravity. Return to your planned resistive and aerobic sessions.",
+  "sourceIds": [
+   "nasa-hrp-hazards"
+  ]
+ },
+ {
+  "systemId": "msk",
+  "status": "concern",
+  "text": "Exercise has dropped for several days. Review the schedule with the crew and the ground team.",
+  "sourceIds": [
+   "nasa-hrp-hazards",
+   "asteron-method"
+  ]
+ },
+ {
+  "systemId": "immune",
+  "status": "concern",
+  "text": "Fever was measured. Re-measure in 30 minutes, rest, drink fluids, limit close contact with crewmates and send the report.",
+  "sourceIds": [
+   "cdc-fever",
+   "nasa-hrp-hazards"
+  ]
+ },
+ {
+  "systemId": "immune",
+  "status": "urgent",
+  "text": "Fever with other warning signs needs immediate attention. Contact the flight surgeon now.",
+  "sourceIds": [
+   "cdc-fever",
+   "nasa-std-3001-v1c"
+  ]
+ }
+]
