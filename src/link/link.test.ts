@@ -77,12 +77,18 @@ describe('earliest reply and link-aware escalation', () => {
     const r = earliestReply('mars', T('2026-11-13T15:00:00Z'), 30)
     expect(r.waitMs / 60_000).toBeGreaterThan(22 + 30)
   })
-  it('urgent case: ISS and Moon can wait for the ground, Mars cannot', () => {
-    const at = T('2026-11-13T15:00:00Z')
+  it('urgent case outside a Mars pass: ISS and Moon can wait for the ground, Mars cannot', () => {
+    const at = T('2026-11-13T09:00:00Z') // Mars: next pass at 14:00 UTC
     const g = GROUND_RESPONSE_MIN[4]
     expect(linkAware({ tier: 4, reasons: [] }, earliestReply('iss', at, g).waitMs).directive).toBe('follow-tier')
     expect(linkAware({ tier: 4, reasons: [] }, earliestReply('moon', at, g).waitMs).directive).toBe('follow-tier')
     expect(linkAware({ tier: 4, reasons: [] }, earliestReply('mars', at, g).waitMs).directive).toBe('onboard-protocol')
+  })
+  it('urgent case inside a Mars pass near today\'s distance: round trip 2 x 11 min + 5 min fits in 30 min', () => {
+    const r = earliestReply('mars', T('2026-11-13T15:00:00Z'), GROUND_RESPONSE_MIN[4])
+    expect(r.waitMs / 60_000).toBeGreaterThan(26)
+    expect(r.waitMs / 60_000).toBeLessThan(28)
+    expect(linkAware({ tier: 4, reasons: [] }, r.waitMs).directive).toBe('follow-tier')
   })
   it('tier 3 at Mars outside conjunction can still wait for Earth (under 24 h)', () => {
     const r = earliestReply('mars', T('2026-11-13T15:00:00Z'), GROUND_RESPONSE_MIN[3])
