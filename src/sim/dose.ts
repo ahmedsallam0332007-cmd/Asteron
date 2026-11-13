@@ -24,3 +24,20 @@ export function generateDose(crew: CrewMember, profile: DoseProfile, now: string
     provenance: { kind: 'simulated' as const, generator: 'asteron-dosimeter', version: SIM_VERSION, seed, scenarioId: `dose-${profile}` },
   }))
 }
+
+/**
+ * Dose from one solar particle event, using NASA's published estimate for the October 1989 event
+ * (NTRS 20250006168, Table 1). Returns null where our sources publish no value: no number is invented.
+ */
+export function speDose(profile: DoseProfile, sheltered: boolean): { doseMsv: number; label: string; sourceIds: string[] } | null {
+  const est = content.radiation.speEventEstimateMsv
+  if (profile === 'mars') {
+    return sheltered
+      ? { doseMsv: est.mars.shielded, label: 'Sheltered (10 g/cm2 water-equivalent shield), NASA estimate for the October 1989 event', sourceIds: est.mars.sourceIds }
+      : { doseMsv: est.mars.unshielded, label: 'Not sheltered (planet and atmosphere only), NASA estimate for the October 1989 event', sourceIds: est.mars.sourceIds }
+  }
+  if (profile === 'moon') {
+    return { doseMsv: est.moon.shielded, label: 'Shielded estimate (10 g/cm2) for the October 1989 event; NASA publishes no unsheltered lunar value in our sources', sourceIds: est.moon.sourceIds }
+  }
+  return null
+}

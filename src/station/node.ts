@@ -70,18 +70,36 @@ export class StationNode {
     this.validateValues(args.values)
     const nowIso = iso(args.now)
     const saved = await saveCheckIn(this.db, args.crewId, args.values, nowIso, args.provenance)
-    const history = (await this.db.readings.where('crewId').equals(args.crewId).toArray()) as Reading[]
+    return this.assessAndQueue({ crew, at: args.now, readings: saved, flightDay: args.flightDay ?? crew.bio.flightDay, record: true })
+  }
+
+  /** Re-sends the last known state at an earlier time (for example after a reset), without new readings or a new decision record. */
+  async sendSnapshot(crewId: string, atMs: number, _nowMs: number) {
+    const crew = CREW.find((c) => c.id === crewId)
+    if (!crew) throw new Error(`Unknown crew member ${crewId}`)
+    const atIso = iso(atMs)
+    const history = (await this.db.readings.where('crewId').equals(crewId).toArray()).filter((r) => r.takenAt <= atIso)
+    const latest = new Map<string, Reading>()
+    for (const r of history) if (!latest.has(r.indicatorId) || latest.get(r.indicatorId)!.takenAt < r.takenAt) latest.set(r.indicatorId, r)
+    const r = await this.assessAndQueue({ crew, at: atMs, readings: [...latest.values()], flightDay: crew.bio.flightDay, record: false, checkinOnly: true })
+    return r.queued[0]
+  }
+
+  private async assessAndQueue(a: { crew: (typeof CREW)[number]; at: number; readings: Reading[]; flightDay: number; record: boolean; checkinOnly?: boolean }) {
+    const nowIso = iso(a.at)
+    const crewId = a.crew.id
+    const history = ((await this.db.readings.where('crewId').equals(crewId).toArray()) as Reading[]).filter((r) => r.takenAt <= nowIso)
     const assessment = assess(this.content, history, nowIso)
     const profile = this.profile()
     const tier = assessment.tier.tier
-    const wait = earliestReply(profile, args.now, GROUND_RESPONSE_MIN[tier]).waitMs
+    const wait = earliestReply(profile, a.at, GROUND_RESPONSE_MIN[tier]).waitMs
     const link: LinkAwareDecision = linkAware(assessment.tier, wait)
 
     const escalation: EscalationRecord = {
-      crewId: args.crewId, at: nowIso, tier, overall: assessment.overall.status, directive: link.directive,
+      crewId, at: nowIso, tier, overall: assessment.overall.status, directive: link.directive,
       waitMs: link.waitMs, maxWaitMs: link.maxWaitMs, explanation: link.explanation, reasons: assessment.tier.reasons, profile,
     }
-    await this.db.escalations.add(escalation)
+    if (a.record) await this.db.escalations.add(escalation)
 
     const rules = new Map(this.content.rules.map((r) => [r.id, r]))
     const seen = new Set<string>()
@@ -91,7 +109,7 @@ export class StationNode {
         const status = rules.get(f.ruleId)!.resultStatus
         return status === 'normal' ? [] : [{ ruleId: f.ruleId, indicatorId: e.indicatorId, status, reason: f.reason, sourceIds: f.sourceIds }]
       }),
-    ).sort((a, b) => STATUS_RANK[b.status] - STATUS_RANK[a.status])
+    ).sort((x, y) => STATUS_RANK[y.status] - STATUS_RANK[x.status])
     const summary: CheckinPayload['assessment'] = {
       overall: assessment.overall.status, tier, tierReasons: assessment.tier.reasons, findings,
       systems: Object.fromEntries(assessment.systems.map((s) => [s.systemId, s.status])),
@@ -99,15 +117,15 @@ export class StationNode {
     const linkPayload = { profile, directive: link.directive, waitMs: link.waitMs, maxWaitMs: link.maxWaitMs, explanation: link.explanation }
 
     const queued: OutboxRecord[] = []
-    queued.push(await this.enqueue('checkin', args.crewId, {
-      crewId: args.crewId, takenAt: nowIso, flightDay: args.flightDay ?? crew.bio.flightDay,
-      readings: saved.map((r) => ({ indicatorId: r.indicatorId, value: r.value, provenance: r.provenance?.kind ?? 'manual' })),
+    queued.push(await this.enqueue('checkin', crewId, {
+      crewId, takenAt: nowIso, flightDay: a.flightDay,
+      readings: a.readings.map((r) => ({ indicatorId: r.indicatorId, value: r.value, provenance: r.provenance?.kind ?? 'manual' })),
       assessment: summary, link: linkPayload,
-    } satisfies CheckinPayload, args.now))
-    if (tier >= 3) {
-      queued.push(await this.enqueue('alert', args.crewId, { crewId: args.crewId, takenAt: nowIso, assessment: summary, link: linkPayload }, args.now))
-      const text = buildReport({ crew, now: nowIso, evaluations: assessment.evaluations, systems: assessment.systems, overall: assessment.overall, tier: assessment.tier, readings: history, content: this.content })
-      queued.push(await this.enqueue('report', args.crewId, { crewId: args.crewId, takenAt: nowIso, text: `${text}\n\nLINK: ${link.explanation}` }, args.now))
+    } satisfies CheckinPayload, a.at))
+    if (tier >= 3 && !a.checkinOnly) {
+      queued.push(await this.enqueue('alert', crewId, { crewId, takenAt: nowIso, assessment: summary, link: linkPayload }, a.at))
+      const text = buildReport({ crew: a.crew, now: nowIso, evaluations: assessment.evaluations, systems: assessment.systems, overall: assessment.overall, tier: assessment.tier, readings: history, content: this.content })
+      queued.push(await this.enqueue('report', crewId, { crewId, takenAt: nowIso, text: `${text}\n\nLINK: ${link.explanation}` }, a.at))
     }
     return { assessment, link, escalation, queued }
   }

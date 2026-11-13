@@ -29,3 +29,19 @@ describe('simulated dosimetry: deterministic and inside NASA\'s published daily 
     expect(r.map((x) => x.takenAt)).toEqual(['2026-11-11T08:00:00.000Z', '2026-11-12T08:00:00.000Z', NOW])
   })
 })
+
+describe('solar particle event dose: NASA published estimate, sheltered vs unsheltered', () => {
+  it('mars: 25 mSv if the crew sheltered before the event, 40 mSv if not', async () => {
+    const { speDose } = await import('./dose')
+    expect(speDose('mars', true)).toMatchObject({ doseMsv: 25 })
+    expect(speDose('mars', false)).toMatchObject({ doseMsv: 40 })
+  })
+  it('moon: only a shielded estimate is published, so it is used either way and labelled', async () => {
+    const { speDose } = await import('./dose')
+    expect(speDose('moon', false)).toMatchObject({ doseMsv: 100, label: expect.stringMatching(/shielded estimate/i) })
+  })
+  it('iss: no published value in our sources, so no number is invented', async () => {
+    const { speDose } = await import('./dose')
+    expect(speDose('iss', false)).toBeNull()
+  })
+})

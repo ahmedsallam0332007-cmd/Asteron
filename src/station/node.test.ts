@@ -179,3 +179,20 @@ describe('station node: check-in -> engine -> link-aware decision -> sealed outb
     expect(await node.receive(garbage, NOW)).toMatchObject({ ok: false, reason: 'malformed' })
   })
 })
+
+describe('station snapshot: sends the last known state without creating new readings', () => {
+  it('assesses at an earlier time from stored history and queues a check-in bundle dated then', async () => {
+    const db = new StationDB(`st-snap-${Math.random()}`)
+    await seedScenario(db, 'healthy', new Date(NOW).toISOString())
+    const { station, ground } = await provisionPair()
+    const node = new StationNode({ db, keys: station, content, profile: () => 'mars' })
+    await node.init()
+    const before = await db.readings.count()
+    const yesterday = NOW - 86_400_000
+    const rec = await node.sendSnapshot('rahal', yesterday, NOW)
+    expect(await db.readings.count()).toBe(before)
+    expect(rec.createdAt).toBe(yesterday)
+    const o = await open(rec.sealed, ground.pinned, async () => ground.receiveKey, new ReplayGuard())
+    expect(o.ok && JSON.parse(o.bundle.payload).assessment.overall).toBe('normal')
+  })
+})
