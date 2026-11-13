@@ -13,6 +13,11 @@ security with keys provisioned before flight, the approach of NASA's DTN stack:
 | Payload check | SHA-256 of the payload carried in the signed header | — |
 | Audit | ground actions in a hash-chained log; any edit or deletion is located | — |
 | Keys | generated inside Web Crypto, private keys non-extractable | — |
+| Payload validation | after decryption, every payload is checked against a Zod schema for its kind; a valid signature does not make a payload trusted | input validation (OWASP) |
+| Direction | the station accepts only uplink kinds, the ground only downlink kinds | — |
+| Malformed input | garbage fields (bad base64, wrong IV length, missing header) are rejected as `malformed`, never crash a node | — |
+| Pairing | each side keeps its private key in its own database; only public keys meet in the pre-flight record; a side that loses its identity re-pairs and the peer pins the new key | — |
+| Rejections | every refused bundle is written to a rejected log and the audit chain with its reason | — |
 | Web app | CSP allows only the app's own origin (no third-party scripts or network), no framing, device APIs disabled (`public/_headers`) | OWASP secure headers |
 
 Not wire-compatible with BPSec/SDLS (they encode in CBOR; we use JSON). Not audited by a security
