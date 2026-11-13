@@ -22,7 +22,7 @@ export interface LinkState {
 const blackoutCache = new Map<ProfileId, { start: number; end: number }[]>()
 function blackouts(id: ProfileId) {
   const p = PROFILES[id]
-  if (!p.conjunction || id !== 'mars') return []
+  if (!p.conjunction) return []
   if (!blackoutCache.has(id)) blackoutCache.set(id, conjunctionSpans(EPHEMERIS.mars, p.conjunction.maxSotDeg, p.conjunction.bufferDays))
   return blackoutCache.get(id)!
 }
@@ -31,7 +31,7 @@ export const blackoutAt = (id: ProfileId, t: number) => blackouts(id).find((b) =
 export function oneWaySeconds(id: ProfileId, t: number): { sec: number; distanceKm: number | null; sotDeg: number | null } {
   const p = PROFILES[id]
   if (p.fixedOneWaySec !== undefined) return { sec: p.fixedOneWaySec, distanceKm: null, sotDeg: null }
-  const g = geometryAt(EPHEMERIS[id as 'mars' | 'moon'], t)
+  const g = geometryAt(EPHEMERIS[id === 'moon' ? 'moon' : 'mars'], t)
   if (!g) throw new Error(`No JPL Horizons data for ${id} at ${new Date(t).toISOString()} (covered: 2021–2040)`)
   return { sec: g.distanceKm / C_KM_S, distanceKm: g.distanceKm, sotDeg: g.sotDeg }
 }

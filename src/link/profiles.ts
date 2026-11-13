@@ -2,7 +2,7 @@
  * Link profiles. Every number is either real NASA data or labelled as an assumption.
  * See docs/REAL_DATA_PRINCIPLE.md.
  */
-export type ProfileId = 'iss' | 'moon' | 'mars'
+export type ProfileId = 'iss' | 'moon' | 'mars' | 'mars-direct'
 
 export interface LinkProfile {
   id: ProfileId
@@ -19,7 +19,7 @@ export interface LinkProfile {
   conjunction?: { maxSotDeg: number; bufferDays: number; source: string }
 }
 
-export const PROFILES: Record<ProfileId, LinkProfile> = {
+const BASE: Record<Exclude<ProfileId, 'mars-direct'>, LinkProfile> = {
   iss: {
     id: 'iss',
     label: 'Space station (low Earth orbit)',
@@ -49,6 +49,17 @@ export const PROFILES: Record<ProfileId, LinkProfile> = {
       bufferDays: 1,
       source: 'NASA: commands stop while Mars is within 2° of the Sun as seen from Earth. With a 1-day buffer this reproduces NASA\'s announced 11–25 Nov 2023 moratorium from JPL Horizons data.',
     },
+  },
+}
+
+export const PROFILES: Record<ProfileId, LinkProfile> = {
+  ...BASE,
+  'mars-direct': {
+  ...BASE.mars,
+  id: 'mars-direct',
+  label: 'Mars, no relay orbiter (direct to Earth)',
+  rateBps: 500,
+  rateSource: 'NASA: a Mars rover talking directly to Earth over X-band gets only 160–500 bit/s (top of the range used).',
   },
 }
 
