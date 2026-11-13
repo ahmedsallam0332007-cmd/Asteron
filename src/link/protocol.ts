@@ -3,8 +3,12 @@
  * (Bundle Protocol, RFC 9171): every event is stored first, sent when a window allows,
  * highest priority first, resumed across windows, verified by SHA-256, acknowledged (custody).
  */
-export type BundleKind = 'alert' | 'report' | 'checkin' | 'raw'
-export const PRIORITY: Record<BundleKind, 0 | 1 | 2 | 3> = { alert: 3, report: 2, checkin: 1, raw: 0 }
+/** Downlink (station -> ground): alert, report, checkin, dose, journal, heartbeat, raw.
+ *  Uplink (ground -> station): space-weather, advice, ack (custody signal). */
+export type BundleKind = 'alert' | 'report' | 'checkin' | 'dose' | 'journal' | 'heartbeat' | 'raw' | 'space-weather' | 'advice' | 'ack'
+export const PRIORITY: Record<BundleKind, 0 | 1 | 2 | 3> = {
+  alert: 3, 'space-weather': 3, report: 2, advice: 2, ack: 2, checkin: 1, dose: 1, journal: 1, heartbeat: 0, raw: 0,
+}
 
 export interface Bundle {
   id: string
