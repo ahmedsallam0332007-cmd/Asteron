@@ -1,0 +1,316 @@
+[
+ {
+  "id": "base-hr-pos",
+  "description": "HR 75 vs steady 70 (3.3 MAD) fires",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     70,
+     70,
+     70,
+     70,
+     70,
+     70,
+     75
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "watch"
+   },
+   "fired": [
+    "base-hr-high"
+   ]
+  }
+ },
+ {
+  "id": "base-hr-edge",
+  "description": "HR 74.5 vs steady 70 is exactly 3 MAD: does not fire",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     70,
+     70,
+     70,
+     70,
+     70,
+     70,
+     74.5
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "normal"
+   },
+   "notFired": [
+    "base-hr-high"
+   ]
+  }
+ },
+ {
+  "id": "base-hr-neg",
+  "description": "HR 74 vs varied usual 70 (2.7 MAD) does not fire",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     68,
+     72,
+     70,
+     71,
+     69,
+     73,
+     70,
+     74
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "normal"
+   },
+   "notFired": [
+    "base-hr-high"
+   ]
+  }
+ },
+ {
+  "id": "base-hr-short",
+  "description": "Only 6 prior days: baseline not established",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     70,
+     70,
+     70,
+     72,
+     70,
+     85
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "normal"
+   },
+   "notFired": [
+    "base-hr-high"
+   ],
+   "notes": {
+    "hr_rest": "baseline not established"
+   }
+  }
+ },
+ {
+  "id": "base-sleep-pos",
+  "description": "Sleep 6.4 vs usual 7.5 fires",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     7.5,
+     7.5,
+     7.5,
+     7.5,
+     7.5,
+     7.5,
+     7.5,
+     6.4
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "sleep_h": "watch"
+   },
+   "fired": [
+    "base-sleep-low",
+    "abs-sleep-7"
+   ]
+  }
+ },
+ {
+  "id": "base-sleep-neg",
+  "description": "Sleep 7.0 vs usual 7.5 does not fire",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     7.5,
+     7.5,
+     7.5,
+     7.5,
+     7.5,
+     7.5,
+     7.5,
+     7.0
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "sleep_h": "normal"
+   },
+   "notFired": [
+    "base-sleep-low"
+   ]
+  }
+ },
+ {
+  "id": "base-mood-pos",
+  "description": "Mood 2 vs usual 4 fires",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "mood",
+    "values": [
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     2
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "mood": "watch"
+   },
+   "fired": [
+    "base-mood-low"
+   ]
+  }
+ },
+ {
+  "id": "base-temp-pos",
+  "description": "Temp 37.2 vs usual 36.7 fires",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "temp",
+    "values": [
+     36.7,
+     36.7,
+     36.7,
+     36.7,
+     36.7,
+     36.7,
+     36.7,
+     37.2
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "temp": "watch"
+   },
+   "fired": [
+    "base-temp-high"
+   ]
+  }
+ },
+ {
+  "id": "base-exercise-pos",
+  "description": "Exercise 30 vs usual 60 fires",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "exercise_min",
+    "values": [
+     60,
+     60,
+     60,
+     60,
+     60,
+     60,
+     60,
+     30
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "exercise_min": "watch"
+   },
+   "fired": [
+    "base-exercise-low"
+   ]
+  }
+ },
+ {
+  "id": "base-bpsys-pos",
+  "description": "Systolic 118 vs usual 105 fires baseline but not absolute",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     105,
+     105,
+     105,
+     105,
+     105,
+     105,
+     105,
+     118
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_sys": "watch"
+   },
+   "fired": [
+    "base-bpsys-high"
+   ],
+   "notFired": [
+    "abs-bpsys-120"
+   ]
+  }
+ },
+ {
+  "id": "base-bpsys-edge",
+  "description": "Systolic 119 vs usual 110 is exactly 3 MAD: does not fire",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     110,
+     110,
+     110,
+     110,
+     110,
+     112,
+     110,
+     119
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_sys": "normal"
+   },
+   "notFired": [
+    "base-bpsys-high"
+   ]
+  }
+ }
+]

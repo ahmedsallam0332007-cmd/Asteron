@@ -1,0 +1,254 @@
+[
+ {
+  "id": "trend-hr-pos-edge",
+  "description": "HR 70,73,76 rises by exactly 6",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     73,
+     76
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "watch"
+   },
+   "fired": [
+    "trend-hr-up"
+   ]
+  }
+ },
+ {
+  "id": "trend-hr-neg-small",
+  "description": "HR 70,73,75 rises only 5",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     73,
+     75
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "normal"
+   },
+   "notFired": [
+    "trend-hr-up"
+   ]
+  }
+ },
+ {
+  "id": "trend-hr-neg-zigzag",
+  "description": "HR 70,78,76 is not steady",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     78,
+     76
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "normal"
+   },
+   "notFired": [
+    "trend-hr-up"
+   ]
+  }
+ },
+ {
+  "id": "trend-hr-one-gap",
+  "description": "One missing day within 3 days still counts",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     null,
+     73,
+     76
+    ]
+   }
+  ],
+  "expect": {
+   "fired": [
+    "trend-hr-up"
+   ]
+  }
+ },
+ {
+  "id": "trend-hr-gap",
+  "description": "Readings spread over 4 days are not a 3-day trend",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     null,
+     null,
+     73,
+     76
+    ]
+   }
+  ],
+  "expect": {
+   "notFired": [
+    "trend-hr-up"
+   ],
+   "notes": {
+    "hr_rest": "trend window has gaps"
+   }
+  }
+ },
+ {
+  "id": "trend-sleep-pos",
+  "description": "Sleep 8, 7.5, 7.0 falls by 1 h",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     8,
+     7.5,
+     7.0
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "sleep_h": "watch"
+   },
+   "fired": [
+    "trend-sleep-down"
+   ],
+   "notFired": [
+    "abs-sleep-7"
+   ]
+  }
+ },
+ {
+  "id": "trend-bpsys-pos",
+  "description": "Systolic 112,115,118 rises by 6",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     112,
+     115,
+     118
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_sys": "watch"
+   },
+   "fired": [
+    "trend-bpsys-up"
+   ]
+  }
+ },
+ {
+  "id": "trend-mood-pos",
+  "description": "Mood 5,4,4 falls by 1",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "mood",
+    "values": [
+     5,
+     4,
+     4
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "mood": "watch"
+   },
+   "fired": [
+    "trend-mood-down"
+   ]
+  }
+ },
+ {
+  "id": "trend-exercise-pos",
+  "description": "Exercise 90,70,60 falls by 30",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "exercise_min",
+    "values": [
+     90,
+     70,
+     60
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "exercise_min": "watch"
+   },
+   "fired": [
+    "trend-exercise-down"
+   ]
+  }
+ },
+ {
+  "id": "trend-temp-neg",
+  "description": "Temp 36.6,36.8,37.0 rises only 0.4",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "temp",
+    "values": [
+     36.6,
+     36.8,
+     37.0
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "temp": "normal"
+   },
+   "notFired": [
+    "trend-temp-up"
+   ]
+  }
+ },
+ {
+  "id": "trend-short",
+  "description": "Only 2 readings: no trend",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     8,
+     6.8
+    ]
+   }
+  ],
+  "expect": {
+   "notFired": [
+    "trend-sleep-down"
+   ]
+  }
+ }
+]

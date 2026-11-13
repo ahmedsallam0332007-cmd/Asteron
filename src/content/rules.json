@@ -1,0 +1,542 @@
+[
+ {
+  "id": "abs-bpsys-120",
+  "type": "absolute",
+  "indicatorIds": [
+   "bp_sys"
+  ],
+  "params": {
+   "op": "gte",
+   "value": 120
+  },
+  "resultStatus": "watch",
+  "message": "Systolic pressure is in the elevated range or higher.",
+  "sourceIds": [
+   "aha-acc-2025-bp",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-bpsys-140",
+  "type": "absolute",
+  "indicatorIds": [
+   "bp_sys"
+  ],
+  "params": {
+   "op": "gte",
+   "value": 140
+  },
+  "resultStatus": "concern",
+  "message": "Systolic pressure is at stage 2 range (140 or higher).",
+  "sourceIds": [
+   "aha-acc-2025-bp",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-bpsys-180",
+  "type": "absolute",
+  "indicatorIds": [
+   "bp_sys"
+  ],
+  "params": {
+   "op": "gt",
+   "value": 180
+  },
+  "resultStatus": "urgent",
+  "message": "Systolic pressure is above 180, the severe range.",
+  "sourceIds": [
+   "aha-acc-2025-bp",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-bpdia-80",
+  "type": "absolute",
+  "indicatorIds": [
+   "bp_dia"
+  ],
+  "params": {
+   "op": "gte",
+   "value": 80
+  },
+  "resultStatus": "watch",
+  "message": "Diastolic pressure is 80 or higher.",
+  "sourceIds": [
+   "aha-acc-2025-bp",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-bpdia-90",
+  "type": "absolute",
+  "indicatorIds": [
+   "bp_dia"
+  ],
+  "params": {
+   "op": "gte",
+   "value": 90
+  },
+  "resultStatus": "concern",
+  "message": "Diastolic pressure is at stage 2 range (90 or higher).",
+  "sourceIds": [
+   "aha-acc-2025-bp",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-bpdia-120",
+  "type": "absolute",
+  "indicatorIds": [
+   "bp_dia"
+  ],
+  "params": {
+   "op": "gt",
+   "value": 120
+  },
+  "resultStatus": "urgent",
+  "message": "Diastolic pressure is above 120, the severe range.",
+  "sourceIds": [
+   "aha-acc-2025-bp",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-hr-high",
+  "type": "absolute",
+  "indicatorIds": [
+   "hr_rest"
+  ],
+  "params": {
+   "op": "gt",
+   "value": 100
+  },
+  "resultStatus": "watch",
+  "message": "Resting heart rate is above the usual adult range of 60 to 100.",
+  "sourceIds": [
+   "aha-resting-hr",
+   "mayo-hr",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-hr-low",
+  "type": "absolute",
+  "indicatorIds": [
+   "hr_rest"
+  ],
+  "params": {
+   "op": "lt",
+   "value": 60
+  },
+  "resultStatus": "watch",
+  "message": "Resting heart rate is below the usual adult range of 60 to 100. Fit people can be lower, so this alone stays at watch.",
+  "sourceIds": [
+   "aha-resting-hr",
+   "mayo-hr",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-spo2-94",
+  "type": "absolute",
+  "indicatorIds": [
+   "spo2"
+  ],
+  "params": {
+   "op": "lte",
+   "value": 94
+  },
+  "resultStatus": "concern",
+  "message": "Blood oxygen is 94% or lower, the level where the WHO manual says to act.",
+  "sourceIds": [
+   "who-pulse-ox",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-spo2-90",
+  "type": "absolute",
+  "indicatorIds": [
+   "spo2"
+  ],
+  "params": {
+   "op": "lt",
+   "value": 90
+  },
+  "resultStatus": "urgent",
+  "message": "Blood oxygen is below 90%, considered dangerous.",
+  "sourceIds": [
+   "who-pulse-ox",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-temp-38",
+  "type": "absolute",
+  "indicatorIds": [
+   "temp"
+  ],
+  "params": {
+   "op": "gte",
+   "value": 38
+  },
+  "resultStatus": "concern",
+  "message": "Temperature is 38.0 °C or higher, the CDC definition of fever.",
+  "sourceIds": [
+   "cdc-fever",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "abs-sleep-7",
+  "type": "absolute",
+  "indicatorIds": [
+   "sleep_h"
+  ],
+  "params": {
+   "op": "lt",
+   "value": 7
+  },
+  "resultStatus": "watch",
+  "message": "Sleep was under the 7 hours recommended for adults.",
+  "sourceIds": [
+   "aasm-srs-2015",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "base-hr-high",
+  "type": "baseline",
+  "indicatorIds": [
+   "hr_rest"
+  ],
+  "params": {
+   "k": 3,
+   "minDays": 7,
+   "direction": "above"
+  },
+  "resultStatus": "watch",
+  "message": "Resting heart rate is well above this person's own usual level.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "base-bpsys-high",
+  "type": "baseline",
+  "indicatorIds": [
+   "bp_sys"
+  ],
+  "params": {
+   "k": 3,
+   "minDays": 7,
+   "direction": "above"
+  },
+  "resultStatus": "watch",
+  "message": "Systolic pressure is well above this person's own usual level.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "base-temp-high",
+  "type": "baseline",
+  "indicatorIds": [
+   "temp"
+  ],
+  "params": {
+   "k": 3,
+   "minDays": 7,
+   "direction": "above"
+  },
+  "resultStatus": "watch",
+  "message": "Temperature is well above this person's own usual level.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "base-sleep-low",
+  "type": "baseline",
+  "indicatorIds": [
+   "sleep_h"
+  ],
+  "params": {
+   "k": 3,
+   "minDays": 7,
+   "direction": "below"
+  },
+  "resultStatus": "watch",
+  "message": "Sleep is well below this person's own usual level.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "base-mood-low",
+  "type": "baseline",
+  "indicatorIds": [
+   "mood"
+  ],
+  "params": {
+   "k": 3,
+   "minDays": 7,
+   "direction": "below"
+  },
+  "resultStatus": "watch",
+  "message": "Mood is well below this person's own usual level.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "base-exercise-low",
+  "type": "baseline",
+  "indicatorIds": [
+   "exercise_min"
+  ],
+  "params": {
+   "k": 3,
+   "minDays": 7,
+   "direction": "below"
+  },
+  "resultStatus": "watch",
+  "message": "Exercise is well below this person's own usual level.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "trend-sleep-down",
+  "type": "trend",
+  "indicatorIds": [
+   "sleep_h"
+  ],
+  "params": {
+   "days": 3,
+   "direction": "down",
+   "minChange": 1.0
+  },
+  "resultStatus": "watch",
+  "message": "Sleep has fallen steadily over the last 3 days.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "trend-bpsys-up",
+  "type": "trend",
+  "indicatorIds": [
+   "bp_sys"
+  ],
+  "params": {
+   "days": 3,
+   "direction": "up",
+   "minChange": 6
+  },
+  "resultStatus": "watch",
+  "message": "Systolic pressure has risen steadily over the last 3 days.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "trend-hr-up",
+  "type": "trend",
+  "indicatorIds": [
+   "hr_rest"
+  ],
+  "params": {
+   "days": 3,
+   "direction": "up",
+   "minChange": 6
+  },
+  "resultStatus": "watch",
+  "message": "Resting heart rate has risen steadily over the last 3 days.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "trend-temp-up",
+  "type": "trend",
+  "indicatorIds": [
+   "temp"
+  ],
+  "params": {
+   "days": 3,
+   "direction": "up",
+   "minChange": 0.5
+  },
+  "resultStatus": "watch",
+  "message": "Temperature has risen steadily over the last 3 days.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "trend-mood-down",
+  "type": "trend",
+  "indicatorIds": [
+   "mood"
+  ],
+  "params": {
+   "days": 3,
+   "direction": "down",
+   "minChange": 1
+  },
+  "resultStatus": "watch",
+  "message": "Mood has fallen steadily over the last 3 days.",
+  "sourceIds": [
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "trend-exercise-down",
+  "type": "trend",
+  "indicatorIds": [
+   "exercise_min"
+  ],
+  "params": {
+   "days": 3,
+   "direction": "down",
+   "minChange": 30
+  },
+  "resultStatus": "watch",
+  "message": "Exercise has dropped steadily over the last 3 days. Exercise protects muscle and bone in microgravity.",
+  "sourceIds": [
+   "nasa-hrp-hazards",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "comp-fatigue",
+  "type": "composite",
+  "indicatorIds": [
+   "sleep_h",
+   "hr_rest",
+   "mood"
+  ],
+  "params": {
+   "conditions": [
+    {
+     "indicatorId": "sleep_h",
+     "kind": "lt",
+     "value": 7
+    },
+    {
+     "indicatorId": "hr_rest",
+     "kind": "baselineAbove",
+     "value": 2
+    },
+    {
+     "indicatorId": "mood",
+     "kind": "baselineBelow",
+     "value": 2
+    }
+   ],
+   "minDays": 7
+  },
+  "resultStatus": "concern",
+  "message": "Short sleep, a raised resting heart rate and low mood together suggest fatigue or strain.",
+  "sourceIds": [
+   "aasm-srs-2015",
+   "nasa-hrp-hazards",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "comp-infection",
+  "type": "composite",
+  "indicatorIds": [
+   "temp",
+   "hr_rest"
+  ],
+  "params": {
+   "conditions": [
+    {
+     "indicatorId": "temp",
+     "kind": "gte",
+     "value": 38
+    },
+    {
+     "indicatorId": "hr_rest",
+     "kind": "gt",
+     "value": 100
+    }
+   ]
+  },
+  "resultStatus": "concern",
+  "message": "Fever with a fast resting heart rate is a pattern that can come with infection.",
+  "sourceIds": [
+   "cdc-fever",
+   "aha-resting-hr",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked"
+ },
+ {
+  "id": "comp-infection-severe",
+  "type": "composite",
+  "indicatorIds": [
+   "temp",
+   "hr_rest",
+   "spo2"
+  ],
+  "params": {
+   "conditions": [
+    {
+     "indicatorId": "temp",
+     "kind": "gte",
+     "value": 38
+    },
+    {
+     "indicatorId": "hr_rest",
+     "kind": "gt",
+     "value": 100
+    },
+    {
+     "indicatorId": "spo2",
+     "kind": "lte",
+     "value": 94
+    }
+   ]
+  },
+  "resultStatus": "urgent",
+  "message": "Fever, a fast heart rate and low blood oxygen together need immediate attention.",
+  "sourceIds": [
+   "cdc-fever",
+   "aha-resting-hr",
+   "who-pulse-ox",
+   "asteron-method"
+  ],
+  "reviewStatus": "unchecked",
+  "minTier": 4
+ }
+]

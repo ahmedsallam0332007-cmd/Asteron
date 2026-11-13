@@ -1,0 +1,543 @@
+[
+ {
+  "id": "abs-bpsys-119",
+  "description": "Systolic 119 is normal",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     119
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_sys": "normal"
+   },
+   "notFired": [
+    "abs-bpsys-120"
+   ]
+  }
+ },
+ {
+  "id": "abs-bpsys-120",
+  "description": "Systolic 120 is the elevated edge",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     120
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_sys": "watch"
+   },
+   "fired": [
+    "abs-bpsys-120"
+   ]
+  }
+ },
+ {
+  "id": "abs-bpsys-139",
+  "description": "Systolic 139 stays watch",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     139
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_sys": "watch"
+   },
+   "notFired": [
+    "abs-bpsys-140"
+   ]
+  }
+ },
+ {
+  "id": "abs-bpsys-140",
+  "description": "Systolic 140 is stage 2 edge",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     140
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_sys": "concern"
+   },
+   "fired": [
+    "abs-bpsys-140"
+   ]
+  }
+ },
+ {
+  "id": "abs-bpsys-180",
+  "description": "Systolic exactly 180 is not above 180",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     180
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_sys": "concern"
+   },
+   "notFired": [
+    "abs-bpsys-180"
+   ]
+  }
+ },
+ {
+  "id": "abs-bpsys-181",
+  "description": "Systolic 181 is severe",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     181
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_sys": "urgent"
+   },
+   "fired": [
+    "abs-bpsys-180"
+   ],
+   "tier": 4
+  }
+ },
+ {
+  "id": "abs-bpdia-79",
+  "description": "Diastolic 79 is normal",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_dia",
+    "values": [
+     79
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_dia": "normal"
+   },
+   "notFired": [
+    "abs-bpdia-80"
+   ]
+  }
+ },
+ {
+  "id": "abs-bpdia-80",
+  "description": "Diastolic 80 edge",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_dia",
+    "values": [
+     80
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_dia": "watch"
+   },
+   "fired": [
+    "abs-bpdia-80"
+   ]
+  }
+ },
+ {
+  "id": "abs-bpdia-90",
+  "description": "Diastolic 90 edge",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_dia",
+    "values": [
+     90
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_dia": "concern"
+   },
+   "fired": [
+    "abs-bpdia-90"
+   ]
+  }
+ },
+ {
+  "id": "abs-bpdia-120",
+  "description": "Diastolic exactly 120 is not above 120",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_dia",
+    "values": [
+     120
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_dia": "concern"
+   },
+   "notFired": [
+    "abs-bpdia-120"
+   ]
+  }
+ },
+ {
+  "id": "abs-bpdia-121",
+  "description": "Diastolic 121 is severe",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_dia",
+    "values": [
+     121
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_dia": "urgent"
+   },
+   "fired": [
+    "abs-bpdia-120"
+   ]
+  }
+ },
+ {
+  "id": "abs-hr-100",
+  "description": "Heart rate 100 is the top of normal",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     100
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "normal"
+   },
+   "notFired": [
+    "abs-hr-high"
+   ]
+  }
+ },
+ {
+  "id": "abs-hr-101",
+  "description": "Heart rate 101 is high",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     101
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "watch"
+   },
+   "fired": [
+    "abs-hr-high"
+   ]
+  }
+ },
+ {
+  "id": "abs-hr-60",
+  "description": "Heart rate 60 is the bottom of normal",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     60
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "normal"
+   },
+   "notFired": [
+    "abs-hr-low"
+   ]
+  }
+ },
+ {
+  "id": "abs-hr-59",
+  "description": "Heart rate 59 is low, watch only",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     59
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "watch"
+   },
+   "fired": [
+    "abs-hr-low"
+   ]
+  }
+ },
+ {
+  "id": "abs-spo2-95",
+  "description": "SpO2 95 is normal",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "spo2",
+    "values": [
+     95
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "spo2": "normal"
+   },
+   "notFired": [
+    "abs-spo2-94"
+   ]
+  }
+ },
+ {
+  "id": "abs-spo2-94",
+  "description": "SpO2 94 is the action edge",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "spo2",
+    "values": [
+     94
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "spo2": "concern"
+   },
+   "fired": [
+    "abs-spo2-94"
+   ]
+  }
+ },
+ {
+  "id": "abs-spo2-90",
+  "description": "SpO2 exactly 90 is not below 90",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "spo2",
+    "values": [
+     90
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "spo2": "concern"
+   },
+   "notFired": [
+    "abs-spo2-90"
+   ]
+  }
+ },
+ {
+  "id": "abs-spo2-89",
+  "description": "SpO2 89 is urgent",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "spo2",
+    "values": [
+     89
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "spo2": "urgent"
+   },
+   "fired": [
+    "abs-spo2-90"
+   ]
+  }
+ },
+ {
+  "id": "abs-temp-37.9",
+  "description": "37.9 C is not fever",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "temp",
+    "values": [
+     37.9
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "temp": "normal"
+   },
+   "notFired": [
+    "abs-temp-38"
+   ]
+  }
+ },
+ {
+  "id": "abs-temp-38.0",
+  "description": "38.0 C is the fever edge",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "temp",
+    "values": [
+     38.0
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "temp": "concern"
+   },
+   "fired": [
+    "abs-temp-38"
+   ]
+  }
+ },
+ {
+  "id": "abs-sleep-7",
+  "description": "7 h sleep meets the recommendation",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     7
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "sleep_h": "normal"
+   },
+   "notFired": [
+    "abs-sleep-7"
+   ]
+  }
+ },
+ {
+  "id": "abs-sleep-6.9",
+  "description": "6.9 h sleep is short",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     6.9
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "sleep_h": "watch"
+   },
+   "fired": [
+    "abs-sleep-7"
+   ]
+  }
+ },
+ {
+  "id": "stale-48h",
+  "description": "A reading exactly 48 h old still counts",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "spo2",
+    "values": [
+     97
+    ],
+    "endOffsetHours": 48
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "spo2": "normal"
+   }
+  }
+ },
+ {
+  "id": "stale-49h",
+  "description": "A reading 49 h old is stale: unknown, never normal",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "spo2",
+    "values": [
+     97
+    ],
+    "endOffsetHours": 49
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "spo2": "unknown"
+   }
+  }
+ },
+ {
+  "id": "missing",
+  "description": "No reading at all is unknown",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "spo2": "unknown",
+    "hr_rest": "normal"
+   }
+  }
+ }
+]

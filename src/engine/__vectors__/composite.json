@@ -1,0 +1,283 @@
+[
+ {
+  "id": "comp-infection-pos",
+  "description": "Fever 38.2 with HR 104",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "temp",
+    "values": [
+     38.2
+    ]
+   },
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     104
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "temp": "concern",
+    "hr_rest": "concern"
+   },
+   "fired": [
+    "comp-infection"
+   ],
+   "notFired": [
+    "comp-infection-severe"
+   ],
+   "tier": 3
+  }
+ },
+ {
+  "id": "comp-infection-neg",
+  "description": "Fever with HR 98 is not the pattern",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "temp",
+    "values": [
+     38.4
+    ]
+   },
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     98
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "hr_rest": "normal"
+   },
+   "notFired": [
+    "comp-infection"
+   ]
+  }
+ },
+ {
+  "id": "comp-severe-pos",
+  "description": "Fever, HR 112 and SpO2 93 together are urgent, tier 4",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "temp",
+    "values": [
+     38.4
+    ]
+   },
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     112
+    ]
+   },
+   {
+    "indicatorId": "spo2",
+    "values": [
+     93
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "spo2": "urgent",
+    "hr_rest": "urgent",
+    "temp": "urgent"
+   },
+   "fired": [
+    "comp-infection-severe",
+    "comp-infection"
+   ],
+   "tier": 4
+  }
+ },
+ {
+  "id": "comp-severe-neg",
+  "description": "Same without low SpO2 is not urgent",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "temp",
+    "values": [
+     38.4
+    ]
+   },
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     112
+    ]
+   },
+   {
+    "indicatorId": "spo2",
+    "values": [
+     96
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "spo2": "normal",
+    "hr_rest": "concern"
+   },
+   "notFired": [
+    "comp-infection-severe"
+   ],
+   "tier": 3
+  }
+ },
+ {
+  "id": "comp-fatigue-pos",
+  "description": "Short sleep, HR above usual, mood below usual",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     7.2,
+     7.2,
+     7.2,
+     7.2,
+     7.2,
+     7.2,
+     7.2,
+     6.5
+    ]
+   },
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     70,
+     70,
+     70,
+     70,
+     70,
+     70,
+     74
+    ]
+   },
+   {
+    "indicatorId": "mood",
+    "values": [
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     3
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "sleep_h": "concern",
+    "hr_rest": "concern",
+    "mood": "concern"
+   },
+   "fired": [
+    "comp-fatigue"
+   ],
+   "notFired": [
+    "base-hr-high"
+   ],
+   "tier": 3
+  }
+ },
+ {
+  "id": "comp-fatigue-neg",
+  "description": "Same with 7.1 h sleep does not fire",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     7.2,
+     7.2,
+     7.2,
+     7.2,
+     7.2,
+     7.2,
+     7.2,
+     7.1
+    ]
+   },
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     70,
+     70,
+     70,
+     70,
+     70,
+     70,
+     74
+    ]
+   },
+   {
+    "indicatorId": "mood",
+    "values": [
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     3
+    ]
+   }
+  ],
+  "expect": {
+   "notFired": [
+    "comp-fatigue"
+   ]
+  }
+ },
+ {
+  "id": "comp-fatigue-no-baseline",
+  "description": "Too few days for a baseline: composite cannot fire",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     7.2,
+     7.2,
+     6.5
+    ]
+   },
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70,
+     70,
+     80
+    ]
+   },
+   {
+    "indicatorId": "mood",
+    "values": [
+     4,
+     4,
+     3
+    ]
+   }
+  ],
+  "expect": {
+   "notFired": [
+    "comp-fatigue"
+   ],
+   "notes": {
+    "hr_rest": "baseline not established"
+   }
+  }
+ }
+]

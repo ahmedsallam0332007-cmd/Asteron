@@ -1,0 +1,6 @@
+[
+ {"tier":1,"label":"Self-check","actions":["Re-measure any reading that looks off, following the measurement tip.","Follow the guidance for your systems.","Keep your daily check-in going."],"sourceIds":["asteron-method"]},
+ {"tier":2,"label":"Log and monitor","actions":["Record the reading and note how you feel.","Re-check at the next check-in.","Tell the crew medical officer if one is on board."],"sourceIds":["asteron-method"]},
+ {"tier":3,"label":"Contact flight surgeon","actions":["Send a non-urgent request to the flight surgeon with the generated report.","Repeat the measurement first and note the time.","Follow mission medical procedures while you wait."],"sourceIds":["nasa-std-3001-v1c","asteron-method"]},
+ {"tier":4,"label":"Urgent","actions":["Contact the flight surgeon immediately.","Follow the mission emergency medical procedure.","The report is sent first as soon as the link allows."],"sourceIds":["nasa-std-3001-v1c","asteron-method"]}
+]

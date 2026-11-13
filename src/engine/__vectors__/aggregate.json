@@ -1,0 +1,245 @@
+[
+ {
+  "id": "agg-all-normal",
+  "description": "Everything in range: overall normal, tier 1",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70
+    ]
+   },
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     115
+    ]
+   },
+   {
+    "indicatorId": "bp_dia",
+    "values": [
+     75
+    ]
+   },
+   {
+    "indicatorId": "spo2",
+    "values": [
+     98
+    ]
+   },
+   {
+    "indicatorId": "temp",
+    "values": [
+     36.8
+    ]
+   },
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     7.5
+    ]
+   },
+   {
+    "indicatorId": "mood",
+    "values": [
+     4
+    ]
+   },
+   {
+    "indicatorId": "exercise_min",
+    "values": [
+     60
+    ]
+   }
+  ],
+  "expect": {
+   "overall": "normal",
+   "tier": 1,
+   "systems": {
+    "brain": "normal",
+    "cardio": "normal",
+    "resp": "normal",
+    "metabolic": "normal",
+    "msk": "normal",
+    "immune": "normal"
+   }
+  }
+ },
+ {
+  "id": "agg-missing-spo2",
+  "description": "Missing SpO2: respiratory unknown, overall unknown (not normal)",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70
+    ]
+   },
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     115
+    ]
+   },
+   {
+    "indicatorId": "bp_dia",
+    "values": [
+     75
+    ]
+   },
+   {
+    "indicatorId": "temp",
+    "values": [
+     36.8
+    ]
+   },
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     7.5
+    ]
+   },
+   {
+    "indicatorId": "mood",
+    "values": [
+     4
+    ]
+   },
+   {
+    "indicatorId": "exercise_min",
+    "values": [
+     60
+    ]
+   }
+  ],
+  "expect": {
+   "overall": "unknown",
+   "tier": 1,
+   "systems": {
+    "resp": "unknown",
+    "cardio": "normal"
+   }
+  }
+ },
+ {
+  "id": "agg-unknown-does-not-hide",
+  "description": "A watch on cardio still shows even with SpO2 missing",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     101
+    ]
+   },
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     115
+    ]
+   },
+   {
+    "indicatorId": "bp_dia",
+    "values": [
+     75
+    ]
+   },
+   {
+    "indicatorId": "temp",
+    "values": [
+     36.8
+    ]
+   },
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     7.5
+    ]
+   },
+   {
+    "indicatorId": "mood",
+    "values": [
+     4
+    ]
+   },
+   {
+    "indicatorId": "exercise_min",
+    "values": [
+     60
+    ]
+   }
+  ],
+  "expect": {
+   "overall": "watch",
+   "tier": 2,
+   "systems": {
+    "cardio": "watch",
+    "resp": "unknown"
+   }
+  }
+ },
+ {
+  "id": "agg-concern-tier3",
+  "description": "A concern gives tier 3",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "hr_rest",
+    "values": [
+     70
+    ]
+   },
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     115
+    ]
+   },
+   {
+    "indicatorId": "bp_dia",
+    "values": [
+     75
+    ]
+   },
+   {
+    "indicatorId": "spo2",
+    "values": [
+     98
+    ]
+   },
+   {
+    "indicatorId": "temp",
+    "values": [
+     38.1
+    ]
+   },
+   {
+    "indicatorId": "sleep_h",
+    "values": [
+     7.5
+    ]
+   },
+   {
+    "indicatorId": "mood",
+    "values": [
+     4
+    ]
+   },
+   {
+    "indicatorId": "exercise_min",
+    "values": [
+     60
+    ]
+   }
+  ],
+  "expect": {
+   "overall": "concern",
+   "tier": 3,
+   "systems": {
+    "immune": "concern"
+   }
+  }
+ }
+]
