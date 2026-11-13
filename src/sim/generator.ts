@@ -4,11 +4,27 @@ import type { Indicator, Reading, Status } from '../engine/types'
 export const SIM_VERSION = '1.0.0'
 export const HISTORY_DAYS = 15
 
+export interface CrewBio {
+  age: number
+  sex: 'F' | 'M'
+  heightCm: number
+  weightKg: number
+  nationality: string
+  callsign: string
+  specialty: string
+  priorFlights: number
+  flightDay: number
+  missionDays: number
+  fitness: 'high' | 'very high'
+  chronotype: 'morning' | 'intermediate' | 'evening'
+  exerciseRoutine: string
+}
 export interface CrewMember {
   id: string
   name: string
   role: string
   initials: string
+  bio: CrewBio
   profile: Record<string, [number, number]> // indicatorId -> [mean, day-to-day SD]
 }
 export interface Scenario {
@@ -31,8 +47,8 @@ const clamp = (v: number, [lo, hi]: [number, number]) => Math.min(hi, Math.max(l
  * Deterministic history for one crew member: same scenario + crew + seed -> same values.
  * The last reading lands at `now`; earlier ones one day apart.
  */
-export function generateHistory(crew: CrewMember, scenario: Scenario, indicators: Indicator[], now: string, days = HISTORY_DAYS): Reading[] {
-  const seed = hashSeed(`${scenario.id}:${crew.id}`)
+export function generateHistory(crew: CrewMember, scenario: Scenario, indicators: Indicator[], now: string, days = HISTORY_DAYS, salt = ''): Reading[] {
+  const seed = hashSeed(`${scenario.id}:${crew.id}${salt}`)
   const rand = mulberry32(seed)
   const end = Date.parse(now)
   const out: Reading[] = []

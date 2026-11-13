@@ -352,7 +352,7 @@
   "params": {
    "days": 3,
    "direction": "up",
-   "minChange": 6
+   "minChange": 10
   },
   "resultStatus": "watch",
   "message": "Systolic pressure has risen steadily over the last 3 days.",
@@ -406,10 +406,10 @@
   "params": {
    "days": 3,
    "direction": "down",
-   "minChange": 1
+   "minChange": 2
   },
   "resultStatus": "watch",
-  "message": "Mood has fallen steadily over the last 3 days.",
+  "message": "Mood has fallen by 2 or more points over the last 3 days.",
   "sourceIds": [
    "asteron-method"
   ],

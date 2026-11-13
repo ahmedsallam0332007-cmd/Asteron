@@ -6,11 +6,11 @@
   "initials": "NR",
   "profile": {
    "hr_rest": [
-    64,
+    66,
     1.32
    ],
    "bp_sys": [
-    114,
+    112,
     2.4
    ],
    "bp_dia": [
@@ -37,6 +37,21 @@
     95,
     6
    ]
+  },
+  "bio": {
+   "age": 44,
+   "sex": "F",
+   "heightCm": 171,
+   "weightKg": 63,
+   "nationality": "Egyptian",
+   "callsign": "Nile",
+   "specialty": "Commander, former test pilot",
+   "priorFlights": 2,
+   "flightDay": 118,
+   "missionDays": 180,
+   "fitness": "very high",
+   "chronotype": "morning",
+   "exerciseRoutine": "Resistive 3x/week + treadmill"
   }
  },
  {
@@ -50,7 +65,7 @@
     1.44
    ],
    "bp_sys": [
-    110,
+    108,
     2.4
    ],
    "bp_dia": [
@@ -77,6 +92,21 @@
     90,
     6
    ]
+  },
+  "bio": {
+   "age": 47,
+   "sex": "M",
+   "heightCm": 178,
+   "weightKg": 76,
+   "nationality": "French",
+   "callsign": "Doc",
+   "specialty": "Physician, aerospace medicine",
+   "priorFlights": 1,
+   "flightDay": 118,
+   "missionDays": 180,
+   "fitness": "high",
+   "chronotype": "intermediate",
+   "exerciseRoutine": "Cycle ergometer + resistive"
   }
  },
  {
@@ -86,11 +116,11 @@
   "initials": "SO",
   "profile": {
    "hr_rest": [
-    62,
+    65,
     1.2
    ],
    "bp_sys": [
-    116,
+    112,
     2.4
    ],
    "bp_dia": [
@@ -117,6 +147,21 @@
     100,
     6
    ]
+  },
+  "bio": {
+   "age": 38,
+   "sex": "M",
+   "heightCm": 183,
+   "weightKg": 82,
+   "nationality": "Nigerian",
+   "callsign": "Forge",
+   "specialty": "Flight engineer, mechanical systems",
+   "priorFlights": 0,
+   "flightDay": 118,
+   "missionDays": 180,
+   "fitness": "very high",
+   "chronotype": "evening",
+   "exerciseRoutine": "Resistive 4x/week"
   }
  },
  {
@@ -130,7 +175,7 @@
     1.44
    ],
    "bp_sys": [
-    108,
+    106,
     2.4
    ],
    "bp_dia": [
@@ -157,6 +202,21 @@
     85,
     6
    ]
+  },
+  "bio": {
+   "age": 36,
+   "sex": "F",
+   "heightCm": 166,
+   "weightKg": 58,
+   "nationality": "Hungarian",
+   "callsign": "Lark",
+   "specialty": "Mission specialist, biologist",
+   "priorFlights": 0,
+   "flightDay": 118,
+   "missionDays": 180,
+   "fitness": "high",
+   "chronotype": "morning",
+   "exerciseRoutine": "Treadmill + resistive"
   }
  },
  {
@@ -170,7 +230,7 @@
     1.32
    ],
    "bp_sys": [
-    112,
+    110,
     2.4
    ],
    "bp_dia": [
@@ -197,6 +257,21 @@
     95,
     6
    ]
+  },
+  "bio": {
+   "age": 41,
+   "sex": "M",
+   "heightCm": 175,
+   "weightKg": 74,
+   "nationality": "Jordanian",
+   "callsign": "Falcon",
+   "specialty": "Pilot, former air force",
+   "priorFlights": 1,
+   "flightDay": 118,
+   "missionDays": 180,
+   "fitness": "high",
+   "chronotype": "intermediate",
+   "exerciseRoutine": "Resistive + cycle"
   }
  },
  {
@@ -210,7 +285,7 @@
     1.32
    ],
    "bp_sys": [
-    111,
+    109,
     2.4
    ],
    "bp_dia": [
@@ -237,6 +312,21 @@
     88,
     6
    ]
+  },
+  "bio": {
+   "age": 39,
+   "sex": "F",
+   "heightCm": 169,
+   "weightKg": 61,
+   "nationality": "Kazakh",
+   "callsign": "Aurora",
+   "specialty": "Science officer, physicist",
+   "priorFlights": 1,
+   "flightDay": 118,
+   "missionDays": 180,
+   "fitness": "high",
+   "chronotype": "intermediate",
+   "exerciseRoutine": "Treadmill + resistive"
   }
  }
 ]

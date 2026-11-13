@@ -142,14 +142,14 @@
  },
  {
   "id": "trend-bpsys-pos",
-  "description": "Systolic 112,115,118 rises by 6",
+  "description": "Systolic 108,113,118 rises by exactly 10",
   "now": "2026-11-13T08:00:00Z",
   "series": [
    {
     "indicatorId": "bp_sys",
     "values": [
-     112,
-     115,
+     108,
+     113,
      118
     ]
    }
@@ -164,8 +164,54 @@
   }
  },
  {
+  "id": "trend-bpsys-neg",
+  "description": "Systolic 108,113,117 rises only 9",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "bp_sys",
+    "values": [
+     108,
+     113,
+     117
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "bp_sys": "normal"
+   },
+   "notFired": [
+    "trend-bpsys-up"
+   ]
+  }
+ },
+ {
   "id": "trend-mood-pos",
-  "description": "Mood 5,4,4 falls by 1",
+  "description": "Mood 5,4,3 falls by 2",
+  "now": "2026-11-13T08:00:00Z",
+  "series": [
+   {
+    "indicatorId": "mood",
+    "values": [
+     5,
+     4,
+     3
+    ]
+   }
+  ],
+  "expect": {
+   "indicators": {
+    "mood": "watch"
+   },
+   "fired": [
+    "trend-mood-down"
+   ]
+  }
+ },
+ {
+  "id": "trend-mood-neg",
+  "description": "Mood 5,4,4 falls only 1: ordinary day-to-day noise",
   "now": "2026-11-13T08:00:00Z",
   "series": [
    {
@@ -179,9 +225,9 @@
   ],
   "expect": {
    "indicators": {
-    "mood": "watch"
+    "mood": "normal"
    },
-   "fired": [
+   "notFired": [
     "trend-mood-down"
    ]
   }
