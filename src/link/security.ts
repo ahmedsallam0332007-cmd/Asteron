@@ -90,14 +90,21 @@ export class ReplayGuard {
 
 export type OpenResult =
   | { ok: true; bundle: Bundle; duplicate: boolean }
-  | { ok: false; reason: 'bad-signature' | 'decrypt-failed' | 'replay' | 'unknown-sender' | 'hash-mismatch' }
+  | { ok: false; reason: 'bad-signature' | 'decrypt-failed' | 'replay' | 'unknown-sender' | 'hash-mismatch' | 'malformed' }
 
 /** Ground side: check sender, signature, replay, then decrypt and check the payload hash. */
 export async function open(s: SealedBundle, pinned: Map<string, PublicIdentity>, upKeyFor: (src: string) => Promise<CryptoKey>, guard: ReplayGuard): Promise<OpenResult> {
+  if (!s || typeof s !== 'object' || !s.header || typeof s.header !== 'object') return { ok: false, reason: 'malformed' }
   const sender = pinned.get(s.header.src)
   if (!sender) return { ok: false, reason: 'unknown-sender' }
-  const iv = unb64(s.iv), ct = unb64(s.ct)
-  const valid = await crypto.subtle.verify({ name: 'ECDSA', hash: 'SHA-256' }, sender.sign, unb64(s.sig), signedBytes(s.header, iv, ct))
+  let iv: ReturnType<typeof unb64>, ct: ReturnType<typeof unb64>, sig: ReturnType<typeof unb64>
+  try {
+    iv = unb64(s.iv); ct = unb64(s.ct); sig = unb64(s.sig)
+  } catch {
+    return { ok: false, reason: 'malformed' }
+  }
+  if (iv.length !== 12 || sig.length === 0) return { ok: false, reason: 'malformed' }
+  const valid = await crypto.subtle.verify({ name: 'ECDSA', hash: 'SHA-256' }, sender.sign, sig, signedBytes(s.header, iv, ct))
   if (!valid) return { ok: false, reason: 'bad-signature' }
   const r = guard.check(s.header)
   if (r === 'replay') return { ok: false, reason: 'replay' }

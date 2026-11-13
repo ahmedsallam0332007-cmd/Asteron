@@ -1,10 +1,8 @@
+import { queuedOf } from '../link/outbox'
 import type { JournalEntry, OutboxRecord, StationDB } from './db'
 
 /** Bundles still to send: highest priority first, then oldest sequence. Sent and acknowledged ones are skipped. */
-export async function queuedOutbox(db: StationDB): Promise<OutboxRecord[]> {
-  const rows = await db.outbox.where('state').anyOf('queued', 'sending').toArray()
-  return rows.sort((a, b) => b.priority - a.priority || a.seq - b.seq)
-}
+export const queuedOutbox = (db: StationDB): Promise<OutboxRecord[]> => queuedOf(db)
 
 export async function addJournal(db: StationDB, e: Omit<JournalEntry, 'id'>): Promise<number> {
   const text = e.text.trim()
