@@ -1,0 +1,25 @@
+{
+ "id": "outage",
+ "title": "Link outage drill",
+ "summary": "The infection pattern develops while the link to Earth is down. Data waits on the station.",
+ "crewId": "varga",
+ "linkOutage": true,
+ "overrides": {
+  "temp": [
+   37.2,
+   37.7,
+   38.4
+  ],
+  "hr_rest": [
+   80,
+   88,
+   106
+  ]
+ },
+ "expected": [
+  {
+   "crewId": "varga",
+   "tier": 3
+  }
+ ]
+}

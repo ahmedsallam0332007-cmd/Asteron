@@ -1,0 +1,242 @@
+[
+ {
+  "id": "rahal",
+  "name": "Cmdr. Nadia Rahal",
+  "role": "Commander",
+  "initials": "NR",
+  "profile": {
+   "hr_rest": [
+    64,
+    1.32
+   ],
+   "bp_sys": [
+    114,
+    2.4
+   ],
+   "bp_dia": [
+    72,
+    1.8
+   ],
+   "spo2": [
+    98,
+    0.45
+   ],
+   "temp": [
+    36.7,
+    0.07
+   ],
+   "sleep_h": [
+    7.7,
+    0.25
+   ],
+   "mood": [
+    4,
+    0.2
+   ],
+   "exercise_min": [
+    95,
+    6
+   ]
+  }
+ },
+ {
+  "id": "moreau",
+  "name": "Dr. Kenji Moreau",
+  "role": "Crew medical officer",
+  "initials": "KM",
+  "profile": {
+   "hr_rest": [
+    68,
+    1.44
+   ],
+   "bp_sys": [
+    110,
+    2.4
+   ],
+   "bp_dia": [
+    70,
+    1.8
+   ],
+   "spo2": [
+    98,
+    0.45
+   ],
+   "temp": [
+    36.6,
+    0.07
+   ],
+   "sleep_h": [
+    7.8,
+    0.25
+   ],
+   "mood": [
+    4,
+    0.2
+   ],
+   "exercise_min": [
+    90,
+    6
+   ]
+  }
+ },
+ {
+  "id": "okafor",
+  "name": "Eng. Sami Okafor",
+  "role": "Flight engineer",
+  "initials": "SO",
+  "profile": {
+   "hr_rest": [
+    62,
+    1.2
+   ],
+   "bp_sys": [
+    116,
+    2.4
+   ],
+   "bp_dia": [
+    74,
+    1.8
+   ],
+   "spo2": [
+    97,
+    0.45
+   ],
+   "temp": [
+    36.8,
+    0.07
+   ],
+   "sleep_h": [
+    7.9,
+    0.25
+   ],
+   "mood": [
+    4,
+    0.2
+   ],
+   "exercise_min": [
+    100,
+    6
+   ]
+  }
+ },
+ {
+  "id": "varga",
+  "name": "Spc. Lina Varga",
+  "role": "Mission specialist",
+  "initials": "LV",
+  "profile": {
+   "hr_rest": [
+    70,
+    1.44
+   ],
+   "bp_sys": [
+    108,
+    2.4
+   ],
+   "bp_dia": [
+    68,
+    1.8
+   ],
+   "spo2": [
+    98,
+    0.45
+   ],
+   "temp": [
+    36.7,
+    0.07
+   ],
+   "sleep_h": [
+    7.7,
+    0.25
+   ],
+   "mood": [
+    4,
+    0.2
+   ],
+   "exercise_min": [
+    85,
+    6
+   ]
+  }
+ },
+ {
+  "id": "haddad",
+  "name": "Plt. Omar Haddad",
+  "role": "Pilot",
+  "initials": "OH",
+  "profile": {
+   "hr_rest": [
+    66,
+    1.32
+   ],
+   "bp_sys": [
+    112,
+    2.4
+   ],
+   "bp_dia": [
+    71,
+    1.8
+   ],
+   "spo2": [
+    98,
+    0.45
+   ],
+   "temp": [
+    36.6,
+    0.07
+   ],
+   "sleep_h": [
+    7.8,
+    0.25
+   ],
+   "mood": [
+    4,
+    0.2
+   ],
+   "exercise_min": [
+    95,
+    6
+   ]
+  }
+ },
+ {
+  "id": "sorokina",
+  "name": "Dr. Elena Sorokina",
+  "role": "Science officer",
+  "initials": "ES",
+  "profile": {
+   "hr_rest": [
+    67,
+    1.32
+   ],
+   "bp_sys": [
+    111,
+    2.4
+   ],
+   "bp_dia": [
+    70,
+    1.8
+   ],
+   "spo2": [
+    98,
+    0.45
+   ],
+   "temp": [
+    36.7,
+    0.07
+   ],
+   "sleep_h": [
+    7.9,
+    0.25
+   ],
+   "mood": [
+    4,
+    0.2
+   ],
+   "exercise_min": [
+    88,
+    6
+   ]
+  }
+ }
+]

@@ -1,0 +1,13 @@
+{
+ "id": "healthy",
+ "title": "Healthy baseline",
+ "summary": "Two weeks in orbit, everyone in range.",
+ "overrides": {},
+ "expected": [
+  {
+   "crewId": "*",
+   "overall": "normal",
+   "tier": 1
+  }
+ ]
+}

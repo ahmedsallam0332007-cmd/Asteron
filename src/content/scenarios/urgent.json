@@ -1,0 +1,27 @@
+{
+ "id": "urgent",
+ "title": "Urgent multi-signal case",
+ "summary": "Cmdr. Rahal has fever, a fast heart rate and low blood oxygen together.",
+ "crewId": "rahal",
+ "overrides": {
+  "temp": [
+   37.6,
+   38.6
+  ],
+  "hr_rest": [
+   84,
+   118
+  ],
+  "spo2": [
+   95,
+   91
+  ]
+ },
+ "expected": [
+  {
+   "crewId": "rahal",
+   "overall": "urgent",
+   "tier": 4
+  }
+ ]
+}

@@ -1,0 +1,27 @@
+{
+ "id": "msk-decline",
+ "title": "Musculoskeletal decline",
+ "summary": "Dr. Sorokina's exercise drops day after day, the main countermeasure against bone and muscle loss.",
+ "crewId": "sorokina",
+ "overrides": {
+  "exercise_min": [
+   80,
+   60,
+   45,
+   30,
+   20
+  ]
+ },
+ "expected": [
+  {
+   "crewId": "sorokina",
+   "systems": {
+    "msk": "watch"
+   },
+   "tier": 2
+  }
+ ],
+ "anchors": [
+  "nasa-hrp-hazards"
+ ]
+}

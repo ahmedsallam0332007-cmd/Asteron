@@ -1,0 +1,28 @@
+{
+ "id": "infection",
+ "title": "Infection pattern",
+ "summary": "Spc. Varga develops a fever with a fast resting heart rate.",
+ "crewId": "varga",
+ "overrides": {
+  "temp": [
+   37.2,
+   37.7,
+   38.4
+  ],
+  "hr_rest": [
+   80,
+   88,
+   106
+  ]
+ },
+ "expected": [
+  {
+   "crewId": "varga",
+   "systems": {
+    "immune": "concern",
+    "cardio": "concern"
+   },
+   "tier": 3
+  }
+ ]
+}

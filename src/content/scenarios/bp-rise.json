@@ -1,0 +1,23 @@
+{
+ "id": "bp-rise",
+ "title": "Rising blood pressure",
+ "summary": "Plt. Haddad's systolic pressure climbs steadily over four days.",
+ "crewId": "haddad",
+ "overrides": {
+  "bp_sys": [
+   112,
+   118,
+   124,
+   129
+  ]
+ },
+ "expected": [
+  {
+   "crewId": "haddad",
+   "systems": {
+    "cardio": "watch"
+   },
+   "tier": 2
+  }
+ ]
+}

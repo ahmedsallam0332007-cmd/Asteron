@@ -1,0 +1,35 @@
+{
+ "id": "sleep-loss",
+ "title": "Sleep deprivation",
+ "summary": "Eng. Okafor's sleep falls toward the ~6 h measured in flight; mood dips and resting heart rate rises.",
+ "crewId": "okafor",
+ "overrides": {
+  "sleep_h": [
+   6.8,
+   6.3,
+   5.9,
+   5.6
+  ],
+  "mood": [
+   4,
+   3,
+   3
+  ],
+  "hr_rest": [
+   66,
+   68
+  ]
+ },
+ "expected": [
+  {
+   "crewId": "okafor",
+   "systems": {
+    "brain": "concern"
+   },
+   "tier": 3
+  }
+ ],
+ "anchors": [
+  "barger-2014"
+ ]
+}
