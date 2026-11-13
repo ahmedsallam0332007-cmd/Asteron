@@ -1,16 +1,32 @@
 import type { Provenance, Reading } from '../engine/types'
 import type { StationDB } from './db'
 
-const TWELVE_H = 12 * 3_600_000
+export const TWELVE_H = 12 * 3_600_000
+
+/** A check-in counts as today's if it was taken in the last 12 hours. */
+export const checkedInToday = (lastTakenAt: string | undefined, now: string) =>
+  !!lastTakenAt && Date.parse(now) - Date.parse(lastTakenAt) < TWELVE_H
 
 /**
  * Saves one check-in. Readings taken in the last 12 h for the same crew and
  * indicator are replaced, so a day keeps one value per indicator (the baseline
  * and trend rules assume one reading per day).
  */
-export async function saveCheckIn(db: StationDB, crewId: string, values: Record<string, number>, now: string, provenance: Provenance) {
+export async function saveCheckIn(
+  db: StationDB,
+  crewId: string,
+  values: Record<string, number>,
+  now: string,
+  provenance: Provenance | ((indicatorId: string) => Provenance),
+) {
   const cutoff = new Date(Date.parse(now) - TWELVE_H).toISOString()
-  const readings: Reading[] = Object.entries(values).map(([indicatorId, value]) => ({ crewId, indicatorId, value, takenAt: now, provenance }))
+  const readings: Reading[] = Object.entries(values).map(([indicatorId, value]) => ({
+    crewId,
+    indicatorId,
+    value,
+    takenAt: now,
+    provenance: typeof provenance === 'function' ? provenance(indicatorId) : provenance,
+  }))
   await db.transaction('rw', db.readings, async () => {
     const old = await db.readings.where('crewId').equals(crewId).filter((r) => r.takenAt >= cutoff && r.indicatorId in values).primaryKeys()
     await db.readings.bulkDelete(old)

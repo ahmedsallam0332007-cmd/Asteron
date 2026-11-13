@@ -18,3 +18,7 @@ export function useAssessment(crewId: string) {
 export function useScenarioId() {
   return useLiveQuery(async () => ((await stationDb.settings.get('scenario'))?.value as { id: string } | undefined)?.id, [])
 }
+
+export function usePendingToday() {
+  return useLiveQuery(async () => ((await stationDb.settings.get('pendingToday'))?.value ?? {}) as import('./seed').PendingToday, [])
+}

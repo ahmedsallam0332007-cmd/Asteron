@@ -5,6 +5,15 @@ import { useApp } from '../../../store/app'
 import { SYSTEM_LABEL } from '../../../lib/systems'
 import { ago } from '../../../lib/format'
 import { Card, ProvenanceBadge, StatusBadge } from '../../components/Status'
+import { checkedInToday } from '../../../data/checkin'
+import { simulateAllCheckIns } from '../../../data/simulateAll'
+import { stationDb } from '../../../data/db'
+
+const lastAt = (rs: { takenAt: string }[]) => rs.reduce<string | undefined>((m, r) => (!m || r.takenAt > m ? r.takenAt : m), undefined)
+
+function PendingChip() {
+  return <span data-pending className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-mauve/60 px-2.5 py-0.5 text-xs font-semibold text-mauve whitespace-nowrap"><span aria-hidden>◷</span>Check-in pending</span>
+}
 
 export function StationDashboard() {
   const overview = useCrewOverview()
@@ -13,9 +22,22 @@ export function StationDashboard() {
   const cur = overview.find((o) => o.crew.id === crewId) ?? overview[0]
   const tier = content.tiers.find((t) => t.tier === cur.tier.tier)!
   const { bio } = cur.crew
+  const curLast = lastAt(cur.readings)
+  const curDone = checkedInToday(curLast, now)
+  const pendingCount = overview.filter((o) => !checkedInToday(lastAt(o.readings), now)).length
 
   return (
     <div className="flex flex-col gap-6">
+      {pendingCount > 0 && (
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-mauve/40 bg-asteron/10 px-4 py-3 text-sm">
+          <span><b>{pendingCount} of 6</b> crew members have not checked in today. Nothing is assessed for today until they do.</span>
+          <button
+            id="simulate-all"
+            className="rounded-lg border border-mauve px-3 py-1.5 font-semibold text-mauve hover:bg-mauve/10"
+            onClick={async () => { const t = new Date().toISOString(); await simulateAllCheckIns(stationDb, t); useApp.getState().setNow(t) }}
+          >Run simulated check-ins for the rest</button>
+        </div>
+      )}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2" role="tablist" aria-label="Crew">
         {overview.map((o) => (
           <button
@@ -29,7 +51,7 @@ export function StationDashboard() {
               <span className="font-display font-semibold text-sm truncate">{o.crew.name.split(' ').slice(1).join(' ')}</span>
               <span className="font-mono text-[10px] text-dust">{o.crew.bio.callsign}</span>
             </div>
-            <div className="mt-1.5"><StatusBadge status={o.overall.status as never} /></div>
+            <div className="mt-1.5">{checkedInToday(lastAt(o.readings), now) ? <StatusBadge status={o.overall.status} /> : <PendingChip />}</div>
           </button>
         ))}
       </div>
@@ -44,9 +66,12 @@ export function StationDashboard() {
                 “{bio.callsign}” · {bio.age} y · {bio.nationality} · flight day {bio.flightDay} of {bio.missionDays}
               </p>
             </div>
-            <StatusBadge status={cur.overall.status as never} size="lg" />
+            {curDone ? <StatusBadge status={cur.overall.status} size="lg" /> : <PendingChip />}
           </div>
-          <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <p className="mt-3 text-xs font-mono uppercase tracking-wider text-dust">
+            {curDone ? `Today's check-in · ${ago(curLast!, now)}` : `Today's check-in not done · showing the last result (${curLast ? ago(curLast, now) : 'none'})`}
+          </p>
+          <div className={`mt-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 ${curDone ? '' : 'opacity-60'}`}>
             {cur.systems.map((s) => (
               <Link
                 key={s.systemId}
@@ -68,12 +93,19 @@ export function StationDashboard() {
 
         <Card className={tier.tier >= 3 ? 'border-st-concern/50' : ''}>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-mauve">Escalation</p>
-          <h2 className="font-display text-2xl font-bold mt-1">
-            Tier {tier.tier} · {tier.label}
-          </h2>
-          <ol className="mt-3 flex flex-col gap-2 text-sm text-dust list-decimal pl-5">
-            {tier.actions.map((a) => <li key={a}>{a}</li>)}
-          </ol>
+          {curDone ? (
+            <>
+              <h2 className="font-display text-2xl font-bold mt-1">Tier {tier.tier} · {tier.label}</h2>
+              <ol className="mt-3 flex flex-col gap-2 text-sm text-dust list-decimal pl-5">
+                {tier.actions.map((a) => <li key={a}>{a}</li>)}
+              </ol>
+            </>
+          ) : (
+            <>
+              <h2 className="font-display text-2xl font-bold mt-1">Awaiting today's check-in</h2>
+              <p className="mt-3 text-sm text-dust">The escalation tier for today is decided after {cur.crew.name.split(' ').slice(1).join(' ')} submits today's readings.</p>
+            </>
+          )}
           <div className="mt-5 flex flex-wrap gap-2">
             <Link to="/station/checkin" className="rounded-xl bg-asteron px-4 py-2.5 font-semibold text-white hover:bg-asteron/85">
               Start daily check-in
