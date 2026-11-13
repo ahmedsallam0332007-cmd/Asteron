@@ -4,6 +4,9 @@ import type { TierDecision } from '../engine/types'
  * Longest acceptable wait for the flight surgeon's answer, per tier (Team Asteron design, not a medical source).
  * Tier 4 = urgent: 30 min. Tier 3 = contact flight surgeon: 24 h.
  */
+/** How long the ground team needs to read a report and answer, per tier (Team Asteron assumption). */
+export const GROUND_RESPONSE_MIN: Record<number, number> = { 1: 240, 2: 120, 3: 60, 4: 5 }
+
 export const MAX_WAIT_MS: Record<number, number> = { 3: 24 * 3_600_000, 4: 30 * 60_000 }
 
 export interface LinkAwareDecision {

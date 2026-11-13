@@ -34,8 +34,8 @@ export const PROFILES: Record<ProfileId, LinkProfile> = {
     label: 'Moon',
     rateBps: 28e6,
     rateSource: 'Real DSN Now reading (13 Nov 2026): JWST K-band downlink at 28 Mbps from ~1.5 million km, used here as a deep-space Ka/K-band reference. Assumption for a crewed lunar link.',
-    schedule: { kind: 'passes', startsUtcHour: [2, 14], hours: 6 },
-    scheduleSource: 'Assumption modelled on JWST practice (two DSN contacts a day, up to 12 h). Real future DSN pass times are not published in advance.',
+    schedule: { kind: 'continuous' },
+    scheduleSource: 'Assumption: a crewed lunar mission is tracked near-continuously by the DSN; brief losses (for example behind the Moon) are not modelled.',
   },
   mars: {
     id: 'mars',

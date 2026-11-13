@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { EPHEMERIS, EPHEMERIS_SOURCE, conjunctionSpans } from './ephemeris'
 import { blackoutAt, earliestReply, linkState, oneWaySeconds, windowsAround } from './contactPlan'
-import { linkAware } from './escalation'
+import { GROUND_RESPONSE_MIN, linkAware } from './escalation'
 
 const T = (s: string) => Date.parse(s)
 const DAY = 86_400_000
@@ -45,6 +45,9 @@ describe('solar conjunction blackout (S-O-T < 2 deg, NASA rule)', () => {
     expect(blackoutAt('iss', T('2026-01-09'))).toBeNull()
     expect(blackoutAt('moon', T('2026-01-09'))).toBeNull()
   })
+  it('the Moon is in continuous contact (crewed-mission assumption)', () => {
+    expect(linkState('moon', T('2026-11-13T09:00:00Z')).inContact).toBe(true)
+  })
 })
 
 describe('contact windows and capacity', () => {
@@ -74,11 +77,16 @@ describe('earliest reply and link-aware escalation', () => {
     const r = earliestReply('mars', T('2026-11-13T15:00:00Z'), 30)
     expect(r.waitMs / 60_000).toBeGreaterThan(22 + 30)
   })
-  it('urgent case at Mars switches to the on-board protocol; on the ISS it does not', () => {
-    const mars = earliestReply('mars', T('2026-11-13T15:00:00Z'), 30)
-    expect(linkAware({ tier: 4, reasons: [] }, mars.waitMs).directive).toBe('onboard-protocol')
-    const iss = earliestReply('iss', T('2026-11-13T15:00:00Z'), 5)
-    expect(linkAware({ tier: 4, reasons: [] }, iss.waitMs).directive).toBe('follow-tier')
+  it('urgent case: ISS and Moon can wait for the ground, Mars cannot', () => {
+    const at = T('2026-11-13T15:00:00Z')
+    const g = GROUND_RESPONSE_MIN[4]
+    expect(linkAware({ tier: 4, reasons: [] }, earliestReply('iss', at, g).waitMs).directive).toBe('follow-tier')
+    expect(linkAware({ tier: 4, reasons: [] }, earliestReply('moon', at, g).waitMs).directive).toBe('follow-tier')
+    expect(linkAware({ tier: 4, reasons: [] }, earliestReply('mars', at, g).waitMs).directive).toBe('onboard-protocol')
+  })
+  it('tier 3 at Mars outside conjunction can still wait for Earth (under 24 h)', () => {
+    const r = earliestReply('mars', T('2026-11-13T15:00:00Z'), GROUND_RESPONSE_MIN[3])
+    expect(linkAware({ tier: 3, reasons: [] }, r.waitMs).directive).toBe('follow-tier')
   })
   it('during conjunction even tier 3 cannot wait for Earth', () => {
     const r = earliestReply('mars', T('2026-01-08T12:00:00Z'), 30)
