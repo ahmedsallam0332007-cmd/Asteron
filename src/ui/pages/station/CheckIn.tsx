@@ -10,6 +10,7 @@ import { useApp } from '../../../store/app'
 import { CREW } from '../../../sim'
 import { usualValues } from '../../../lib/usual'
 import { Card, ProvenanceBadge, StatusBadge } from '../../components/Status'
+import { AnchorNote } from '../../components/Anchor'
 
 type Analysis = { readings: Reading[]; at: string; result: ReturnType<typeof assess>; counts: Record<string, number> }
 
@@ -105,6 +106,7 @@ export function CheckIn() {
                 />
                 <span className="text-dust text-sm w-12">{ind.unit}</span>
               </div>
+              <AnchorNote indicatorId={ind.id} compact />
               {open === ind.id && <p className="text-xs text-dust bg-abyss rounded-lg p-2 border border-line">{ind.howToMeasure}</p>}
               {errors[ind.id] && <p id={`e-${ind.id}`} className="text-xs text-st-urgent">{errors[ind.id]}</p>}
             </div>

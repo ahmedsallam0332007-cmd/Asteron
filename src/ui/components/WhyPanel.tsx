@@ -1,6 +1,7 @@
 import { content, sourceById } from '../../content'
 import type { Evaluation } from '../../engine/types'
 import { ProvenanceBadge, StatusBadge } from './Status'
+import { AnchorNote } from './Anchor'
 
 /** Shows exactly why an indicator has its status: rule, readings, sources, review state. */
 export function WhyPanel({ evaluation }: { evaluation: Evaluation }) {
@@ -11,6 +12,7 @@ export function WhyPanel({ evaluation }: { evaluation: Evaluation }) {
         <h3 className="font-semibold">{ind.label}</h3>
         <StatusBadge status={evaluation.status} />
       </div>
+      <div className="mt-2"><AnchorNote indicatorId={ind.id} /></div>
       {evaluation.status === 'unknown' && <p className="text-sm text-dust mt-2">No reading in the last {ind.staleHours} hours. Unknown is never shown as normal: re-measure.</p>}
       {evaluation.notes.filter((n) => n !== 'no recent reading').map((n) => (
         <p key={n} className="text-xs text-dust mt-2 font-mono">Note: {n}</p>

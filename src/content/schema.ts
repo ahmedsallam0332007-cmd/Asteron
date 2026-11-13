@@ -77,3 +77,5 @@ export const guidanceSchema = z.object({
   text: z.string().min(20),
   sourceIds,
 })
+
+export const anchorSchema = z.object({ indicatorId: z.string(), text: z.string().min(20), sourceIds })

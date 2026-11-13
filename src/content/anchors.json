@@ -1,0 +1,10 @@
+[
+ {"indicatorId":"bp_sys","text":"In flight: 24-h systolic pressure was about 8 mmHg lower than before flight (8 ISS astronauts, 85-192 days).","sourceIds":["norsk-2015"]},
+ {"indicatorId":"bp_dia","text":"In flight: 24-h diastolic pressure was about 9 mmHg lower than before flight (8 ISS astronauts).","sourceIds":["norsk-2015"]},
+ {"indicatorId":"hr_rest","text":"In flight: heart rate did not change compared with before flight, while the heart pumped about 35% more blood per beat (8 ISS astronauts).","sourceIds":["norsk-2015"]},
+ {"indicatorId":"sleep_h","text":"In flight: astronauts slept 6.09 h a night on average on the ISS, against 8.5 h scheduled (21 ISS astronauts).","sourceIds":["barger-2014"]},
+ {"indicatorId":"exercise_min","text":"Without gravity, bone and muscle are lost; daily exercise is the main countermeasure.","sourceIds":["nasa-hrp-hazards"]},
+ {"indicatorId":"mood","text":"Isolation and confinement are one of NASA's five spaceflight hazards and affect mood, sleep and team work.","sourceIds":["nasa-hrp-hazards"]},
+ {"indicatorId":"spo2","text":"No spaceflight-specific figure in our sources yet; the published clinical range applies.","sourceIds":["who-pulse-ox"]},
+ {"indicatorId":"temp","text":"No spaceflight-specific figure in our sources yet; the published clinical definition of fever applies.","sourceIds":["cdc-fever"]}
+]

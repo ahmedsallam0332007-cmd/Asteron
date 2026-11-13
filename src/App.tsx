@@ -5,6 +5,7 @@ import { CheckIn } from './ui/pages/station/CheckIn'
 import { SystemDetail } from './ui/pages/station/SystemDetail'
 import { Report } from './ui/pages/station/Report'
 import { Placeholder } from './ui/pages/Placeholder'
+import { NasaData } from './ui/pages/NasaData'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="station/checkin" element={<CheckIn />} />
           <Route path="station/system/:id" element={<SystemDetail />} />
           <Route path="station/report" element={<Report />} />
+          <Route path="nasa" element={<NasaData />} />
           <Route path="ground" element={<Placeholder title="Ground console" />} />
           <Route path="lab" element={<Placeholder title="Judge Lab" />} />
           <Route path="verify" element={<Placeholder title="Verify" />} />

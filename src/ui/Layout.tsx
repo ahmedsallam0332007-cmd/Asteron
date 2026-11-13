@@ -10,6 +10,7 @@ import { ensureSeeded, seedScenario } from '../data/seed'
 const NAV = [
   ['/station', 'Station'],
   ['/ground', 'Ground'],
+  ['/nasa', 'NASA Data'],
   ['/lab', 'Judge Lab'],
   ['/verify', 'Verify'],
   ['/about', 'About'],
@@ -71,7 +72,7 @@ export function Layout() {
       </main>
       <footer className="border-t border-line text-xs text-dust">
         <div className="mx-auto max-w-7xl px-4 py-4 flex flex-wrap gap-x-6 gap-y-1 justify-between">
-          <span>Self-support aid, not a medical diagnosis. All crew data is simulated.</span>
+          <span>Self-support aid, not a medical diagnosis. Station and Ground crew data is simulated; the NASA Data page shows real published data.</span>
           <span>Team Asteron · NASA Space Apps 2026 Cairo · not endorsed by NASA</span>
         </div>
       </footer>

@@ -9,7 +9,7 @@ describe('content', () => {
     expect(content.rules.length).toBeGreaterThan(10)
   })
   it('every rule, indicator and tier has resolvable sourceIds', () => {
-    const items = [...content.rules, ...content.indicators, ...content.tiers, ...content.guidance]
+    const items = [...content.rules, ...content.indicators, ...content.tiers, ...content.guidance, ...content.anchors]
     const bad = items.flatMap((x) => x.sourceIds.filter((s) => !ids.has(s)).map((s) => `${'id' in x ? x.id : 'tier'} -> ${s}`))
     expect(bad).toEqual([])
   })
@@ -25,6 +25,9 @@ describe('content', () => {
       for (const i of r.indicatorIds) expect(ind.has(i), `${r.id}: ${i}`).toBe(true)
       if (r.type === 'composite') for (const c of r.params.conditions) expect(ind.has(c.indicatorId)).toBe(true)
     }
+  })
+  it('every indicator has exactly one NASA/published anchor', () => {
+    expect(content.indicators.map((i) => content.anchors.filter((a) => a.indicatorId === i.id).length)).toEqual(content.indicators.map(() => 1))
   })
   it('rule ids are unique', () => {
     const ids = content.rules.map((r) => r.id)
