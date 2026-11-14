@@ -76,17 +76,17 @@ function glowTexture() {
 }
 
 /** Organ glow positions as fractions of body height (x: the person's left is +x; z: front is +z). */
-interface OrganDef { system: SystemId; spots: { f: number; x?: number; z?: number; r: number }[] }
+interface OrganDef { system: SystemId; spots: { n: string; f: number; x?: number; z?: number; r: number }[] }
 const ORGANS: OrganDef[] = [
-  { system: 'brain', spots: [{ f: 0.935, z: 0.005, r: 0.07 }] },
-  { system: 'cardio', spots: [{ f: 0.725, x: 0.018, z: 0.025, r: 0.045 }] },
-  { system: 'resp', spots: [{ f: 0.735, x: -0.05, z: 0.005, r: 0.055 }, { f: 0.735, x: 0.055, z: 0.005, r: 0.05 }] },
-  { system: 'metabolic', spots: [{ f: 0.645, x: -0.04, z: 0.02, r: 0.05 }, { f: 0.65, x: 0.04, z: 0.025, r: 0.04 }, { f: 0.575, z: 0.03, r: 0.06 }] },
-  { system: 'msk', spots: [{ f: 0.79, z: -0.035, r: 0.03 }, { f: 0.68, z: -0.04, r: 0.03 }, { f: 0.57, z: -0.035, r: 0.03 }, { f: 0.5, r: 0.06 }, { f: 0.285, x: -0.045, z: 0.01, r: 0.035 }, { f: 0.285, x: 0.045, z: 0.01, r: 0.035 }] },
-  { system: 'immune', spots: [{ f: 0.835, x: -0.025, z: 0.01, r: 0.022 }, { f: 0.835, x: 0.025, z: 0.01, r: 0.022 }, { f: 0.745, x: -0.1, r: 0.025 }, { f: 0.745, x: 0.1, r: 0.025 }, { f: 0.625, x: 0.07, z: -0.01, r: 0.03 }, { f: 0.475, x: -0.06, z: 0.02, r: 0.022 }, { f: 0.475, x: 0.06, z: 0.02, r: 0.022 }] },
+  { system: 'brain', spots: [{ n: 'Brain', f: 0.935, z: 0.005, r: 0.07 }] },
+  { system: 'cardio', spots: [{ n: 'Heart', f: 0.725, x: 0.018, z: 0.025, r: 0.045 }] },
+  { system: 'resp', spots: [{ n: 'Right lung', f: 0.735, x: -0.05, z: 0.005, r: 0.055 }, { n: 'Left lung', f: 0.735, x: 0.055, z: 0.005, r: 0.05 }] },
+  { system: 'metabolic', spots: [{ n: 'Liver', f: 0.645, x: -0.04, z: 0.02, r: 0.05 }, { n: 'Stomach', f: 0.65, x: 0.04, z: 0.025, r: 0.04 }, { n: 'Intestines', f: 0.575, z: 0.03, r: 0.06 }] },
+  { system: 'msk', spots: [{ n: 'Upper spine', f: 0.79, z: -0.035, r: 0.03 }, { n: 'Mid spine', f: 0.68, z: -0.04, r: 0.03 }, { n: 'Lower spine', f: 0.57, z: -0.035, r: 0.03 }, { n: 'Pelvis', f: 0.5, r: 0.06 }, { n: 'Right knee', f: 0.285, x: -0.045, z: 0.01, r: 0.035 }, { n: 'Left knee', f: 0.285, x: 0.045, z: 0.01, r: 0.035 }] },
+  { system: 'immune', spots: [{ n: 'Lymph nodes, neck', f: 0.835, x: -0.025, z: 0.01, r: 0.022 }, { n: 'Lymph nodes, neck', f: 0.835, x: 0.025, z: 0.01, r: 0.022 }, { n: 'Lymph nodes, right armpit', f: 0.745, x: -0.1, r: 0.025 }, { n: 'Lymph nodes, left armpit', f: 0.745, x: 0.1, r: 0.025 }, { n: 'Spleen', f: 0.625, x: 0.07, z: -0.01, r: 0.03 }, { n: 'Lymph nodes, right groin', f: 0.475, x: -0.06, z: 0.02, r: 0.022 }, { n: 'Lymph nodes, left groin', f: 0.475, x: 0.06, z: 0.02, r: 0.022 }] },
 ]
 
-function Organ({ def, status, onPick }: { def: OrganDef; status: Status; onPick?: (s: SystemId) => void }) {
+function Organ({ def, status, onPick, onHover }: { def: OrganDef; status: Status; onPick?: (s: SystemId, organ: string) => void; onHover?: (organ: string | null, s: SystemId) => void }) {
   const ref = useRef<THREE.Group>(null)
   const color = STATUS_COLOR[status]
   const alert = status === 'concern' || status === 'urgent'
@@ -108,8 +108,8 @@ function Organ({ def, status, onPick }: { def: OrganDef; status: Status; onPick?
         return [
           <sprite key={`h${i}`} position={p} scale={r * 4.2} material={halo} userData={{ halo: true, base: r * 4.2 }} renderOrder={2} />,
           <sprite key={`c${i}`} position={p} scale={r * 1.9} material={core} renderOrder={3} />,
-          <mesh key={`m${i}`} position={p} scale={r * 1.2} geometry={sphere} material={hit} onClick={(e) => { e.stopPropagation(); onPick?.(def.system) }}
-            onPointerOver={() => { document.body.style.cursor = 'pointer' }} onPointerOut={() => { document.body.style.cursor = '' }} />,
+          <mesh key={`m${i}`} position={p} scale={Math.max(r * 2, 0.07)} geometry={sphere} material={hit} onClick={(e) => { e.stopPropagation(); onPick?.(def.system, s.n) }}
+            onPointerOver={(e) => { e.stopPropagation(); document.body.style.cursor = 'pointer'; onHover?.(s.n, def.system) }} onPointerOut={() => { document.body.style.cursor = ''; onHover?.(null, def.system) }} />,
         ]
       })}
     </group>
@@ -152,6 +152,9 @@ function Card({ system, status, lines, onPick }: { system: SystemId; status: Sta
 }
 
 export function Body3D({ systems, cards = [], onPick, height = 460 }: { systems: Record<SystemId, Status>; cards?: BodyCard[]; onPick?: (s: SystemId) => void; height?: number }) {
+  const [picked, setPicked] = useState<{ organ: string; system: SystemId } | null>(null)
+  const [hover, setHover] = useState<{ organ: string; system: SystemId } | null>(null)
+  const shown = hover ?? picked
   const [ok] = useState(() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')) } catch { return false } })
   const ids: SystemId[] = ['brain', 'resp', 'msk', 'cardio', 'metabolic', 'immune']
   const lines = (id: SystemId) => cards.find((c) => c.system === id)?.lines ?? []
@@ -164,11 +167,18 @@ export function Body3D({ systems, cards = [], onPick, height = 460 }: { systems:
     <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1fr)] gap-2 items-center" role="group" aria-label={`Body map: ${ids.map((k) => `${SYSTEM_LABEL[k]} ${systems[k] ?? 'unknown'}`).join(', ')}`}>
       {column('left')}
       <div style={{ height }} className="relative">
+        {shown && (
+          <div id="organ-label" role="status" className="absolute left-1/2 -translate-x-1/2 top-2 z-10 rounded-xl border px-3 py-1.5 text-center backdrop-blur-xl pointer-events-none"
+            style={{ background: 'rgba(16,10,28,.8)', borderColor: `${STATUS_COLOR[systems[shown.system] ?? 'unknown']}88` }}>
+            <p className="font-display text-sm font-bold text-star">{shown.organ}</p>
+            <p className="text-[11px] text-dust">{SYSTEM_LABEL[shown.system]} · <span style={{ color: STATUS_COLOR[systems[shown.system] ?? 'unknown'] }}>{STATUS_ICON[systems[shown.system] ?? 'unknown']} {STATUS_WORD[systems[shown.system] ?? 'unknown']}</span></p>
+          </div>
+        )}
         {ok ? (
           <Canvas camera={{ position: [0, 0.62, 3.25], fov: 42 }} dpr={[1, 1.6]} gl={{ antialias: true, alpha: true }}>
             <group position={[0, -0.02, 0]}>
               <ModelBoundary><Suspense fallback={null}><BodyModel /></Suspense></ModelBoundary>
-              {ORGANS.map((o) => <Organ key={o.system} def={o} status={systems[o.system] ?? 'unknown'} onPick={onPick} />)}
+              {ORGANS.map((o) => <Organ key={o.system} def={o} status={systems[o.system] ?? 'unknown'} onPick={(sys, organ) => { setPicked({ organ, system: sys }); onPick?.(sys) }} onHover={(organ, sys) => setHover(organ ? { organ, system: sys } : null)} />)}
               <Platform />
             </group>
             <OrbitControls target={[0, 0.62, 0]} enablePan={false} enableZoom={false} autoRotate={!reduceMotion()} autoRotateSpeed={0.5} minPolarAngle={Math.PI / 2.6} maxPolarAngle={Math.PI / 1.8} />
