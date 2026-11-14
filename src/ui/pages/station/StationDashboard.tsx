@@ -84,7 +84,7 @@ export function StationDashboard() {
             <Suspense fallback={<p className="p-4 text-sm text-dust">Loading the body map…</p>}>
               <Body3D systems={Object.fromEntries(cur.systems.map((s) => [s.systemId, curDone ? s.status : 'unknown'])) as never} cards={cardsFrom(latestOf(cur.readings))} onPick={(id) => navigate(`/station/system/${id}`)} height={420} />
             </Suspense>
-            <p className="px-1 pt-2 text-[11px] text-dust">Drag to rotate. A part glows in its status colour; every card says the status in words. Click a part or a card for the rule, the readings and the source.{!curDone && ' Grey until today\'s check-in.'}</p>
+            <p className="px-1 pt-2 text-[11px] text-dust">Drag to rotate. A part glows in its status colour; every card says the status in words. Click a part or a card for the rule, the readings and the source. 3D body: “Male Body” by Alexander Antipov, CC BY 4.0.{!curDone && ' Grey until today\'s check-in.'}</p>
           </div>
           <div className={`mt-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 ${curDone ? '' : 'opacity-60'}`}>
             {cur.systems.map((s) => (

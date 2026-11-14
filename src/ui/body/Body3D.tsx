@@ -90,7 +90,7 @@ function Organ({ def, status, onPick }: { def: OrganDef; status: Status; onPick?
   const ref = useRef<THREE.Group>(null)
   const color = STATUS_COLOR[status]
   const alert = status === 'concern' || status === 'urgent'
-  const strength = status === 'normal' ? 0.35 : status === 'unknown' ? 0.25 : status === 'watch' ? 0.8 : 1
+  const strength = status === 'normal' ? 0.16 : status === 'unknown' ? 0.1 : status === 'watch' ? 0.8 : 1
   const halo = useMemo(() => new THREE.SpriteMaterial({ map: glowTexture(), color, transparent: true, opacity: strength * 0.55, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false }), [color, strength])
   const core = useMemo(() => new THREE.SpriteMaterial({ map: glowTexture(), color, transparent: true, opacity: strength, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false }), [color, strength])
   const hit = useMemo(() => new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }), [])

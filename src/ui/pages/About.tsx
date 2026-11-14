@@ -25,6 +25,7 @@ export function About() {
         <h2 className="font-display text-lg font-bold">Credits and disclosure</h2>
         <ul className="mt-2 grid gap-1.5 text-sm text-dust list-disc pl-5">
           <li>Earth: NASA Blue Marble (NASA Scientific Visualization Studio). Nebulae: “Cosmic Cliffs”, NASA, ESA, CSA, STScI; “Chaos at the Heart of Orion”, NASA/JPL-Caltech/STScI.</li>
+          <li>3D body model: “Male Body” by Alexander Antipov (Sketchfab, CC BY 4.0), converted to glTF, rendered as a hologram. <a className="underline" href="https://sketchfab.com/3d-models/male-body-15a422001834483c9750ce6117d59cc1" target="_blank" rel="noreferrer">Source</a>.</li>
           <li>NASA does not endorse this project. No NASA logos are used.</li>
           <li>Open-source libraries: React, Three.js, React Three Fiber, Dexie, Zod, Recharts, Vite.</li>
         </ul>
