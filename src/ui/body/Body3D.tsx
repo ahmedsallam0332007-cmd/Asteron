@@ -1,90 +1,117 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
-import { useMemo, useRef, useState } from 'react'
+import { OrbitControls, useGLTF } from '@react-three/drei'
+import { Component, Suspense, useMemo, useRef, useState, type ReactNode } from 'react'
 import * as THREE from 'three'
 import type { Status, SystemId } from '../../engine/types'
 import { SYSTEM_LABEL } from '../../lib/systems'
 
 /**
- * Holographic human body (procedural, no third-party model). Each organ group belongs to one engine system
- * and glows in that system's status colour. Readings sit on glass cards around the body (outside the 3D scene),
- * and every card carries an icon and a word, so status is never colour-only.
+ * Holographic human body: a real human body model (public/media/body.glb, credited on the Data & Sources page)
+ * rendered as a hologram. Each engine system glows softly inside the body where its organs are, in that
+ * system's status colour. Readings sit on glass cards around the body (outside the 3D scene), and every card
+ * carries an icon and a word, so status is never colour-only.
  */
+export const BODY_MODEL_URL = '/media/body.glb'
 const STATUS_COLOR: Record<Status, string> = { normal: '#eae2ff', watch: '#f5b700', concern: '#f97316', urgent: '#ef4444', unknown: '#94a3b8' }
 const STATUS_ICON: Record<Status, string> = { normal: '●', watch: '◆', concern: '▲', urgent: '✖', unknown: '?' }
 const STATUS_WORD: Record<Status, string> = { normal: 'Normal', watch: 'Watch', concern: 'Concern', urgent: 'Urgent', unknown: 'Unknown' }
 const reduceMotion = () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
+/** Body placement in the scene: feet on the platform, fixed height. */
+const FLOOR = -0.47
+const H = 2.25
+
 const holo = {
   vertexShader: `varying vec3 vN; varying vec3 vP; varying float vY; void main(){ vN=normalize(normalMatrix*normal); vec4 p=modelViewMatrix*vec4(position,1.); vP=p.xyz; vY=(modelMatrix*vec4(position,1.)).y; gl_Position=projectionMatrix*p; }`,
   fragmentShader: `uniform vec3 c; uniform float t; varying vec3 vN; varying vec3 vP; varying float vY;
-    void main(){ float f=pow(1.-abs(dot(normalize(-vP),vN)),2.2); float lines=.5+.5*sin(vY*90.-t*2.); float scan=smoothstep(.06,0.,abs(fract(vY*.35-t*.12)-.5)-.44);
-      gl_FragColor=vec4(c*(f*1.15+.06+lines*.04)+vec3(.9,.85,1.)*scan*.35, f*.85+.08); }`,
+    void main(){ float f=pow(1.-abs(dot(normalize(-vP),vN)),2.0); float scan=smoothstep(.06,0.,abs(fract(vY*.35-t*.12)-.5)-.44);
+      gl_FragColor=vec4(c*(f*1.25+.035)+vec3(.9,.85,1.)*scan*.28, f*.8+.05); }`,
 }
 
 /** One shared hologram material for every body on the page (module scope: animated outside React state). */
 const HOLO_UNIFORMS = { c: { value: new THREE.Color('#b9a6ff') }, t: { value: 0 } }
-const HOLO_MAT = new THREE.ShaderMaterial({ ...holo, uniforms: HOLO_UNIFORMS, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide })
+const HOLO_MAT = new THREE.ShaderMaterial({ ...holo, uniforms: HOLO_UNIFORMS, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.FrontSide })
 
-function Shell() {
-  const mat = HOLO_MAT
-  useFrame(({ clock }) => { if (!reduceMotion()) HOLO_UNIFORMS.t.value = clock.elapsedTime })
-  const parts = useMemo(() => [
-    { p: [0, 1.63, 0], g: new THREE.SphereGeometry(0.155, 40, 28), s: [1, 1.12, 1.05] },
-    { p: [0, 1.43, 0], g: new THREE.CylinderGeometry(0.055, 0.065, 0.13, 20) },
-    { p: [0, 1.1, 0], g: new THREE.CapsuleGeometry(0.2, 0.34, 10, 28), s: [1.12, 1, 0.66] },
-    { p: [0, 0.74, 0], g: new THREE.CapsuleGeometry(0.17, 0.12, 10, 28), s: [1.05, 1, 0.7] },
-    { p: [-0.3, 1.11, 0], r: [0, 0, 0.16], g: new THREE.CapsuleGeometry(0.05, 0.3, 8, 16) },
-    { p: [0.3, 1.11, 0], r: [0, 0, -0.16], g: new THREE.CapsuleGeometry(0.05, 0.3, 8, 16) },
-    { p: [-0.37, 0.77, 0.02], r: [0, 0, 0.06], g: new THREE.CapsuleGeometry(0.04, 0.3, 8, 16) },
-    { p: [0.37, 0.77, 0.02], r: [0, 0, -0.06], g: new THREE.CapsuleGeometry(0.04, 0.3, 8, 16) },
-    { p: [-0.39, 0.53, 0.03], g: new THREE.SphereGeometry(0.045, 16, 12), s: [0.8, 1.3, 0.5] },
-    { p: [0.39, 0.53, 0.03], g: new THREE.SphereGeometry(0.045, 16, 12), s: [0.8, 1.3, 0.5] },
-    { p: [-0.1, 0.33, 0], g: new THREE.CapsuleGeometry(0.075, 0.38, 8, 16) },
-    { p: [0.1, 0.33, 0], g: new THREE.CapsuleGeometry(0.075, 0.38, 8, 16) },
-    { p: [-0.1, -0.15, 0], g: new THREE.CapsuleGeometry(0.055, 0.38, 8, 16) },
-    { p: [0.1, -0.15, 0], g: new THREE.CapsuleGeometry(0.055, 0.38, 8, 16) },
-    { p: [-0.1, -0.42, 0.05], g: new THREE.SphereGeometry(0.05, 16, 10), s: [0.8, 0.5, 1.6] },
-    { p: [0.1, -0.42, 0.05], g: new THREE.SphereGeometry(0.05, 16, 10), s: [0.8, 0.5, 1.6] },
-  ] as { p: [number, number, number]; r?: [number, number, number]; s?: [number, number, number]; g: THREE.BufferGeometry }[], [])
-  return <group>{parts.map((x, i) => <mesh key={i} position={x.p} rotation={x.r ?? [0, 0, 0]} scale={x.s ?? [1, 1, 1]} geometry={x.g} material={mat} />)}</group>
+/** If the model file cannot load, keep the organ glows and the cards instead of breaking the page. */
+class ModelBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+  static getDerivedStateFromError() { return { failed: true } }
+  render() { return this.state.failed ? null : this.props.children }
 }
 
-interface OrganDef { system: SystemId; pieces: { p: [number, number, number]; s: [number, number, number] }[] }
+function BodyModel() {
+  const { scene } = useGLTF(BODY_MODEL_URL)
+  useFrame(({ clock }) => { if (!reduceMotion()) HOLO_UNIFORMS.t.value = clock.elapsedTime })
+  const body = useMemo(() => {
+    // Bake every mesh (skinned or not) into one static group in its rest pose, then fit it on the platform.
+    scene.updateMatrixWorld(true)
+    const root = new THREE.Group()
+    scene.traverse((o) => {
+      const m = o as THREE.Mesh
+      if (!m.isMesh) return
+      const g = m.geometry.clone().applyMatrix4(m.matrixWorld)
+      for (const a of ['skinIndex', 'skinWeight', 'uv', 'uv1', 'uv2', 'color', 'tangent']) g.deleteAttribute(a)
+      if (!g.attributes.normal) g.computeVertexNormals()
+      const mesh = new THREE.Mesh(g, HOLO_MAT); mesh.raycast = () => {}; root.add(mesh)
+    })
+    const box = new THREE.Box3().setFromObject(root)
+    const size = box.getSize(new THREE.Vector3()); const k = H / size.y
+    const centre = box.getCenter(new THREE.Vector3())
+    root.position.set(-centre.x, -box.min.y, -centre.z)
+    const g = new THREE.Group(); g.add(root); g.scale.setScalar(k); g.position.y = FLOOR
+    return g
+  }, [scene])
+  return <primitive object={body} />
+}
+
+/** Soft round glow texture, drawn once (canvas, no image file). */
+let glowTex: THREE.Texture | null = null
+function glowTexture() {
+  if (glowTex) return glowTex
+  const c = document.createElement('canvas'); c.width = c.height = 128
+  const g = c.getContext('2d')!; const r = g.createRadialGradient(64, 64, 0, 64, 64, 64)
+  r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(0.25, 'rgba(255,255,255,.55)'); r.addColorStop(0.6, 'rgba(255,255,255,.12)'); r.addColorStop(1, 'rgba(255,255,255,0)')
+  g.fillStyle = r; g.fillRect(0, 0, 128, 128)
+  glowTex = new THREE.CanvasTexture(c); return glowTex
+}
+
+/** Organ glow positions as fractions of body height (x: the person's left is +x; z: front is +z). */
+interface OrganDef { system: SystemId; spots: { f: number; x?: number; z?: number; r: number }[] }
 const ORGANS: OrganDef[] = [
-  { system: 'brain', pieces: [{ p: [0, 1.66, 0.0], s: [0.11, 0.095, 0.115] }] },
-  { system: 'cardio', pieces: [{ p: [0.045, 1.09, 0.06], s: [0.06, 0.07, 0.055] }] },
-  { system: 'resp', pieces: [{ p: [-0.085, 1.15, 0.0], s: [0.07, 0.13, 0.065] }, { p: [0.1, 1.16, -0.01], s: [0.065, 0.125, 0.06] }] },
-  { system: 'metabolic', pieces: [{ p: [0.05, 0.9, 0.04], s: [0.1, 0.055, 0.06] }, { p: [-0.05, 0.82, 0.05], s: [0.06, 0.045, 0.045] }, { p: [0, 0.74, 0.04], s: [0.09, 0.05, 0.05] }] },
-  { system: 'msk', pieces: [
-    { p: [0, 1.05, -0.1], s: [0.018, 0.34, 0.018] }, { p: [-0.1, 0.33, 0], s: [0.022, 0.22, 0.022] }, { p: [0.1, 0.33, 0], s: [0.022, 0.22, 0.022] },
-    { p: [-0.1, -0.15, 0], s: [0.018, 0.21, 0.018] }, { p: [0.1, -0.15, 0], s: [0.018, 0.21, 0.018] }, { p: [0, 0.66, -0.02], s: [0.12, 0.04, 0.05] }] },
-  { system: 'immune', pieces: [
-    { p: [-0.05, 1.41, 0.04], s: [0.018, 0.018, 0.018] }, { p: [0.05, 1.41, 0.04], s: [0.018, 0.018, 0.018] },
-    { p: [-0.2, 1.24, 0.02], s: [0.02, 0.02, 0.02] }, { p: [0.2, 1.24, 0.02], s: [0.02, 0.02, 0.02] },
-    { p: [-0.11, 0.6, 0.07], s: [0.02, 0.02, 0.02] }, { p: [0.11, 0.6, 0.07], s: [0.02, 0.02, 0.02] }, { p: [-0.12, 0.92, -0.02], s: [0.04, 0.028, 0.028] }] },
+  { system: 'brain', spots: [{ f: 0.935, z: 0.005, r: 0.07 }] },
+  { system: 'cardio', spots: [{ f: 0.725, x: 0.018, z: 0.025, r: 0.045 }] },
+  { system: 'resp', spots: [{ f: 0.735, x: -0.05, z: 0.005, r: 0.055 }, { f: 0.735, x: 0.055, z: 0.005, r: 0.05 }] },
+  { system: 'metabolic', spots: [{ f: 0.645, x: -0.04, z: 0.02, r: 0.05 }, { f: 0.65, x: 0.04, z: 0.025, r: 0.04 }, { f: 0.575, z: 0.03, r: 0.06 }] },
+  { system: 'msk', spots: [{ f: 0.79, z: -0.035, r: 0.03 }, { f: 0.68, z: -0.04, r: 0.03 }, { f: 0.57, z: -0.035, r: 0.03 }, { f: 0.5, r: 0.06 }, { f: 0.285, x: -0.045, z: 0.01, r: 0.035 }, { f: 0.285, x: 0.045, z: 0.01, r: 0.035 }] },
+  { system: 'immune', spots: [{ f: 0.835, x: -0.025, z: 0.01, r: 0.022 }, { f: 0.835, x: 0.025, z: 0.01, r: 0.022 }, { f: 0.745, x: -0.1, r: 0.025 }, { f: 0.745, x: 0.1, r: 0.025 }, { f: 0.625, x: 0.07, z: -0.01, r: 0.03 }, { f: 0.475, x: -0.06, z: 0.02, r: 0.022 }, { f: 0.475, x: 0.06, z: 0.02, r: 0.022 }] },
 ]
 
 function Organ({ def, status, onPick }: { def: OrganDef; status: Status; onPick?: (s: SystemId) => void }) {
   const ref = useRef<THREE.Group>(null)
   const color = STATUS_COLOR[status]
   const alert = status === 'concern' || status === 'urgent'
-  const mat = useMemo(() => new THREE.MeshBasicMaterial({ color, transparent: true, opacity: status === 'normal' ? 0.55 : status === 'unknown' ? 0.35 : 0.95, blending: THREE.AdditiveBlending, depthWrite: false }), [color, status])
-  const glow = useMemo(() => new THREE.MeshBasicMaterial({ color, transparent: true, opacity: status === 'normal' || status === 'unknown' ? 0.08 : 0.28, blending: THREE.AdditiveBlending, depthWrite: false }), [color, status])
-  const sphere = useMemo(() => new THREE.SphereGeometry(1, 28, 18), [])
+  const strength = status === 'normal' ? 0.35 : status === 'unknown' ? 0.25 : status === 'watch' ? 0.8 : 1
+  const halo = useMemo(() => new THREE.SpriteMaterial({ map: glowTexture(), color, transparent: true, opacity: strength * 0.55, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false }), [color, strength])
+  const core = useMemo(() => new THREE.SpriteMaterial({ map: glowTexture(), color, transparent: true, opacity: strength, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false }), [color, strength])
+  const hit = useMemo(() => new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }), [])
+  const sphere = useMemo(() => new THREE.SphereGeometry(1, 12, 8), [])
   useFrame(({ clock }) => {
     if (!ref.current || reduceMotion()) return
-    ref.current.scale.setScalar(alert ? 1 + 0.09 * Math.sin(clock.elapsedTime * (status === 'urgent' ? 6 : 3.4)) : 1)
+    const k = alert ? 1 + 0.16 * Math.sin(clock.elapsedTime * (status === 'urgent' ? 6 : 3.4)) : 1
+    ref.current.children.forEach((c) => { if (c.userData.halo) c.scale.setScalar(c.userData.base * k) })
   })
   return (
     <group ref={ref}>
-      {def.pieces.map((x, i) => (
-        <group key={i} position={x.p}>
-          <mesh scale={x.s} geometry={sphere} material={mat} onClick={(e) => { e.stopPropagation(); onPick?.(def.system) }}
-            onPointerOver={() => { document.body.style.cursor = 'pointer' }} onPointerOut={() => { document.body.style.cursor = '' }} />
-          <mesh scale={x.s.map((v) => v * 1.9) as [number, number, number]} geometry={sphere} material={glow} />
-        </group>
-      ))}
+      {def.spots.map((s, i) => {
+        const p: [number, number, number] = [(s.x ?? 0) * H, FLOOR + s.f * H, (s.z ?? 0) * H]
+        const r = s.r * H
+        return [
+          <sprite key={`h${i}`} position={p} scale={r * 4.2} material={halo} userData={{ halo: true, base: r * 4.2 }} renderOrder={2} />,
+          <sprite key={`c${i}`} position={p} scale={r * 1.9} material={core} renderOrder={3} />,
+          <mesh key={`m${i}`} position={p} scale={r * 1.2} geometry={sphere} material={hit} onClick={(e) => { e.stopPropagation(); onPick?.(def.system) }}
+            onPointerOver={() => { document.body.style.cursor = 'pointer' }} onPointerOut={() => { document.body.style.cursor = '' }} />,
+        ]
+      })}
     </group>
   )
 }
@@ -140,7 +167,7 @@ export function Body3D({ systems, cards = [], onPick, height = 460 }: { systems:
         {ok ? (
           <Canvas camera={{ position: [0, 0.62, 3.25], fov: 42 }} dpr={[1, 1.6]} gl={{ antialias: true, alpha: true }}>
             <group position={[0, -0.02, 0]}>
-              <Shell />
+              <ModelBoundary><Suspense fallback={null}><BodyModel /></Suspense></ModelBoundary>
               {ORGANS.map((o) => <Organ key={o.system} def={o} status={systems[o.system] ?? 'unknown'} onPick={onPick} />)}
               <Platform />
             </group>
