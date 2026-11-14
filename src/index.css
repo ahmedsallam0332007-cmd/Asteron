@@ -33,11 +33,7 @@ body { background: var(--color-void); color: var(--color-star); font-family: var
 :focus-visible { outline: 2px solid var(--color-signal); outline-offset: 3px; border-radius: 6px; }
 
 /* Space backdrop for inner pages: a real NASA image (Cosmic Cliffs, JWST), darkened so text stays readable. */
-.space-bg { position: fixed; inset: 0; z-index: -1; background:
-  linear-gradient(180deg, rgba(8,5,12,.82), rgba(8,5,12,.92)),
-  radial-gradient(60% 50% at 85% 0%, rgba(124,58,237,.35), transparent 70%),
-  url('/media/nebula-cosmic-cliffs.webp') center / cover no-repeat, var(--color-void);
-  filter: saturate(.8) hue-rotate(35deg); }
+.space-bg { position: fixed; inset: 0; z-index: -1; background: var(--color-void); }
 
 /* Glass surfaces */
 .glass { background: rgba(22,14,36,.55); border: 1px solid rgba(216,180,254,.18); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }

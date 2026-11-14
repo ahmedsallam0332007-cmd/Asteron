@@ -3,7 +3,6 @@ import { useSystem } from '../../store/system'
 import { linkState } from '../../link/contactPlan'
 import { PROFILES } from '../../link/profiles'
 import { formatWait } from '../../link/escalation'
-import { NebulaSky } from './NebulaSky'
 
 
 const STEPS = [
@@ -44,7 +43,6 @@ export function Home() {
   return (
     <div>
       <section className="relative min-h-[100svh] overflow-hidden -mt-[4.25rem] pt-[4.25rem]">
-        <div aria-hidden className="absolute inset-0"><NebulaSky /></div>
         <div aria-hidden className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,5,12,.8)_0%,rgba(8,5,12,.4)_45%,rgba(8,5,12,0)_100%)]" />
         <div className="relative mx-auto max-w-7xl px-4 min-h-[calc(100svh-4.25rem)] grid content-center gap-6 py-16 pointer-events-none">
           <p className="eyebrow rise">Astronaut health monitoring · offline first · delay aware</p>
@@ -68,8 +66,7 @@ export function Home() {
         <a href="#problem" className="absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-[11px] tracking-[0.2em] text-dust hover:text-star">SCROLL ↓</a>
       </section>
 
-      <div className="relative">
-        <div className="space-bg" aria-hidden />
+      <div className="relative bg-[linear-gradient(180deg,rgba(8,5,12,.35),rgba(8,5,12,.72)_18%,rgba(8,5,12,.78))]">
         <div className="mx-auto max-w-7xl px-4 py-20 grid gap-24">
           <section id="judges" className="glass rounded-3xl p-8 md:p-10 border-signal/40">
             <p className="eyebrow">Judges: start here · 5 minutes, no login, works offline</p>
@@ -86,7 +83,7 @@ export function Home() {
                 <li key={t} className="grid grid-cols-[2rem_1fr] gap-2"><span className="font-mono text-signal">{String(i + 1).padStart(2, '0')}</span><span><Link to={to} className="font-semibold text-orchid hover:underline">{t} →</Link> <span className="text-dust">{d}</span></span></li>
               ))}
             </ol>
-            <p className="mt-5 text-xs text-dust">What works: everything on this site runs for real in your browser (engine, encrypted link, ground console, simulator); 381 automated tests. Limits: crew data is simulated (SIM), medical rules are not yet clinically reviewed, and the link security follows BPSec ideas but is not certified. Project document, 30-second demo, system cycle with test results, and the mission dataset: <a className="text-mauve hover:underline" href="/media/asteron-project.pdf">PDF</a> · <a className="text-mauve hover:underline" href="/media/asteron-demo-30s.mp4">video</a> · <a className="text-mauve hover:underline" href="/media/asteron-system-cycle.pdf">cycle and tests</a> · <Link className="text-mauve hover:underline" to="/data">dataset</Link>.</p>
+            <p className="mt-5 text-xs text-dust">What works: everything on this site runs for real in your browser (engine, encrypted link, ground console, simulator); 381 automated tests. Limits: crew data is simulated (SIM), medical rules are not yet clinically reviewed, and the link security follows BPSec ideas but is not certified. 30-second demo, system cycle with test results, and the mission dataset: <a className="text-mauve hover:underline" href="/media/asteron-demo-30s.mp4">video</a> · <a className="text-mauve hover:underline" href="/media/asteron-system-cycle.pdf">cycle and tests</a> · <Link className="text-mauve hover:underline" to="/data">dataset</Link>.</p>
           </section>
 
           <section id="sensing" className="grid gap-6">
