@@ -1,4 +1,3 @@
-import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { useSystem } from '../../store/system'
 import { linkState } from '../../link/contactPlan'
@@ -6,7 +5,6 @@ import { PROFILES } from '../../link/profiles'
 import { formatWait } from '../../link/escalation'
 import { NebulaSky } from './NebulaSky'
 
-const EarthScene = lazy(() => import('./EarthScene').then((m) => ({ default: m.EarthScene })))
 
 const STEPS = [
   { n: '01', k: 'Measure', t: 'Daily check-in', d: 'Vitals, sleep, mood, stress, workload and symptoms. Every value carries its source: SIM, MANUAL or JUDGE.' },
@@ -48,9 +46,6 @@ export function Home() {
       <section className="relative min-h-[100svh] overflow-hidden -mt-[4.25rem] pt-[4.25rem]">
         <div aria-hidden className="absolute inset-0"><NebulaSky /></div>
         <div aria-hidden className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,5,12,.8)_0%,rgba(8,5,12,.4)_45%,rgba(8,5,12,0)_100%)]" />
-        <div aria-hidden className="absolute inset-0" id="earth-scene">
-          <Suspense fallback={null}><EarthScene /></Suspense>
-        </div>
         <div className="relative mx-auto max-w-7xl px-4 min-h-[calc(100svh-4.25rem)] grid content-center gap-6 py-16 pointer-events-none">
           <p className="eyebrow rise">Astronaut health monitoring · offline first · delay aware</p>
           <h1 className="rise font-display font-bold text-[clamp(2.6rem,6.6vw,5.6rem)] leading-[1.02] tracking-[-0.02em] max-w-[13ch] [text-wrap:balance]">
@@ -64,13 +59,9 @@ export function Home() {
             <Link to="/link" className="btn">See the Mission Link</Link>
             <a href="#judges" className="btn">Judges: start here</a>
           </div>
-          <div className="rise grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-3xl mt-2">
-            {[['22.2 min', 'longest one-way delay to Mars', 'JPL HORIZONS'], ['~2 weeks', 'link blackout at solar conjunction', 'NASA 2° RULE'], ['600 mSv', 'career radiation limit', 'NASA-STD-3001']].map(([v, l, s]) => (
-              <div key={v} className="glass rounded-2xl px-4 py-3">
-                <b className="block font-display text-2xl tabular-nums">{v}</b>
-                <span className="text-xs text-dust">{l}</span>
-                <small className="block font-mono text-[10px] text-mauve mt-1 tracking-wider">{s}</small>
-              </div>
+          <div className="rise flex flex-wrap gap-x-12 gap-y-4 mt-4">
+            {[['22.2 min', 'longest one-way delay to Mars, JPL Horizons'], ['~2 weeks', 'link blackout at solar conjunction'], ['600 mSv', 'NASA career radiation limit']].map(([v, l]) => (
+              <div key={v}><b className="block font-display text-3xl font-bold tabular-nums">{v}</b><span className="text-sm text-dust">{l}</span></div>
             ))}
           </div>
         </div>
@@ -96,6 +87,25 @@ export function Home() {
               ))}
             </ol>
             <p className="mt-5 text-xs text-dust">What works: everything on this site runs for real in your browser (engine, encrypted link, ground console, simulator); 381 automated tests. Limits: crew data is simulated (SIM), medical rules are not yet clinically reviewed, and the link security follows BPSec ideas but is not certified. Project document, 30-second demo, system cycle with test results, and the mission dataset: <a className="text-mauve hover:underline" href="/media/asteron-project.pdf">PDF</a> · <a className="text-mauve hover:underline" href="/media/asteron-demo-30s.mp4">video</a> · <a className="text-mauve hover:underline" href="/media/asteron-system-cycle.pdf">cycle and tests</a> · <Link className="text-mauve hover:underline" to="/data">dataset</Link>.</p>
+          </section>
+
+          <section id="sensing" className="grid gap-6">
+            <div><p className="eyebrow">How each astronaut is read</p><h2 className="mt-2 font-display text-[clamp(1.8rem,3.4vw,2.8rem)] font-bold max-w-[28ch] leading-tight">Not the spacesuit. A smart shirt, a one-minute check-in and a dosimeter.</h2>
+              <p className="mt-3 text-dust max-w-[80ch]">Inside the station astronauts wear normal clothes; the spacesuit is only for spacewalks. Asteron reads each person every day from three sources, then assesses on board.</p></div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                ['01 · Smart shirt (wearable)', 'Worn at work, in sleep and during exercise. Reference: the CSA Bio-Monitor used on the ISS (smart shirt, headband, tablet app), which measures heart activity, blood pressure, breathing, skin temperature, blood oxygen and activity.', 'Resting heart rate · blood pressure · SpO₂ · temperature · sleep hours · exercise minutes'],
+                ['02 · One-minute check-in', 'On the station tablet, for what no sensor can measure.', 'Mood · stress · workload · headache · rash · dizziness · vision change'],
+                ['03 · Personal dosimeter', 'Daily radiation dose, tracked against NASA’s limits.', 'Daily dose · career dose vs 600 mSv'],
+              ].map(([t, d, k]) => (
+                <div key={t} className="glass rounded-2xl p-5 grid gap-2 content-start">
+                  <span className="font-mono text-xs text-signal tracking-[0.14em] uppercase">{t}</span>
+                  <p className="text-sm text-dust">{d}</p>
+                  <p className="text-sm font-semibold text-star">{k}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-dust max-w-[90ch]">The tablet keeps a daily summary on the station → the engine assesses it against the astronaut’s own normal and NASA-sourced limits → the report is encrypted, signed and queued for Earth. <b className="text-star">In this prototype</b> the shirt and dosimeter are simulated with the same data format and every value is badged <b className="text-star">SIM</b>; typed values are <b className="text-star">MANUAL</b> or <b className="text-star">JUDGE</b>. Connecting real hardware replaces only the input step. Spacesuit (EVA) telemetry is outside this version.</p>
           </section>
 
           <section id="problem" className="glass rounded-3xl p-8 md:p-12">
