@@ -38,5 +38,5 @@ export function ProvenanceBadge({ p }: { p?: Provenance }) {
 }
 
 export function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <section className={`rounded-2xl border border-line bg-hull/80 p-5 ${className}`}>{children}</section>
+  return <section className={`rounded-2xl border border-line bg-hull/55 backdrop-blur-xl p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.06)] ${className}`}>{children}</section>
 }

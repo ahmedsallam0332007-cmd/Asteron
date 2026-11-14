@@ -1,27 +1,30 @@
 @import 'tailwindcss';
-@import '@fontsource/space-grotesk/500.css';
-@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/michroma/400.css';
+@import '@fontsource/sora/500.css';
+@import '@fontsource/sora/700.css';
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/600.css';
 @import '@fontsource/jetbrains-mono/500.css';
 
+/* Asteron identity, palette C (Rose Nebula). Purple is brand only, never a status colour. */
 @theme {
-  --color-void: #07060a;
-  --color-abyss: #0f0b17;
-  --color-hull: #1a1426;
-  --color-line: #2c2342;
-  --color-asteron: #7b3fe4;
-  --color-mauve: #b58be8;
-  --color-orchid: #ebddff;
-  --color-signal: #3dd6f5;
-  --color-star: #f4f1fa;
-  --color-dust: #a79fbd;
+  --color-void: #08050c;
+  --color-abyss: #110a1c;
+  --color-hull: #1a1029;
+  --color-line: #33224d;
+  --color-asteron: #7c3aed;
+  --color-mauve: #d8b4fe;
+  --color-orchid: #f5e8ff;
+  --color-signal: #f0abfc;
+  --color-star: #f7f2ff;
+  --color-dust: #bfb3d6;
   --color-st-normal: #22c55e;
   --color-st-watch: #f5b700;
   --color-st-concern: #f97316;
   --color-st-urgent: #ef4444;
   --color-st-unknown: #94a3b8;
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-brand: 'Michroma', 'Sora', system-ui, sans-serif;
+  --font-display: 'Sora', system-ui, sans-serif;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
@@ -29,5 +32,39 @@
 html, body, #root { height: 100%; }
 body { background: var(--color-void); color: var(--color-star); font-family: var(--font-sans); }
 :focus-visible { outline: 2px solid var(--color-signal); outline-offset: 3px; border-radius: 6px; }
+
+/* Space backdrop for inner pages: a real NASA image (Cosmic Cliffs, JWST), darkened so text stays readable. */
+.space-bg { position: fixed; inset: 0; z-index: -1; background:
+  linear-gradient(180deg, rgba(8,5,12,.82), rgba(8,5,12,.92)),
+  radial-gradient(60% 50% at 85% 0%, rgba(124,58,237,.35), transparent 70%),
+  url('/media/nebula-cosmic-cliffs.webp') center / cover no-repeat, var(--color-void);
+  filter: saturate(.8) hue-rotate(35deg); }
+
+/* Glass surfaces */
+.glass { background: rgba(22,14,36,.55); border: 1px solid rgba(216,180,254,.18); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+
+/* Premium glass buttons */
+.btn { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: .55rem; font: 600 .9rem/1 var(--font-sans); color: var(--color-star);
+  padding: .8rem 1.2rem; border-radius: .85rem; border: 0; cursor: pointer; text-decoration: none; white-space: nowrap;
+  background: linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.03)); backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(0,0,0,.25), 0 10px 28px -14px rgba(0,0,0,.8); transition: transform .18s ease, box-shadow .18s ease, opacity .18s; }
+.btn::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: -1;
+  background: linear-gradient(135deg, rgba(245,232,255,.6), rgba(216,180,254,.12) 40%, rgba(240,171,252,.45));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+.btn::after { content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.2) 50%, transparent 70%); background-size: 250% 100%; background-position: 120% 0; transition: background-position .7s ease; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:hover:not(:disabled)::after { background-position: -20% 0; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn-primary { background: linear-gradient(180deg, rgba(167,110,255,.8), rgba(124,58,237,.7)); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 12px 36px -12px rgba(124,58,237,.95); }
+.btn-danger { background: linear-gradient(180deg, rgba(239,68,68,.45), rgba(239,68,68,.2)); }
+.btn-sm { padding: .5rem .8rem; font-size: .8rem; border-radius: .7rem; }
+.eyebrow { font: 500 .72rem/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--color-mauve); }
+.grad-text { background: linear-gradient(100deg, #f5e8ff, #d8b4fe 45%, #f0abfc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
-@media print { header, footer, button { display: none !important; } body { background: #fff; color: #000; } pre { border: 0 !important; background: #fff !important; } }
+@media print { header, footer, button, .space-bg { display: none !important; } body { background: #fff; color: #000; } pre { border: 0 !important; background: #fff !important; } }

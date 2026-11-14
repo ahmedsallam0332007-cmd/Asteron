@@ -1,13 +1,19 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import { useLiveQuery } from 'dexie-react-hooks'
+import { cardsFrom, latestOf } from '../../body/cards'
 import { content } from '../../../content'
 import { useCrewOverview } from '../../../data/useCrewOverview'
 import { useApp } from '../../../store/app'
+import { station } from '../../../store/boot'
 import { SYSTEM_LABEL } from '../../../lib/systems'
 import { ago } from '../../../lib/format'
 import { Card, ProvenanceBadge, StatusBadge } from '../../components/Status'
 import { checkedInToday } from '../../../data/checkin'
 import { simulateAllCheckIns } from '../../../data/simulateAll'
 import { stationDb } from '../../../data/db'
+
+const Body3D = lazy(() => import('../../body/Body3D').then((m) => ({ default: m.Body3D })))
 
 const lastAt = (rs: { takenAt: string }[]) => rs.reduce<string | undefined>((m, r) => (!m || r.takenAt > m ? r.takenAt : m), undefined)
 
@@ -18,6 +24,9 @@ function PendingChip() {
 export function StationDashboard() {
   const overview = useCrewOverview()
   const { crewId, setCrew, now } = useApp()
+  const navigate = useNavigate()
+  const inbox = useLiveQuery(() => stationDb.inbox.orderBy('receivedAt').reverse().limit(4).toArray(), [])
+  const decision = useLiveQuery(async () => (await stationDb.escalations.where('crewId').equals(crewId).sortBy('at')).at(-1), [crewId])
   if (!overview) return <p className="text-dust">Loading station data…</p>
   const cur = overview.find((o) => o.crew.id === crewId) ?? overview[0]
   const tier = content.tiers.find((t) => t.tier === cur.tier.tier)!
@@ -33,8 +42,8 @@ export function StationDashboard() {
           <span><b>{pendingCount} of 6</b> crew members have not checked in today. Nothing is assessed for today until they do.</span>
           <button
             id="simulate-all"
-            className="rounded-lg border border-mauve px-3 py-1.5 font-semibold text-mauve hover:bg-mauve/10"
-            onClick={async () => { const t = new Date().toISOString(); await simulateAllCheckIns(stationDb, t); useApp.getState().setNow(t) }}
+            className="btn btn-sm"
+            onClick={async () => { await simulateAllCheckIns(stationDb, station(), Date.parse(useApp.getState().now)) }}
           >Run simulated check-ins for the rest</button>
         </div>
       )}
@@ -71,6 +80,12 @@ export function StationDashboard() {
           <p className="mt-3 text-xs font-mono uppercase tracking-wider text-dust">
             {curDone ? `Today's check-in · ${ago(curLast!, now)}` : `Today's check-in not done · showing the last result (${curLast ? ago(curLast, now) : 'none'})`}
           </p>
+          <div id="body-3d" className="mt-3 rounded-2xl border border-line/70 bg-[radial-gradient(60%_60%_at_50%_45%,rgba(124,58,237,.22),transparent_70%)] p-3">
+            <Suspense fallback={<p className="p-4 text-sm text-dust">Loading the body map…</p>}>
+              <Body3D systems={Object.fromEntries(cur.systems.map((s) => [s.systemId, curDone ? s.status : 'unknown'])) as never} cards={cardsFrom(latestOf(cur.readings))} onPick={(id) => navigate(`/station/system/${id}`)} height={420} />
+            </Suspense>
+            <p className="px-1 pt-2 text-[11px] text-dust">Drag to rotate. A part glows in its status colour; every card says the status in words. Click a part or a card for the rule, the readings and the source.{!curDone && ' Grey until today\'s check-in.'}</p>
+          </div>
           <div className={`mt-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 ${curDone ? '' : 'opacity-60'}`}>
             {cur.systems.map((s) => (
               <Link
@@ -106,16 +121,38 @@ export function StationDashboard() {
               <p className="mt-3 text-sm text-dust">The escalation tier for today is decided after {cur.crew.name.split(' ').slice(1).join(' ')} submits today's readings.</p>
             </>
           )}
+          {curDone && decision && (
+            <p id="station-directive" data-directive={decision.directive} className={`mt-3 rounded-lg border px-3 py-2 text-sm ${decision.directive === 'onboard-protocol' ? 'border-st-watch/50 text-st-watch' : 'border-line text-dust'}`}>
+              <b>{decision.directive === 'onboard-protocol' ? '⚠ On-board protocol now. ' : '✓ Earth can answer in time. '}</b>{decision.explanation}
+            </p>
+          )}
           <div className="mt-5 flex flex-wrap gap-2">
-            <Link to="/station/checkin" className="rounded-xl bg-asteron px-4 py-2.5 font-semibold text-white hover:bg-asteron/85">
+            <Link to="/station/checkin" className="btn btn-primary">
               Start daily check-in
             </Link>
-            <Link to="/station/report" className="rounded-xl border border-mauve px-4 py-2.5 font-semibold text-mauve hover:bg-mauve/10">
+            <Link to="/station/report" className="btn">
               Report for flight surgeon
             </Link>
           </div>
         </Card>
       </div>
+
+      <Card>
+        <div className="flex items-baseline justify-between gap-3"><h2 className="font-display text-lg font-bold">Messages from Earth</h2><span className="font-mono text-xs text-dust">verified · decrypted · acknowledged</span></div>
+        <ul id="station-inbox" className="mt-3 grid gap-2 text-sm">
+          {(inbox ?? []).length === 0 && <li className="text-dust">Nothing received yet. Replies from the flight surgeon arrive here after the link delay.</li>}
+          {(inbox ?? []).map((m) => {
+            const p = m.payload as { text?: string; message?: string; shelterText?: string; crewId?: string }
+            return (
+              <li key={m.id} data-kind={m.kind} className={`rounded-xl border p-3 ${m.kind === 'space-weather' ? 'border-st-urgent/60 bg-st-urgent/10' : 'border-line bg-void/40'}`}>
+                <p className="font-semibold">{m.kind === 'space-weather' ? '☢ Solar storm warning: shelter now' : `Flight surgeon → ${p.crewId}`}</p>
+                <p className="text-dust">{m.kind === 'space-weather' ? `${p.message} ${p.shelterText}` : p.text}</p>
+                <p className="mt-1 font-mono text-[11px] text-dust">Sent {new Date(m.createdAt).toISOString().slice(11, 16)} UTC · arrived {new Date(m.receivedAt).toISOString().slice(11, 16)} UTC</p>
+              </li>
+            )
+          })}
+        </ul>
+      </Card>
 
       <Card>
         <h2 className="font-display text-lg font-bold mb-3">Latest readings</h2>

@@ -7,6 +7,8 @@ interface AppState {
   tick: () => void
   /** Moves the clock forward only (never back), so freshly written readings are never 'in the future'. */
   setNow: (iso: string) => void
+  /** Follows the mission clock exactly (a reset may move it to another date). */
+  syncNow: (iso: string) => void
 }
 
 export const useApp = create<AppState>((set) => ({
@@ -15,6 +17,7 @@ export const useApp = create<AppState>((set) => ({
   now: new Date().toISOString(),
   tick: () => set((s) => ({ now: maxIso(s.now, new Date().toISOString()) })),
   setNow: (iso) => set((s) => ({ now: maxIso(s.now, iso) })),
+  syncNow: (iso) => set((s) => (s.now === iso ? s : { now: iso })),
 }))
 
 const maxIso = (a: string, b: string) => (a > b ? a : b)

@@ -128,6 +128,18 @@ describe('full mission loop (headless): everything the website will show, proven
     expect(await sys.groundDb.reports.count()).toBe(1)
   })
 
+  it('a reset to an earlier date never makes a tick fail (reset and tick can overlap in the browser)', async () => {
+    const t0 = Date.parse('2026-11-13T14:30:00Z')
+    const sys = await boot('iss', t0)
+    await runFor(sys, 5000, 1000)
+    const old = sys.mission
+    const resetting = sys.reset({ epoch: Date.parse('2023-11-18T14:30:00Z'), scenarioId: 'healthy', profile: 'mars', realNow: 0 })
+    await expect(sys.tick(1)).resolves.toBeDefined()
+    await resetting
+    expect(sys.mission).not.toBe(old)
+    await expect(sys.tick(2)).resolves.toBeDefined()
+  })
+
   it('the mission clock compresses time on request and never runs backwards', async () => {
     const t0 = Date.parse('2026-11-13T14:30:00Z')
     const sys = await boot('iss', t0)

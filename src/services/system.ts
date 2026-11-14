@@ -109,6 +109,8 @@ export class AsteronSystem {
   setCut(v: boolean) { this.mission.setCut(v) }
   isCut() { return this.mission.isCut() }
   compression() { return this.clock.compression }
+  /** The clock anchor, so a page reload resumes the same mission time. */
+  clockState(): ClockState { return { ...this.clock } }
 
   missionNow(realNow = this.lastReal) { return clockAt(this.clock, realNow) }
   setCompression(c: number, realNow: number) { this.clock = rebase(this.clock, realNow, { compression: c }); this.lastReal = realNow }
@@ -117,7 +119,9 @@ export class AsteronSystem {
   /** Called by the page loop with the wall clock. */
   async tick(realNow: number) {
     this.lastReal = Math.max(this.lastReal, realNow)
-    return this.mission.tick(this.missionNow())
+    const now = this.missionNow()
+    if (now < this.mission.lastTick()) return { down: [], up: [] } // a reset moved the clock; the new mission takes over
+    return this.mission.tick(now)
   }
 
   /** Moves mission time forward by `ms` (fast-forward) and runs the link up to then. */

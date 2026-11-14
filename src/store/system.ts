@@ -1,6 +1,6 @@
 import { createStore } from 'zustand/vanilla'
 import { useStore } from 'zustand'
-import type { GroundDB, StationDB } from '../data/db'
+import { groundDb, stationDb, type GroundDB, type StationDB } from '../data/db'
 import type { PreflightDB } from '../link/pairing'
 import type { ProfileId } from '../link/profiles'
 import type { Delivered } from '../services/mission'
@@ -21,7 +21,7 @@ export interface SystemState {
   /** Increments after every tick, so views know to re-read the databases. */
   version: number
   events: LinkEvent[]
-  start(o: { epoch: number; profile: ProfileId; scenarioId: string; reset?: boolean }): Promise<void>
+  start(o: { epoch: number; profile: ProfileId; scenarioId: string; reset?: boolean; compression?: number }): Promise<void>
   tick(): Promise<void>
   fastForward(ms: number): Promise<void>
   reset(o: { epoch: number; profile: ProfileId; scenarioId: string }): Promise<void>
@@ -45,11 +45,23 @@ export interface StoreOptions {
   autoTick?: boolean
 }
 
+export interface SavedMission { missionAt: number; realAt: number; compression: number; profile: ProfileId }
+const SAVE_KEY = 'asteron.mission'
+/** Per-browser convenience: resume the same mission clock after a reload. Never required for correctness. */
+export function loadSavedMission(): SavedMission | null {
+  try { const v = JSON.parse(localStorage.getItem(SAVE_KEY) ?? 'null'); return v && Number.isFinite(v.missionAt) && Number.isFinite(v.realAt) && v.compression >= 1 && v.profile ? v : null } catch { return null }
+}
+
 export function createSystemStore(opts: StoreOptions = {}) {
   const now = opts.clock ?? (() => Date.now())
   let timer: ReturnType<typeof setInterval> | undefined
   let busy = false
 
+  const save = () => {
+    const sys = store.getState().system
+    if (!sys || typeof localStorage === 'undefined') return
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify({ ...sys.clockState(), profile: sys.profile() })) } catch { /* storage may be blocked */ }
+  }
   const store = createStore<SystemState>()((set, get) => {
     const after = (out: { down: Delivered[]; up: Delivered[] }) => {
       const sys = get().system!
@@ -62,11 +74,12 @@ export function createSystemStore(opts: StoreOptions = {}) {
       async start(o) {
         try {
           set({ status: 'booting' })
-          const system = await AsteronSystem.boot({ role: opts.role, stationDb: opts.stationDb, groundDb: opts.groundDb, preflight: opts.preflight, transport: opts.transport, profile: o.profile, epoch: o.epoch, realNow: now() })
+          const system = await AsteronSystem.boot({ role: opts.role, stationDb: opts.stationDb, groundDb: opts.groundDb, preflight: opts.preflight, transport: opts.transport, profile: o.profile, epoch: o.epoch, realNow: now(), compression: o.compression })
           set({ status: 'pairing', system })
           await system.ready()
           if (o.reset !== false) await system.reset({ epoch: o.epoch, scenarioId: o.scenarioId, profile: o.profile, realNow: now() })
           set({ status: 'ready', profile: o.profile, missionNow: system.missionNow(now()), cut: system.isCut(), compression: system.compression(), events: [] })
+          save()
           if (opts.autoTick) timer = setInterval(() => void get().tick(), 1000)
         } catch (e) {
           set({ status: 'error', error: e instanceof Error ? e.message : String(e) })
@@ -84,23 +97,27 @@ export function createSystemStore(opts: StoreOptions = {}) {
         const sys = get().system
         if (!sys) return
         busy = true
-        try { after(await sys.advanceMission(ms)) } finally { busy = false }
+        try { after(await sys.advanceMission(ms)) } finally { busy = false; save() }
       },
 
       async reset(o) {
         const sys = get().system
         if (!sys) return
-        await sys.reset({ ...o, realNow: now() })
+        while (busy) await new Promise((r) => setTimeout(r, 20))
+        busy = true
+        try { await sys.reset({ ...o, realNow: now() }) } finally { busy = false }
         set((s) => ({ profile: o.profile, missionNow: sys.missionNow(now()), events: [], version: s.version + 1 }))
+        save()
       },
 
       setCut(v) { get().system?.setCut(v); set({ cut: v }) },
-      setProfile(p) { get().system?.setProfile(p); set({ profile: p }) },
+      setProfile(p) { get().system?.setProfile(p); set({ profile: p }); save() },
       setCompression(c) {
         const sys = get().system
         if (!sys) return
         sys.setCompression(c, now())
         set({ compression: c })
+        save()
       },
       tamperNext(dir) { get().system?.transport.tamperNext(dir, 1) },
       pushEvents(e) { if (e.length) set((s) => ({ events: [...s.events, ...e].slice(-MAX_EVENTS) })) },
@@ -111,5 +128,5 @@ export function createSystemStore(opts: StoreOptions = {}) {
 }
 
 /** The one store the website uses: both sides in this page, ticking every second. */
-export const systemStore = createSystemStore({ autoTick: true })
+export const systemStore = createSystemStore({ autoTick: true, stationDb, groundDb })
 export const useSystem = <T,>(sel: (s: SystemState) => T) => useStore(systemStore, sel)

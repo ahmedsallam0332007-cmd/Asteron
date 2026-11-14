@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { content } from '../../../content'
 import { stationDb } from '../../../data/db'
-import { checkedInToday, saveCheckIn, validate } from '../../../data/checkin'
+import { checkedInToday, validate } from '../../../data/checkin'
+import { station } from '../../../store/boot'
 import { useCrewReadings, usePendingToday } from '../../../data/hooks'
 import { assess } from '../../../engine'
 import type { Provenance, Reading } from '../../../engine/types'
@@ -12,7 +13,7 @@ import { usualValues } from '../../../lib/usual'
 import { Card, ProvenanceBadge, StatusBadge } from '../../components/Status'
 import { AnchorNote } from '../../components/Anchor'
 
-type Analysis = { readings: Reading[]; at: string; result: ReturnType<typeof assess>; counts: Record<string, number> }
+type Analysis = { readings: Reading[]; at: string; result: ReturnType<typeof assess>; counts: Record<string, number>; link: { directive: string; explanation: string }; queued: string[] }
 
 const MANUAL: Provenance = { kind: 'manual', enteredBy: 'crew' }
 
@@ -49,12 +50,12 @@ function CheckInForm() {
     const { errors, parsed } = validate(values, plausible)
     setErrors(errors)
     if (Object.keys(errors).length) return
-    const now = new Date().toISOString()
-    const saved = await saveCheckIn(stationDb, crewId, parsed, now, provenanceOf)
-    useApp.getState().setNow(now)
+    const now = useApp.getState().now
+    const result = await station().submitCheckIn({ crewId, values: parsed, provenance: provenanceOf, now: Date.parse(now) })
+    const saved = (await stationDb.readings.where('crewId').equals(crewId).toArray()).filter((r) => r.takenAt === now)
     const all = await stationDb.readings.where('crewId').equals(crewId).toArray()
     const counts = saved.reduce<Record<string, number>>((m, r) => ({ ...m, [r.provenance!.kind]: (m[r.provenance!.kind] ?? 0) + 1 }), {})
-    setAnalysis({ readings: all, at: now, result: assess(content, all, now), counts })
+    setAnalysis({ readings: all, at: now, result: assess(content, all, now), counts, link: result.link, queued: result.queued.map((q) => q.kind) })
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
     if (reduce) setStep(5)
     else { setStep(1); [2, 3, 4, 5].forEach((s, i) => setTimeout(() => setStep(s), 280 * (i + 1))) }
@@ -116,7 +117,7 @@ function CheckInForm() {
             </div>
           ))}
           <div className="sm:col-span-2">
-            <button type="submit" id="analyze" className="rounded-xl bg-asteron px-5 py-2.5 font-semibold text-white hover:bg-asteron/85">
+            <button type="submit" id="analyze" className="btn btn-primary">
               Save and analyse
             </button>
           </div>
@@ -150,6 +151,10 @@ function CheckInForm() {
               <li id="analysis-result" className="rounded-xl border border-line bg-abyss p-3">
                 <div className="flex items-center gap-3"><span className="font-display text-lg font-bold">{crew.name}</span><StatusBadge status={analysis.result.overall.status} /></div>
                 <p className="mt-1">Tier {tier.tier} · {tier.label}</p>
+                <p id="link-decision" data-directive={analysis.link.directive} className={`mt-2 rounded-lg border px-3 py-2 ${analysis.link.directive === 'onboard-protocol' ? 'border-st-watch/50 text-st-watch' : 'border-line text-dust'}`}>
+                  <span className="font-semibold">{analysis.link.directive === 'onboard-protocol' ? '⚠ On-board protocol now. ' : '✓ Earth can answer in time. '}</span>{analysis.link.explanation}
+                </p>
+                <p className="mt-2 text-xs text-dust">Sealed and queued for Earth: {analysis.queued.join(', ')} (AES-GCM-256 + ECDSA). <Link to="/link" className="text-mauve hover:underline">Watch it travel →</Link></p>
                 <div className="mt-2 flex gap-3 text-mauve">
                   <Link to="/station" className="hover:underline">Dashboard →</Link>
                   <Link to="/station/report" className="hover:underline">Report →</Link>

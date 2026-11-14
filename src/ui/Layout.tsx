@@ -1,80 +1,83 @@
 import { useEffect } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { Logo } from './components/Logo'
-import { useApp } from '../store/app'
-import { stationDb } from '../data/db'
 import { SCENARIOS } from '../sim'
 import { useScenarioId } from '../data/hooks'
-import { ensureSeeded, seedScenario } from '../data/seed'
+import { bootSystem } from '../store/boot'
+import { useSystem, systemStore } from '../store/system'
+import { oneWaySeconds } from '../link/contactPlan'
+import { PROFILES } from '../link/profiles'
+import { formatWait } from '../link/escalation'
 
 const NAV = [
   ['/station', 'Station'],
+  ['/link', 'Mission Link'],
   ['/ground', 'Ground'],
-  ['/science', 'Hazards'],
-  ['/nasa', 'NASA Data'],
   ['/lab', 'Judge Lab'],
+  ['/data', 'Data & Sources'],
   ['/verify', 'Verify'],
   ['/about', 'About'],
 ] as const
 
+function LinkChip() {
+  const status = useSystem((s) => s.status)
+  const profile = useSystem((s) => s.profile)
+  const cut = useSystem((s) => s.cut)
+  const now = useSystem((s) => s.missionNow)
+  if (status !== 'ready') return <span className="font-mono text-xs text-dust">{status === 'error' ? 'System error' : 'Starting system…'}</span>
+  let delay = ''
+  try { delay = formatWait(oneWaySeconds(profile, now).sec * 1000) } catch { delay = 'n/a' }
+  return (
+    <NavLink to="/link" id="link-chip" className="hidden lg:inline-flex items-center gap-2 font-mono text-xs text-signal whitespace-nowrap">
+      <i className={`inline-block size-2 rounded-full ${cut ? 'bg-st-urgent' : 'bg-signal pulse-dot'}`} aria-hidden />
+      {PROFILES[profile].label.split(' (')[0].toUpperCase()} · {cut ? 'LINK CUT' : `${delay} one-way`}
+    </NavLink>
+  )
+}
+
 export function Layout() {
-  const tick = useApp((s) => s.tick)
+  const { pathname } = useLocation()
+  const home = pathname === '/'
   const scenarioId = useScenarioId()
-  useEffect(() => {
-    const now = new Date().toISOString()
-    ensureSeeded(stationDb, now).then(() => useApp.getState().setNow(now))
-    const t = setInterval(tick, 30_000)
-    return () => clearInterval(t)
-  }, [tick])
+  const error = useSystem((s) => s.error)
+  useEffect(() => { void bootSystem() }, [])
 
   return (
     <div className="min-h-full flex flex-col">
-      <header className="sticky top-0 z-20 border-b border-line bg-void/90 backdrop-blur">
-        <div className="mx-auto max-w-7xl px-4 h-14 flex items-center gap-6">
-          <NavLink to="/" className="flex items-center gap-2 font-display font-bold tracking-[0.2em] text-orchid">
-            <Logo size={24} /> ASTERON
+      {!home && <div className="space-bg" aria-hidden />}
+      <header className="sticky top-3 z-30 px-3">
+        <div className="glass mx-auto max-w-7xl rounded-2xl px-4 h-14 flex items-center gap-4">
+          <NavLink to="/" className="flex items-center gap-2.5 font-brand text-[13px] tracking-[0.22em] text-orchid shrink-0" aria-label="Asteron home">
+            <Logo size={26} /> ASTERON
           </NavLink>
-          <nav className="flex gap-1 text-sm overflow-x-auto">
+          <nav className="flex gap-1 text-sm overflow-x-auto" aria-label="Main">
             {NAV.map(([to, label]) => (
-              <NavLink
-                key={to}
-                to={to}
-                className={({ isActive }) =>
-                  `px-3 py-1.5 rounded-lg whitespace-nowrap ${isActive ? 'bg-asteron/20 text-orchid' : 'text-dust hover:text-star'}`
-                }
-              >
+              <NavLink key={to} to={to}
+                className={({ isActive }) => `px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors ${isActive ? 'bg-asteron/30 text-orchid' : 'text-dust hover:text-star hover:bg-white/5'}`}>
                 {label}
               </NavLink>
             ))}
           </nav>
-          <label className="ml-auto hidden md:flex items-center gap-2 text-xs text-dust">
-            <span className="font-mono uppercase tracking-wider">Scenario</span>
-            <select
-              id="scenario"
-              className="bg-abyss border border-line rounded-lg px-2 py-1 text-star"
-              value={scenarioId ?? ''}
-              onChange={async (e) => {
-                const now = new Date().toISOString()
-                await seedScenario(stationDb, e.target.value, now)
-                useApp.getState().setNow(now)
-              }}
-            >
-              {SCENARIOS.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.title}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="ml-auto flex items-center gap-4">
+            <LinkChip />
+            <label className="hidden xl:flex items-center gap-2 text-xs text-dust">
+              <span className="font-mono uppercase tracking-wider">Scenario</span>
+              <select id="scenario" className="bg-abyss/80 border border-line rounded-lg px-2 py-1 text-star" value={scenarioId ?? ''}
+                onChange={async (e) => { const s = systemStore.getState(); await s.reset({ epoch: s.missionNow, profile: s.profile, scenarioId: e.target.value }) }}>
+                {SCENARIOS.map((s) => <option key={s.id} value={s.id}>{s.title}</option>)}
+              </select>
+            </label>
+          </div>
         </div>
       </header>
-      <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-6">
+      {error && <div role="alert" className="mx-auto mt-3 max-w-7xl rounded-xl border border-st-urgent/50 bg-st-urgent/10 px-4 py-2 text-sm text-st-urgent">System error: {error}</div>}
+      <main className={home ? 'flex-1' : 'flex-1 mx-auto w-full max-w-7xl px-4 py-8'}>
         <Outlet />
       </main>
-      <footer className="border-t border-line text-xs text-dust">
-        <div className="mx-auto max-w-7xl px-4 py-4 flex flex-wrap gap-x-6 gap-y-1 justify-between">
+      <footer className="border-t border-line/70 text-xs text-dust bg-void/60 backdrop-blur">
+        <div className="mx-auto max-w-7xl px-4 py-5 flex flex-wrap gap-x-6 gap-y-1 justify-between">
           <span>Self-support aid, not a medical diagnosis. Station and Ground crew data is simulated; the NASA Data page shows real published data.</span>
-          <span>Team Asteron · NASA Space Apps 2026 Cairo · not endorsed by NASA</span>
+          <span>Team Asteron · NASA Space Apps 2026 Cairo · imagery: NASA, ESA, CSA, STScI · not endorsed by NASA</span>
         </div>
       </footer>
     </div>

@@ -22,7 +22,7 @@ export function Report() {
           <h1 className="font-display text-2xl font-bold">Report for the flight surgeon</h1>
           <div className="flex gap-2">
             <button
-              className="rounded-xl bg-asteron px-4 py-2 font-semibold text-white"
+              className="btn btn-primary"
               onClick={async () => {
                 try { await navigator.clipboard.writeText(text); setCopied('ok') } catch { setCopied('fail') }
               }}
