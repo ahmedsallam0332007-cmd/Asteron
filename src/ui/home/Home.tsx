@@ -61,7 +61,7 @@ export function Home() {
           <div className="rise flex flex-wrap gap-3 pointer-events-auto">
             <Link to="/station" className="btn btn-primary" id="cta-station">Open the Station</Link>
             <Link to="/link" className="btn">See the Mission Link</Link>
-            <Link to="/ground" className="btn">Ground console</Link>
+            <a href="#judges" className="btn">Judges: start here</a>
           </div>
           <div className="rise grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-3xl mt-2">
             {[['22.2 min', 'longest one-way delay to Mars', 'JPL HORIZONS'], ['~2 weeks', 'link blackout at solar conjunction', 'NASA 2° RULE'], ['600 mSv', 'career radiation limit', 'NASA-STD-3001']].map(([v, l, s]) => (
@@ -79,6 +79,24 @@ export function Home() {
       <div className="relative">
         <div className="space-bg" aria-hidden />
         <div className="mx-auto max-w-7xl px-4 py-20 grid gap-24">
+          <section id="judges" className="glass rounded-3xl p-8 md:p-10 border-signal/40">
+            <p className="eyebrow">Judges: start here · 5 minutes, no login, works offline</p>
+            <h2 className="mt-2 font-display text-[clamp(1.6rem,3vw,2.4rem)] font-bold">Try the whole system yourself</h2>
+            <ol className="mt-5 grid md:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+              {[
+                ['Station', 'Start daily check-in → Save and analyse. See the steps, the tier, and the link decision (“Earth can answer in time” or “On-board protocol now”). The 3D body shows where.', '/station/checkin'],
+                ['Ground', 'The same astronaut appears with the age of the data. Acknowledge an alert, write a note, Resolve and send advice. Verify the audit chain.', '/ground'],
+                ['Mission Link', 'Press “Attacker: alter the next bundle”, then do a check-in: the arrival list shows it refused. Press “Demo: Mars conjunction, Nov 2023”: the link goes dark for two weeks.', '/link'],
+                ['Simulator', 'Run the mission (26 days, about 20 s). Click any square of the timeline, filter who did what, and follow one message from creation to arrival.', '/simulator'],
+                ['Judge Lab', 'Type your own values or pick a preset (infection, overload, CO2, SANS). The engine and the body update live, with the rule and its source.', '/lab'],
+                ['Verify and Data', 'Run the 76 golden tests in your browser. See every source, which ones we checked against the original, and download the simulated dataset.', '/verify'],
+              ].map(([t, d, to], i) => (
+                <li key={t} className="grid grid-cols-[2rem_1fr] gap-2"><span className="font-mono text-signal">{String(i + 1).padStart(2, '0')}</span><span><Link to={to} className="font-semibold text-orchid hover:underline">{t} →</Link> <span className="text-dust">{d}</span></span></li>
+              ))}
+            </ol>
+            <p className="mt-5 text-xs text-dust">What works: everything on this site runs for real in your browser (engine, encrypted link, ground console, simulator); 381 automated tests. Limits: crew data is simulated (SIM), medical rules are not yet clinically reviewed, and the link security follows BPSec ideas but is not certified. Project document and 30-second demo: <a className="text-mauve hover:underline" href="/media/asteron-project.pdf">PDF</a> · <a className="text-mauve hover:underline" href="/media/asteron-demo-30s.mp4">video</a>.</p>
+          </section>
+
           <section id="problem" className="glass rounded-3xl p-8 md:p-12">
             <p className="eyebrow">The problem</p>
             <blockquote className="mt-4 font-display text-[clamp(1.4rem,2.6vw,2.1rem)] leading-snug max-w-[34ch]">
