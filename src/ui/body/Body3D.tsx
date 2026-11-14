@@ -40,7 +40,7 @@ class ModelBoundary extends Component<{ children: ReactNode }, { failed: boolean
 }
 
 function BodyModel() {
-  const { scene } = useGLTF(BODY_MODEL_URL)
+  const { scene } = useGLTF(BODY_MODEL_URL, false, false) // no Draco or Meshopt decoders: they need WebAssembly, which the CSP forbids
   useFrame(({ clock }) => { if (!reduceMotion()) HOLO_UNIFORMS.t.value = clock.elapsedTime })
   const body = useMemo(() => {
     // Bake every mesh (skinned or not) into one static group in its rest pose, then fit it on the platform.
