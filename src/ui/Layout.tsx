@@ -14,6 +14,7 @@ const NAV = [
   ['/link', 'Mission Link'],
   ['/ground', 'Ground'],
   ['/lab', 'Judge Lab'],
+  ['/simulator', 'Simulator'],
   ['/data', 'Data & Sources'],
   ['/verify', 'Verify'],
   ['/about', 'About'],

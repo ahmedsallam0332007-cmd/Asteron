@@ -39,6 +39,9 @@ Station:
   -> acknowledgement releases custody; no acknowledgement in 2 x light time + 10 min -> send again
 ```
 
+## Mission Simulator (`src/services/simulation.ts`, page `/simulator`)
+Runs a whole mission on the real system with throw-away databases: 6 crew check in daily (simulated sensors, planned illnesses on set days), the link follows JPL geometry, an attacker alters random bundles, a solar storm warning goes up, and an automatic flight surgeon acknowledges and resolves alerts. It records every bundle's journey (created, sent, altered, refused, resent, arrived) and every actor's action, plus a day-by-day view of what the station decided and what Earth knew. Same seed, same mission.
+
 ## Run modes
 - **One page (default):** both sides in one browser tab over an in-memory link. Used by the Mission page and the tests.
 - **Two windows:** a station window and a ground window over `BroadcastChannel` (same browser, zero network). Each window opens only its own database. Public keys meet in the pre-flight pairing record; private keys never leave their side.

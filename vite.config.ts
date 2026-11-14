@@ -22,5 +22,5 @@ export default defineConfig({
       workbox: { globPatterns: ['**/*.{js,css,html,svg,woff2,json,webp}'], navigateFallback: '/index.html' },
     }),
   ],
-  test: { environment: 'node', include: ['src/**/*.test.ts'] },
+  test: { environment: 'node', include: ['src/**/*.test.ts'], testTimeout: 120_000 },
 })

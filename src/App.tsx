@@ -13,6 +13,7 @@ import { JudgeLab } from './ui/pages/JudgeLab'
 import { Verify } from './ui/pages/Verify'
 import { DataSources } from './ui/pages/DataSources'
 import { About } from './ui/pages/About'
+import { Simulator } from './ui/pages/Simulator'
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="link" element={<MissionLink />} />
           <Route path="ground" element={<Ground />} />
           <Route path="lab" element={<JudgeLab />} />
+          <Route path="simulator" element={<Simulator />} />
           <Route path="data" element={<DataSources />} />
           <Route path="science" element={<Science />} />
           <Route path="nasa" element={<NasaData />} />

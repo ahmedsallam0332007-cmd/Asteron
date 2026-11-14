@@ -15,7 +15,10 @@ interface Side {
   requeueUnacked(nowMs: number, timeoutMs: number): Promise<number>
 }
 
-export type Delivered = ({ id: string; kind?: string; arrivesAt: number } & ({ ok: true } | { ok: false; reason: string }))
+/** A bundle that finished leaving its sender during a tick (it is now travelling at the speed of light). */
+export interface Launched { id: string; dir: 'down' | 'up'; completedAt: number; arrivesAt: number }
+
+export type Delivered = ({ id: string; kind?: string; arrivesAt: number } & ({ ok: true; duplicate?: boolean } | { ok: false; reason: string }))
 
 /**
  * Drives one link between the two sides. Each tick, in order:
@@ -56,27 +59,30 @@ export class Mission {
 
   private result(e: Envelope, r: GroundReceive | ReceiveResult): Delivered {
     const id = String(e.sealed?.header?.id ?? '?')
-    return r.ok ? { id, kind: r.kind, arrivesAt: e.arrivesAt, ok: true } : { id, kind: e.sealed?.header?.kind, arrivesAt: e.arrivesAt, ok: false, reason: r.reason }
+    return r.ok ? { id, kind: r.kind, arrivesAt: e.arrivesAt, ok: true, duplicate: !!r.duplicate } : { id, kind: e.sealed?.header?.kind, arrivesAt: e.arrivesAt, ok: false, reason: r.reason }
   }
 
-  private async move(side: Side, dir: Envelope['dir'], from: number, to: number) {
+  private async move(side: Side, dir: Envelope['dir'], from: number, to: number, launched: Launched[]) {
     const queue = await side.queue()
     if (!queue.length) return
     const r = advanceLink({ profile: this.profile(), from, to, queue, cut: this.cut })
     await side.progress(r.queue, r.launches)
     const byId = new Map(r.queue.map((q) => [q.id, q]))
-    for (const l of r.launches) this.transport.post({ dir, arrivesAt: l.arrivesAt, sealed: byId.get(l.id)!.sealed })
+    for (const l of r.launches) {
+      this.transport.post({ dir, arrivesAt: l.arrivesAt, sealed: byId.get(l.id)!.sealed })
+      launched.push({ id: l.id, dir, completedAt: l.completedAt, arrivesAt: l.arrivesAt })
+    }
   }
 
   async tick(now: number) {
     if (now < this.last) throw new Error('Mission time must not run backwards')
-    const out = { down: [] as Delivered[], up: [] as Delivered[] }
+    const out = { down: [] as Delivered[], up: [] as Delivered[], launched: [] as Launched[] }
     await this.deliver(now, out)
     const timeout = this.custodyTimeoutMs(now)
     await this.station?.requeueUnacked(now, timeout)
     await this.ground?.requeueUnacked(now, timeout)
-    if (this.station) await this.move(this.station, 'down', this.last, now)
-    if (this.ground) await this.move(this.ground, 'up', this.last, now)
+    if (this.station) await this.move(this.station, 'down', this.last, now, out.launched)
+    if (this.ground) await this.move(this.ground, 'up', this.last, now, out.launched)
     await this.deliver(now, out)
     this.last = now
     return out

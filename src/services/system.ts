@@ -120,7 +120,7 @@ export class AsteronSystem {
   async tick(realNow: number) {
     this.lastReal = Math.max(this.lastReal, realNow)
     const now = this.missionNow()
-    if (now < this.mission.lastTick()) return { down: [], up: [] } // a reset moved the clock; the new mission takes over
+    if (now < this.mission.lastTick()) return { down: [], up: [], launched: [] } // a reset moved the clock; the new mission takes over
     return this.mission.tick(now)
   }
 
