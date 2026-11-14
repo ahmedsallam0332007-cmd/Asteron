@@ -1,0 +1,71 @@
+{
+  "days": 118,
+  "crew": 6,
+  "indicators": 14,
+  "dailyRows": 708,
+  "readingRows": 10620,
+  "events": [
+    {
+      "day": 22,
+      "crewId": "okafor",
+      "label": "Sleep loss with rising workload"
+    },
+    {
+      "day": 37,
+      "crewId": "varga",
+      "label": "Infection: fever with fast heart rate"
+    },
+    {
+      "day": 51,
+      "crewId": "haddad",
+      "label": "Blood pressure rising"
+    },
+    {
+      "day": 68,
+      "crewId": "rahal",
+      "label": "Severe infection with low oxygen"
+    },
+    {
+      "day": 84,
+      "crewId": "moreau",
+      "label": "Vision change (possible SANS)"
+    },
+    {
+      "day": 99,
+      "crewId": "sorokina",
+      "label": "Headache with stress: check cabin CO2"
+    }
+  ],
+  "perCrew": {
+    "rahal": {
+      "alerts": 4,
+      "maxTier": 4,
+      "careerDose": 200.9
+    },
+    "moreau": {
+      "alerts": 3,
+      "maxTier": 3,
+      "careerDose": 117.2
+    },
+    "okafor": {
+      "alerts": 3,
+      "maxTier": 3,
+      "careerDose": 41.6
+    },
+    "varga": {
+      "alerts": 3,
+      "maxTier": 3,
+      "careerDose": 39.7
+    },
+    "haddad": {
+      "alerts": 3,
+      "maxTier": 2,
+      "careerDose": 112.6
+    },
+    "sorokina": {
+      "alerts": 3,
+      "maxTier": 2,
+      "careerDose": 128.4
+    }
+  }
+}

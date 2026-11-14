@@ -4,6 +4,7 @@ import { useSystem } from '../../store/system'
 import { linkState } from '../../link/contactPlan'
 import { PROFILES } from '../../link/profiles'
 import { formatWait } from '../../link/escalation'
+import { NebulaSky } from './NebulaSky'
 
 const EarthScene = lazy(() => import('./EarthScene').then((m) => ({ default: m.EarthScene })))
 
@@ -45,8 +46,8 @@ export function Home() {
   return (
     <div>
       <section className="relative min-h-[100svh] overflow-hidden -mt-[4.25rem] pt-[4.25rem]">
-        <div aria-hidden className="absolute inset-0 bg-[url('/media/nebula-orion.webp')] bg-cover bg-center opacity-35 [filter:hue-rotate(40deg)_saturate(.9)]" />
-        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(70%_60%_at_75%_45%,rgba(124,58,237,.18),transparent_70%),linear-gradient(90deg,rgba(8,5,12,.92)_0%,rgba(8,5,12,.55)_45%,rgba(8,5,12,.1)_100%)]" />
+        <div aria-hidden className="absolute inset-0"><NebulaSky /></div>
+        <div aria-hidden className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,5,12,.8)_0%,rgba(8,5,12,.4)_45%,rgba(8,5,12,0)_100%)]" />
         <div aria-hidden className="absolute inset-0" id="earth-scene">
           <Suspense fallback={null}><EarthScene /></Suspense>
         </div>
@@ -94,7 +95,7 @@ export function Home() {
                 <li key={t} className="grid grid-cols-[2rem_1fr] gap-2"><span className="font-mono text-signal">{String(i + 1).padStart(2, '0')}</span><span><Link to={to} className="font-semibold text-orchid hover:underline">{t} →</Link> <span className="text-dust">{d}</span></span></li>
               ))}
             </ol>
-            <p className="mt-5 text-xs text-dust">What works: everything on this site runs for real in your browser (engine, encrypted link, ground console, simulator); 381 automated tests. Limits: crew data is simulated (SIM), medical rules are not yet clinically reviewed, and the link security follows BPSec ideas but is not certified. Project document and 30-second demo: <a className="text-mauve hover:underline" href="/media/asteron-project.pdf">PDF</a> · <a className="text-mauve hover:underline" href="/media/asteron-demo-30s.mp4">video</a>.</p>
+            <p className="mt-5 text-xs text-dust">What works: everything on this site runs for real in your browser (engine, encrypted link, ground console, simulator); 381 automated tests. Limits: crew data is simulated (SIM), medical rules are not yet clinically reviewed, and the link security follows BPSec ideas but is not certified. Project document, 30-second demo, system cycle with test results, and the mission dataset: <a className="text-mauve hover:underline" href="/media/asteron-project.pdf">PDF</a> · <a className="text-mauve hover:underline" href="/media/asteron-demo-30s.mp4">video</a> · <a className="text-mauve hover:underline" href="/media/asteron-system-cycle.pdf">cycle and tests</a> · <Link className="text-mauve hover:underline" to="/data">dataset</Link>.</p>
           </section>
 
           <section id="problem" className="glass rounded-3xl p-8 md:p-12">

@@ -188,5 +188,14 @@
   "url": "https://www.asc-csa.gc.ca/eng/sciences/radi-n2.asp",
   "verifiedAgainstOriginal": false,
   "note": "Preliminary result: about 150 microsieverts/day from neutrons; dose lower in sleeping quarters than elsewhere on the station."
+ },
+ {
+  "id": "csa-bio-monitor",
+  "kind": "published",
+  "title": "Bio-Monitor: Keeping an eye on astronauts' vital signs",
+  "publisher": "Canadian Space Agency",
+  "url": "https://www.asc-csa.gc.ca/eng/sciences/bio-monitor.asp",
+  "verifiedAgainstOriginal": true,
+  "note": "Page read on 14 Nov 2026. Smart shirt, headband and tablet app on the ISS measuring pulse and electrical activity of the heart, blood pressure, breathing rate and volume, skin temperature, blood oxygen saturation and physical activity, also during sleep and exercise. Used as the reference for how Asteron's vital-sign indicators would be measured in flight."
  }
 ]

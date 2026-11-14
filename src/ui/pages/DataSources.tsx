@@ -60,6 +60,30 @@ export function DataSources() {
         </Card>
       </div>
 
+      <div className="grid lg:grid-cols-2 gap-6">
+        <Card>
+          <p className="eyebrow">Mission dataset · simulated crew (SIM)</p>
+          <h2 className="font-display text-2xl font-bold mt-1">6 astronauts · 118 flight days · 10,620 readings</h2>
+          <p className="mt-2 text-sm text-dust">Name, role, age, body measures and each person’s own normal; every day’s 14 readings, radiation dose, and the engine’s verdict. Six planned health events are all caught; on the other 690 astronaut-days the engine raised a low-level “watch” twice (0.3%) and never an alert to Earth.</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <a className="btn btn-sm btn-primary" href="/media/dataset/asteron-mission-daily.csv" download>Daily table (CSV)</a>
+            <a className="btn btn-sm" href="/media/dataset/asteron-crew-profiles.csv" download>Crew profiles (CSV)</a>
+            <a className="btn btn-sm" href="/media/dataset/asteron-readings-long.csv" download>Every reading (CSV)</a>
+            <a className="btn btn-sm" href="/media/dataset/README.md" target="_blank" rel="noreferrer">Data dictionary</a>
+            <a className="btn btn-sm" href="/media/asteron-system-cycle.pdf" target="_blank" rel="noreferrer">System cycle and test results (PDF)</a>
+          </div>
+        </Card>
+        <Card>
+          <p className="eyebrow">Where each value would come from in flight</p>
+          <ul className="mt-3 grid gap-2 text-sm">
+            <li className="rounded-xl bg-void/50 p-3"><p className="font-semibold">Wearable vital-sign garment</p><p className="text-dust">Heart rate, blood pressure, blood oxygen, temperature, sleep, exercise. Reference: the CSA Bio-Monitor smart shirt used on the ISS, which measures heart activity, blood pressure, breathing, skin temperature, blood oxygen and activity, also during sleep.</p></li>
+            <li className="rounded-xl bg-void/50 p-3"><p className="font-semibold">1-minute daily check-in</p><p className="text-dust">Mood, stress, workload, headache, rash, dizziness, vision change (self-report).</p></li>
+            <li className="rounded-xl bg-void/50 p-3"><p className="font-semibold">Personal dosimeter</p><p className="text-dust">Daily radiation dose, tracked against NASA’s 600 mSv career limit.</p></li>
+          </ul>
+          <p className="mt-3 text-xs text-dust">In this prototype every value is badged: SIM (simulated sensor), MANUAL (typed by the crew) or JUDGE (entered by a visitor).</p>
+        </Card>
+      </div>
+
       <Card>
         <h2 className="font-display text-lg font-bold">Every source ({content.sources.length})</h2>
         <div className="mt-3 overflow-x-auto">
