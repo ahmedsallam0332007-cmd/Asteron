@@ -15,7 +15,7 @@ export function Verify() {
       <div>
         <p className="eyebrow">Verify · prove it is real</p>
         <h1 className="font-display text-3xl font-bold mt-1">Run the engine’s golden tests in your browser</h1>
-        <p className="text-dust mt-1 max-w-[75ch]">The same {total} hand-written cases the build runs: every rule at its exact boundary, unknown never shown as normal, worst status wins. They run here on your machine, with no server. The full project has 363 automated tests.</p>
+        <p className="text-dust mt-1 max-w-[75ch]">The same {total} hand-written cases the build runs: every rule at its exact boundary, unknown never shown as normal, worst status wins. They run here on your machine, with no server. The full project has 381 automated tests.</p>
       </div>
       <div className="grid sm:grid-cols-3 gap-4">
         <Card><p className="text-xs text-dust">Rules</p><p className="font-display text-3xl font-bold">{content.rules.length}</p><p className="text-xs text-dust">each with a source</p></Card>

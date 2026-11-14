@@ -9,6 +9,9 @@ Challenge: *Create Health Monitoring Software for Astronauts on Space Missions*.
 | Live app (no login, works offline after the first visit) | https://asteron-mission.vercel.app |
 | 30-second demo video | https://asteron-mission.vercel.app/media/asteron-demo-30s.mp4 (also in this repo: `public/media/asteron-demo-30s.mp4`) |
 | System cycle and measured test results (PDF) | https://asteron-mission.vercel.app/media/asteron-system-cycle.pdf |
+| Test results | [`docs/TEST_RESULTS.md`](docs/TEST_RESULTS.md) |
+| Source code guide | [`docs/SOURCE_CODE.md`](docs/SOURCE_CODE.md) |
+| Impact | [`docs/IMPACT.md`](docs/IMPACT.md) |
 | Mission dataset (6 crew, 118 days) | [`public/media/dataset/`](public/media/dataset/) |
 
 ## What it is
@@ -68,7 +71,7 @@ src/station   station node      src/ground  ground node, alerts, handover
 src/services  mission runtime, transports, clock, simulator
 src/ui        website (React, three.js)
 ```
-More: [`docs/SYSTEM.md`](docs/SYSTEM.md) (architecture), [`SECURITY.md`](SECURITY.md), [`docs/TESTING.md`](docs/TESTING.md), [`docs/REAL_DATA_PRINCIPLE.md`](docs/REAL_DATA_PRINCIPLE.md), [`CREDITS.md`](CREDITS.md).
+More: [`docs/SOURCE_CODE.md`](docs/SOURCE_CODE.md) (what each part does), [`docs/TEST_RESULTS.md`](docs/TEST_RESULTS.md), [`docs/IMPACT.md`](docs/IMPACT.md), [`docs/SYSTEM.md`](docs/SYSTEM.md) (architecture), [`SECURITY.md`](SECURITY.md), [`docs/TESTING.md`](docs/TESTING.md), [`docs/REAL_DATA_PRINCIPLE.md`](docs/REAL_DATA_PRINCIPLE.md), [`CREDITS.md`](CREDITS.md).
 
 ## Limits
 - Crew data is **simulated** (badged SIM), anchored to published findings; space geometry and radiation limits are real.
