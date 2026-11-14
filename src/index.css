@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import '@fontsource/michroma/400.css';
 @import '@fontsource/sora/500.css';
 @import '@fontsource/sora/700.css';
 @import '@fontsource/inter/400.css';
@@ -23,7 +22,7 @@
   --color-st-concern: #f97316;
   --color-st-urgent: #ef4444;
   --color-st-unknown: #94a3b8;
-  --font-brand: 'Michroma', 'Sora', system-ui, sans-serif;
+  --font-brand: 'Sora', system-ui, sans-serif;
   --font-display: 'Sora', system-ui, sans-serif;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;

@@ -8,13 +8,13 @@ npm run dev        # open the printed link (usually http://localhost:5173)
 
 ## Automated tests (about 1 minute)
 ```
-npm run check      # typecheck + lint + 380 tests (about 30 s)
+npm run check      # typecheck + lint + 381 tests (about 30 s)
 npm run build      # production build + offline service worker
 ```
-What the 380 tests cover (architecture: docs/SYSTEM.md):
+What the 381 tests cover (architecture: docs/SYSTEM.md):
 | Area | File | What is proved |
 |---|---|---|
-| Rules engine | `src/engine/__vectors__/*.json` + `__tests__` | 61 golden cases, every rule at its exact boundary, 1,000 random inputs (deterministic, order-independent, no future data, worse reading never gives a better status) |
+| Rules engine | `src/engine/__vectors__/*.json` + `__tests__` | 76 golden cases, every rule at its exact boundary, 1,000 random inputs (deterministic, order-independent, no future data, worse reading never gives a better status) |
 | Simulation | `src/sim/*.test.ts` | 6 crew x 7 scenarios; 200 random seeds: healthy false-alert rate < 0.5%, every scenario detected every time |
 | Real NASA data | `src/nasa/cbc.test.ts` | OSD-569 imported unchanged (SHA-256), 8 real out-of-range values, 8 values from a shifted row excluded |
 | Link (real ephemeris) | `src/link/link.test.ts` | JPL Horizons light time, NASA 2-degree conjunction rule reproduces the Nov 2023 moratorium exactly, windows, capacity, earliest reply, link-aware escalation |

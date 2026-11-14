@@ -64,6 +64,6 @@ More: `docs/SYSTEM.md` (architecture), `SECURITY.md`, `TESTING.md`, `docs/REAL_D
 
 
 ## Credits and licences
-Libraries: React, Vite, Tailwind CSS, Zustand, Dexie, Zod, three.js, React Three Fiber, drei, Recharts, Lucide, Vitest, Playwright, vite-plugin-pwa (MIT/ISC). Fonts: Sora, Inter, Michroma, JetBrains Mono (SIL OFL, via Fontsource). Images: NASA Blue Marble (NASA SVS); "Cosmic Cliffs" (NASA, ESA, CSA, STScI); "Chaos at the Heart of Orion" (NASA/JPL-Caltech/STScI). No NASA logos are used. Asteron is not affiliated with or endorsed by NASA.
+Libraries: React, Vite, Tailwind CSS, Zustand, Dexie, Zod, three.js, React Three Fiber, drei, Recharts, Lucide, Vitest, Playwright, vite-plugin-pwa (MIT/ISC). Fonts: Sora, Inter, JetBrains Mono (SIL OFL, via Fontsource). Images: NASA Blue Marble (NASA SVS); "Cosmic Cliffs" (NASA, ESA, CSA, STScI); "Chaos at the Heart of Orion" (NASA/JPL-Caltech/STScI). No NASA logos are used. Asteron is not affiliated with or endorsed by NASA.
 
 *Self-support aid, not a medical diagnosis. Station and Ground crew data is simulated; the NASA Data page shows real published data.*

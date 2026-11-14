@@ -48,7 +48,7 @@ export function Layout() {
       {!home && <div className="space-bg" aria-hidden />}
       <header className="sticky top-3 z-30 px-3">
         <div className="glass mx-auto max-w-7xl rounded-2xl px-4 h-14 flex items-center gap-4">
-          <NavLink to="/" className="flex items-center gap-2.5 font-brand text-[13px] tracking-[0.22em] text-orchid shrink-0" aria-label="Asteron home">
+          <NavLink to="/" className="flex items-center gap-2.5 font-brand font-bold text-[17px] tracking-[0.2em] text-star shrink-0" aria-label="Asteron home">
             <Logo size={26} /> ASTERON
           </NavLink>
           <nav className="flex gap-1 text-sm overflow-x-auto" aria-label="Main">
