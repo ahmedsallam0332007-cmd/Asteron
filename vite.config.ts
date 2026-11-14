@@ -19,7 +19,7 @@ export default defineConfig({
         start_url: '/station',
         icons: [{ src: 'icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' }],
       },
-      workbox: { globPatterns: ['**/*.{js,css,html,svg,woff,woff2,json,webp,jpg}'], navigateFallback: '/index.html', maximumFileSizeToCacheInBytes: 4 * 1024 * 1024 },
+      workbox: { globPatterns: ['**/*.{js,css,html,svg,woff,woff2,json,webp,jpg,glb}'], navigateFallback: '/index.html', maximumFileSizeToCacheInBytes: 4 * 1024 * 1024 },
     }),
   ],
   // Never inline assets as data: URLs: the production CSP allows fonts and images from our own origin only.

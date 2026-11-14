@@ -51,10 +51,10 @@ export function Layout() {
           <NavLink to="/" className="flex items-center gap-2.5 font-brand font-bold text-[17px] tracking-[0.2em] text-star shrink-0" aria-label="Asteron home">
             <Logo size={26} /> ASTERON
           </NavLink>
-          <nav className="flex gap-1 text-sm overflow-x-auto" aria-label="Main">
+          <nav className="flex gap-0.5 text-[13px] overflow-x-auto min-w-0 [scrollbar-width:none]" aria-label="Main">
             {NAV.map(([to, label]) => (
               <NavLink key={to} to={to}
-                className={({ isActive }) => `px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors ${isActive ? 'bg-asteron/30 text-orchid' : 'text-dust hover:text-star hover:bg-white/5'}`}>
+                className={({ isActive }) => `px-2.5 py-1.5 rounded-lg whitespace-nowrap transition-colors ${isActive ? 'bg-asteron/30 text-orchid' : 'text-dust hover:text-star hover:bg-white/5'}`}>
                 {label}
               </NavLink>
             ))}
@@ -62,8 +62,8 @@ export function Layout() {
           <div className="ml-auto flex items-center gap-4">
             <LinkChip />
             <label className="hidden xl:flex items-center gap-2 text-xs text-dust">
-              <span className="font-mono uppercase tracking-wider">Scenario</span>
-              <select id="scenario" className="bg-abyss/80 border border-line rounded-lg px-2 py-1 text-star" value={scenarioId ?? ''}
+              <span className="font-mono uppercase tracking-wider hidden 2xl:inline">Scenario</span>
+              <select id="scenario" aria-label="Scenario" title="Scenario" className="bg-abyss/80 border border-line rounded-lg px-2 py-1 text-star max-w-[11rem]" value={scenarioId ?? ''}
                 onChange={async (e) => { const s = systemStore.getState(); await s.reset({ epoch: s.missionNow, profile: s.profile, scenarioId: e.target.value }) }}>
                 {SCENARIOS.map((s) => <option key={s.id} value={s.id}>{s.title}</option>)}
               </select>
