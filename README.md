@@ -7,7 +7,6 @@ Challenge: *Create Health Monitoring Software for Astronauts on Space Missions*.
 | | |
 |---|---|
 | Live app (no login, works offline after the first visit) | https://asteron-mission.vercel.app |
-| 30-second demo video | https://asteron-mission.vercel.app/media/asteron-demo-30s.mp4 (also in this repo: `public/media/asteron-demo-30s.mp4`) |
 | System cycle and measured test results (PDF) | https://asteron-mission.vercel.app/media/asteron-system-cycle.pdf |
 | Test results | [`docs/TEST_RESULTS.md`](docs/TEST_RESULTS.md) |
 | Source code guide | [`docs/SOURCE_CODE.md`](docs/SOURCE_CODE.md) |

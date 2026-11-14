@@ -29,13 +29,13 @@ void main(){
  float vig=smoothstep(1.25,.3,length((v-.5)*vec2(ar*.8,1.)*1.6));col*=mix(.45,1.,vig);
  gl_FragColor=vec4(col,1.);}`
 
-export function NebulaSky({ className = '' }: { className?: string }) {
+export function NebulaSky({ className = '', animate = true }: { className?: string; animate?: boolean }) {
   const ref = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
     const cv = ref.current
     const gl = cv?.getContext('webgl', { antialias: false, premultipliedAlpha: false })
     if (!cv || !gl) return
-    const motion = !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    const motion = animate && !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
     const sh = (type: number, src: string) => { const s = gl.createShader(type)!; gl.shaderSource(s, src); gl.compileShader(s); return s }
     const pr = gl.createProgram()!
     gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(pr)
@@ -48,8 +48,8 @@ export function NebulaSky({ className = '' }: { className?: string }) {
     const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
     for (const [k, val] of [[gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE], [gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR]]) gl.texParameteri(gl.TEXTURE_2D, k, val)
     let isz: [number, number] = [1, 1]; let ready = false; let raf = 0; let alive = true
-    let time = 20, last = performance.now(), mx = 0, my = 0, tx = 0, ty = 0
-    const size = () => { const s = Math.min(1.5, devicePixelRatio || 1); cv.width = Math.round(cv.clientWidth * s); cv.height = Math.round(cv.clientHeight * s); gl.viewport(0, 0, cv.width, cv.height) }
+    let skip = false, time = 20, last = performance.now(), mx = 0, my = 0, tx = 0, ty = 0
+    const size = () => { const s = 0.6 /* soft clouds: 60% resolution, scaled up by the browser */; cv.width = Math.round(cv.clientWidth * s); cv.height = Math.round(cv.clientHeight * s); gl.viewport(0, 0, cv.width, cv.height) }
     const move = (e: PointerEvent) => { tx = e.clientX / innerWidth - 0.5; ty = 0.5 - e.clientY / innerHeight }
     const draw = () => {
       gl.uniform1i(U.img, 0); gl.uniform2f(U.r, cv.width, cv.height); gl.uniform2f(U.isz, isz[0], isz[1]); gl.uniform1f(U.t, time); gl.uniform2f(U.m, mx, my)
@@ -59,7 +59,7 @@ export function NebulaSky({ className = '' }: { className?: string }) {
       if (!alive) return
       const dt = Math.min(0.05, (now - last) / 1000); last = now
       time += dt; mx += (tx - mx) * 0.04; my += (ty - my) * 0.04
-      if (ready) draw()
+      if (ready && (skip = !skip)) draw() // 30 frames a second is enough for slow gas
       raf = requestAnimationFrame(frame)
     }
     const im = new Image()
@@ -73,6 +73,6 @@ export function NebulaSky({ className = '' }: { className?: string }) {
     addEventListener('resize', size); size()
     if (motion) { addEventListener('pointermove', move, { passive: true }); raf = requestAnimationFrame(frame) }
     return () => { alive = false; cancelAnimationFrame(raf); removeEventListener('resize', size); removeEventListener('pointermove', move) }
-  }, [])
+  }, [animate])
   return <canvas ref={ref} aria-hidden className={`block w-full h-full opacity-0 transition-opacity duration-700 ${className}`} />
 }

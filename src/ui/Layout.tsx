@@ -46,7 +46,7 @@ export function Layout() {
 
   return (
     <div className="min-h-full flex flex-col">
-      <div className="space-bg" aria-hidden><NebulaSky />{!home && <div className="absolute inset-0 bg-void/70" />}</div>
+      <div className="space-bg" aria-hidden><NebulaSky key={home ? 'home' : 'page'} animate={home} />{!home && <div className="absolute inset-0 bg-void/70" />}</div>
       <header className="sticky top-3 z-30 px-3">
         <div className="glass mx-auto max-w-7xl rounded-2xl px-4 h-14 flex items-center gap-4">
           <NavLink to="/" className="flex items-center gap-2.5 font-brand font-bold text-[17px] tracking-[0.2em] text-star shrink-0" aria-label="Asteron home">

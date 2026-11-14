@@ -83,7 +83,7 @@ export function Home() {
                 <li key={t} className="grid grid-cols-[2rem_1fr] gap-2"><span className="font-mono text-signal">{String(i + 1).padStart(2, '0')}</span><span><Link to={to} className="font-semibold text-orchid hover:underline">{t} →</Link> <span className="text-dust">{d}</span></span></li>
               ))}
             </ol>
-            <p className="mt-5 text-xs text-dust">What works: everything on this site runs for real in your browser (engine, encrypted link, ground console, simulator); 381 automated tests. Limits: crew data is simulated (SIM), medical rules are not yet clinically reviewed, and the link security follows BPSec ideas but is not certified. 30-second demo, system cycle with test results, and the mission dataset: <a className="text-mauve hover:underline" href="/media/asteron-demo-30s.mp4">video</a> · <a className="text-mauve hover:underline" href="/media/asteron-system-cycle.pdf">cycle and tests</a> · <Link className="text-mauve hover:underline" to="/data">dataset</Link>.</p>
+            <p className="mt-5 text-xs text-dust">What works: everything on this site runs for real in your browser (engine, encrypted link, ground console, simulator); 381 automated tests. Limits: crew data is simulated (SIM), medical rules are not yet clinically reviewed, and the link security follows BPSec ideas but is not certified. System cycle with test results, and the mission dataset: <a className="text-mauve hover:underline" href="/media/asteron-system-cycle.pdf">cycle and tests</a> · <Link className="text-mauve hover:underline" to="/data">dataset</Link>.</p>
           </section>
 
           <section id="sensing" className="grid gap-6">
